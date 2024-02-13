@@ -19,6 +19,10 @@ class InvalidDescriptorBinaryOperation(PropertyUtilsException):
     description = "invalid binary operation between descriptors. "
 
 
+class InvalidDescriptorExponent(PropertyUtilsException):
+    description = "invalid exponent for descriptor, i.e. not a number"
+
+
 class WrongUnitDescriptorType(PropertyUtilsException):
     description = "got a wrong unit descriptor type. "
 
