@@ -1,0 +1,28 @@
+name: Type-check package
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  push:
+    branches: ["main", "feature/*"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  type-check-package:
+    runs-on: ubuntu-latest
+
+    env:
+      INTERPRETER: python
+      PIP: python -m pip
+    
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set Up Python 3.12
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.12"
+    - name: Install package type-checker
+      run: make install-package-type-checker
+    - name: Type-check package
+      run: make type-check-package
