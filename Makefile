@@ -9,6 +9,12 @@ install-package-uploader:
 install-local-package:
 	$(PIP) install -e .
 
+install-requirements:
+	$(PIP) install typing-extensions
+
+install-test-requirements:
+	$(PIP) install unittest-extensions
+
 test-package:
 	$(INTERPRETER) -m unittest discover -v src/property_utils/tests/
 
