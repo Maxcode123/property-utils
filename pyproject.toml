@@ -47,7 +47,7 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-dev = ["unittest-extensions"]
+dev = ["unittest-extensions", "black"]
 
 [project.urls]
 Homepage = "https://github.com/Maxcode123/property-utils"

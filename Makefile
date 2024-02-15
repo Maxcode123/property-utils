@@ -1,4 +1,11 @@
-PY_FILES := $(shell find src/property_utils -not -path '*/tests/*' -not -name '__init__.py' -name '*.py')
+CONFIG=./pyproject.toml
+PY_FILES:=$(shell find src/property_utils -not -path '*/tests/*' -not -name '__init__.py' -name '*.py')
+
+install-package-type-checker:
+	$(PIP) install mypy
+
+install-package-formatter:
+	$(PIP) install black
 
 install-package-builder:
 	$(PIP) install --upgrade build
@@ -20,6 +27,12 @@ test-package:
 
 doctest-package:
 	$(INTERPRETER) -m doctest -v $(PY_FILES)
+
+type-check-package:
+	$(INTERPRETER) -m mypy --config-file $(CONFIG) ./src/property_utils/
+
+format-package:
+	$(INTERPRETER) -m black --config $(CONFIG) ./src/property_utils/
 
 build-package:
 	$(INTERPRETER) -m build
