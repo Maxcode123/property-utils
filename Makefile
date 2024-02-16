@@ -1,6 +1,9 @@
 CONFIG=./pyproject.toml
 PY_FILES:=$(shell find src/property_utils -not -path '*/tests/*' -not -name '__init__.py' -name '*.py')
 
+install-package-linter:
+	$(PIP) install pylint
+
 install-package-type-checker:
 	$(PIP) install mypy
 
@@ -27,6 +30,9 @@ test-package:
 
 doctest-package:
 	$(INTERPRETER) -m doctest -v $(PY_FILES)
+
+lint-package:
+	$(INTERPRETER) -m pylint --ignore tests --disable C0114,C0301,C0302 src/property_utils
 
 type-check-package:
 	$(INTERPRETER) -m mypy --config-file $(CONFIG) ./src/property_utils/
