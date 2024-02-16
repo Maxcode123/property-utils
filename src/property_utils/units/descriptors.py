@@ -326,6 +326,9 @@ class AliasMeasurementUnit(MeasurementUnit):
         it is intended to be used to convert an unknown unit descriptor to an
         AliasMeasurementUnit.
 
+        Subclasses should implement aliased_generic_descriptor and alias_mapping
+        methods.
+
         Raises WrongUnitDescriptorType if given descriptor cannot be translated
         to an AliasMeasurementUnit  instance.
 
@@ -344,6 +347,20 @@ class AliasMeasurementUnit(MeasurementUnit):
         raise WrongUnitDescriptorType(
             f"cannot create AliasMeasurementUnit from descriptor {descriptor}"
         )
+
+    @classmethod
+    def aliased_generic_descriptor(cls) -> GenericUnitDescriptor:
+        """
+        Implement this method by returning the generic of the unit descriptor that this
+        measurement unit aliases.
+
+        >>> class LengthUnit(MeasurementUnit): ...
+        >>> class AreaUnit(AliasMeasurementUnit):
+        ...     @classmethod
+        ...     def aliased_generic_descriptor(cls):
+        ...         return LengthUnit**2
+        """
+        raise NotImplementedError
 
 
 @dataclass

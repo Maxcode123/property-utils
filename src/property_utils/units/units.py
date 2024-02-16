@@ -1,6 +1,8 @@
 from property_utils.units.descriptors import (
     MeasurementUnit,
     AliasMeasurementUnit,
+    GenericCompositeDimension,
+    UnitDescriptor,
 )
 
 
@@ -57,6 +59,10 @@ class PressureUnit(AliasMeasurementUnit):
     PASCAL = "Pa"
     KILO_PASCAL = "kPa"
 
+    @classmethod
+    def aliased_generic_descriptor(cls) -> GenericCompositeDimension:
+        return MassUnit / LengthUnit / (TimeUnit**2)
+
 
 class EnergyUnit(AliasMeasurementUnit):
     JOULE = "J"
@@ -66,3 +72,7 @@ class EnergyUnit(AliasMeasurementUnit):
     CALORIE = "cal"
     KILO_CALORIE = "kcal"
     BTU = "Btu"
+
+    @classmethod
+    def aliased_generic_descriptor(cls) -> GenericCompositeDimension:
+        return MassUnit * (LengthUnit**2) / (TimeUnit**2)
