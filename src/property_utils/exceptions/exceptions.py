@@ -1,3 +1,4 @@
+# pylint: disable=missing-class-docstring
 from typing import Optional
 
 
@@ -9,7 +10,7 @@ class PropertyUtilsException(Exception):
 
     description: str
 
-    def __init__(self, msg: Optional[str] = None, *args) -> None:
+    def __init__(self, *args, msg: Optional[str] = None) -> None:
         if msg is None:
             msg = self.description
         super().__init__(msg, *args)

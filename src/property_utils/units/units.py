@@ -1,8 +1,8 @@
+# pylint: disable=missing-class-docstring
 from property_utils.units.descriptors import (
     MeasurementUnit,
     AliasMeasurementUnit,
     GenericCompositeDimension,
-    UnitDescriptor,
 )
 
 

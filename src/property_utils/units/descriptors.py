@@ -53,9 +53,16 @@ class UnitDescriptor(Protocol):
     Descriptor for a property unit that has a specific unit, e.g. cm^2 or ft^2.
     """
 
-    def isinstance(self, generic: GenericUnitDescriptor) -> bool: ...
+    def isinstance(self, generic: GenericUnitDescriptor) -> bool:
+        """
+        Returns True if the UnitDescriptor is an instance of the generic, False
+        otherwise.
+        """
 
-    def to_generic(self) -> GenericUnitDescriptor: ...
+    def to_generic(self) -> GenericUnitDescriptor:
+        """
+        Create a generic descriptor from this UnitDescriptor.
+        """
 
     def __mul__(self, descriptor: "UnitDescriptor") -> "CompositeDimension": ...
 
@@ -76,7 +83,7 @@ class MeasurementUnitMeta(EnumMeta):
     GenericUnitDescriptor(s).
     """
 
-    def __mul__(unit_cls, other: GenericUnitDescriptor) -> "GenericCompositeDimension":
+    def __mul__(cls, other: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
         Defines multiplication between MeasurementUnit types and other generic
         descriptors.
@@ -88,28 +95,22 @@ class MeasurementUnitMeta(EnumMeta):
         if isinstance(other, GenericCompositeDimension):
             numerator = other.numerator.copy()
             denominator = other.denominator.copy()
-            numerator.append(GenericDimension(unit_cls))
+            numerator.append(GenericDimension(cls))
             return GenericCompositeDimension(
                 numerator=numerator, denominator=denominator
             )
-        elif isinstance(other, GenericDimension):
-            return GenericCompositeDimension(
-                numerator=[GenericDimension(unit_cls), other]
-            )
-        elif type(other) == MeasurementUnitType:
+        if isinstance(other, GenericDimension):
+            return GenericCompositeDimension(numerator=[GenericDimension(cls), other])
+        if isinstance(other, MeasurementUnitType):
             return GenericCompositeDimension(
                 numerator=[
-                    GenericDimension(unit_cls),
+                    GenericDimension(cls),
                     GenericDimension(other),
                 ]
             )
-        raise InvalidDescriptorBinaryOperation(
-            f"cannot multiply {unit_cls} with {other}. "
-        )
+        raise InvalidDescriptorBinaryOperation(f"cannot multiply {cls} with {other}. ")
 
-    def __truediv__(
-        unit_cls, other: GenericUnitDescriptor
-    ) -> "GenericCompositeDimension":
+    def __truediv__(cls, other: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
         Defines division between MeasurementUnit types and other generic
         descriptors.
@@ -121,37 +122,35 @@ class MeasurementUnitMeta(EnumMeta):
         if isinstance(other, GenericCompositeDimension):
             numerator = other.denominator.copy()
             denominator = other.numerator.copy()
-            numerator.append(GenericDimension(unit_cls))
+            numerator.append(GenericDimension(cls))
             return GenericCompositeDimension(
                 numerator=numerator, denominator=denominator
             )
-        elif isinstance(other, GenericDimension):
+        if isinstance(other, GenericDimension):
             return GenericCompositeDimension(
-                numerator=[GenericDimension(unit_cls)], denominator=[other]
+                numerator=[GenericDimension(cls)], denominator=[other]
             )
-        elif type(other) == MeasurementUnitType:
+        if isinstance(other, MeasurementUnitType):
             return GenericCompositeDimension(
-                numerator=[GenericDimension(unit_cls)],
+                numerator=[GenericDimension(cls)],
                 denominator=[GenericDimension(other)],
             )
-        raise InvalidDescriptorBinaryOperation(
-            f"cannot divide {unit_cls} with {other}. "
-        )
+        raise InvalidDescriptorBinaryOperation(f"cannot divide {cls} with {other}. ")
 
-    def __pow__(unit_cls, power: float) -> "GenericDimension":
+    def __pow__(cls, power: float) -> "GenericDimension":
         """
         Defines exponentiation of MeasurementUnit types.
 
         >>> class TimeUnit(MeasurementUnit): ...
         >>> assert type(TimeUnit**3) == GenericDimension
         """
-        return GenericDimension(unit_cls, power)
+        return GenericDimension(cls, power)
 
-    def __str__(self) -> str:
-        return f"<MeasurementUnit: {self.__name__}>"
+    def __str__(cls) -> str:
+        return f"<MeasurementUnit: {cls.__name__}>"
 
-    def __repr__(self) -> str:
-        return str(self)
+    def __repr__(cls) -> str:
+        return str(cls)
 
 
 class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
@@ -196,7 +195,7 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         """
         if isinstance(descriptor, Dimension):
             return descriptor.unit
-        elif isinstance(descriptor, MeasurementUnit):
+        if isinstance(descriptor, MeasurementUnit):
             return descriptor
         raise WrongUnitDescriptorType(
             f"cannot create MeasurementUnit from descriptor: {descriptor}"
@@ -219,7 +218,7 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         >>> TemperatureUnit.CELCIUS.isinstance(LengthUnit)
         False
         """
-        return type(self) == generic
+        return type(self) == generic  # pylint: disable=unidiomatic-typecheck
 
     def to_generic(self) -> GenericUnitDescriptor:
         """
@@ -245,7 +244,7 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         """
         if isinstance(descriptor, MeasurementUnit):
             return Dimension(self) * Dimension(descriptor)
-        elif isinstance(descriptor, (Dimension, CompositeDimension)):
+        if isinstance(descriptor, (Dimension, CompositeDimension)):
             return Dimension(self) * descriptor
         raise InvalidDescriptorBinaryOperation(
             f"cannot multiply {self} with {descriptor}. "
@@ -263,7 +262,7 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         """
         if isinstance(descriptor, MeasurementUnit):
             return Dimension(self) / Dimension(descriptor)
-        elif isinstance(descriptor, (Dimension, CompositeDimension)):
+        if isinstance(descriptor, (Dimension, CompositeDimension)):
             return Dimension(self) / descriptor
         raise InvalidDescriptorBinaryOperation(
             f"cannot divide {self} with {descriptor}. "
@@ -342,7 +341,7 @@ class AliasMeasurementUnit(MeasurementUnit):
             descriptor.unit, AliasMeasurementUnit
         ):
             return descriptor.unit
-        elif isinstance(descriptor, AliasMeasurementUnit):
+        if isinstance(descriptor, AliasMeasurementUnit):
             return descriptor
         raise WrongUnitDescriptorType(
             f"cannot create AliasMeasurementUnit from descriptor {descriptor}"
@@ -379,7 +378,7 @@ class GenericDimension:
     power: float = 1
 
     def __init__(self, unit_type: MeasurementUnitType, power: float = 1) -> None:
-        if not (isinstance(power, float) or isinstance(power, int)):
+        if not isinstance(power, (float, int)):
             raise InvalidDescriptorExponent
         self.unit_type = unit_type
         self.power = power
@@ -400,9 +399,9 @@ class GenericDimension:
             return GenericCompositeDimension(
                 numerator=numerator, denominator=denominator
             )
-        elif isinstance(generic, GenericDimension):
+        if isinstance(generic, GenericDimension):
             return GenericCompositeDimension(numerator=[self, generic])
-        elif type(generic) == MeasurementUnitType:
+        if isinstance(generic, MeasurementUnitType):
             return GenericCompositeDimension(
                 numerator=[self, GenericDimension(generic)]
             )
@@ -427,9 +426,9 @@ class GenericDimension:
             return GenericCompositeDimension(
                 numerator=numerator, denominator=denominator
             )
-        elif isinstance(generic, GenericDimension):
+        if isinstance(generic, GenericDimension):
             return GenericCompositeDimension(numerator=[self], denominator=[generic])
-        elif type(generic) == MeasurementUnitType:
+        if isinstance(generic, MeasurementUnitType):
             return GenericCompositeDimension(
                 numerator=[self], denominator=[GenericDimension(generic)]
             )
@@ -442,7 +441,7 @@ class GenericDimension:
         >>> class TimeUnit(MeasurementUnit): ...
         >>> assert type((TimeUnit**2)**3) == GenericDimension
         """
-        if not (isinstance(power, float) or isinstance(power, int)):
+        if not isinstance(power, (float, int)):
             raise InvalidDescriptorExponent
         self.power *= power
         return self
@@ -491,7 +490,7 @@ class Dimension:
     power: float = 1
 
     def __init__(self, unit: MeasurementUnit, power: float = 1) -> None:
-        if not (isinstance(power, float) or isinstance(power, int)):
+        if not isinstance(power, (float, int)):
             raise InvalidDescriptorExponent
         self.unit = unit
         self.power = power
@@ -510,7 +509,7 @@ class Dimension:
         """
         if isinstance(descriptor, Dimension):
             return descriptor
-        elif isinstance(descriptor, MeasurementUnit):
+        if isinstance(descriptor, MeasurementUnit):
             return Dimension(descriptor)
         raise WrongUnitDescriptorType(
             f"cannot create Dimension from descriptor: {descriptor}"
@@ -530,7 +529,7 @@ class Dimension:
         >>> Dimension(TemperatureUnit.CELCIUS).isinstance(TemperatureUnit**2)
         False
         """
-        if type(generic) == MeasurementUnitType:
+        if isinstance(generic, MeasurementUnitType):
             generic = GenericDimension(generic)
         if not isinstance(generic, GenericDimension):
             return False
@@ -565,9 +564,9 @@ class Dimension:
             denominator = descriptor.denominator.copy()
             numerator.append(self)
             return CompositeDimension(numerator=numerator, denominator=denominator)
-        elif isinstance(descriptor, Dimension):
+        if isinstance(descriptor, Dimension):
             return CompositeDimension(numerator=[self, descriptor])
-        elif isinstance(descriptor, MeasurementUnit):
+        if isinstance(descriptor, MeasurementUnit):
             return CompositeDimension(numerator=[self, Dimension(descriptor)])
         raise InvalidDescriptorBinaryOperation(
             f"cannot multiply {self} with {descriptor}. "
@@ -588,9 +587,9 @@ class Dimension:
             denominator = descriptor.numerator.copy()
             numerator.append(self)
             return CompositeDimension(numerator=numerator, denominator=denominator)
-        elif isinstance(descriptor, Dimension):
+        if isinstance(descriptor, Dimension):
             return CompositeDimension(numerator=[self], denominator=[descriptor])
-        elif isinstance(descriptor, MeasurementUnit):
+        if isinstance(descriptor, MeasurementUnit):
             return CompositeDimension(
                 numerator=[self], denominator=[Dimension(descriptor)]
             )
@@ -606,7 +605,7 @@ class Dimension:
         ...     SECOND = "s"
         >>> assert type((TimeUnit.SECOND**2)**3) == Dimension
         """
-        if not (isinstance(power, float) or isinstance(power, int)):
+        if not isinstance(power, (float, int)):
             raise InvalidDescriptorExponent
         self.power *= power
         return self
@@ -679,13 +678,13 @@ class GenericCompositeDimension:
                 numerator=numerator, denominator=denominator
             )
 
-        elif isinstance(generic, GenericDimension):
+        if isinstance(generic, GenericDimension):
             numerator.append(generic)
             return GenericCompositeDimension(
                 numerator=numerator, denominator=denominator
             )
 
-        elif type(generic) == MeasurementUnitType:
+        if isinstance(generic, MeasurementUnitType):
             numerator.append(GenericDimension(generic))
             return GenericCompositeDimension(
                 numerator=numerator, denominator=denominator
@@ -714,12 +713,12 @@ class GenericCompositeDimension:
             return GenericCompositeDimension(
                 numerator=numerator, denominator=denominator
             )
-        elif isinstance(generic, GenericDimension):
+        if isinstance(generic, GenericDimension):
             denominator.append(generic)
             return GenericCompositeDimension(
                 numerator=numerator, denominator=denominator
             )
-        elif type(generic) == MeasurementUnitType:
+        if isinstance(generic, MeasurementUnitType):
             denominator.append(GenericDimension(generic))
             return GenericCompositeDimension(
                 numerator=numerator, denominator=denominator
@@ -966,10 +965,10 @@ class CompositeDimension:
             numerator.extend(descriptor.numerator)
             denominator.extend(descriptor.denominator)
             return CompositeDimension(numerator=numerator, denominator=denominator)
-        elif isinstance(descriptor, Dimension):
+        if isinstance(descriptor, Dimension):
             numerator.append(descriptor)
             return CompositeDimension(numerator=numerator, denominator=denominator)
-        elif isinstance(descriptor, MeasurementUnit):
+        if isinstance(descriptor, MeasurementUnit):
             numerator.append(Dimension(descriptor))
             return CompositeDimension(numerator=numerator, denominator=denominator)
         raise InvalidDescriptorBinaryOperation(
@@ -994,10 +993,10 @@ class CompositeDimension:
             numerator.extend(descriptor.denominator)
             denominator.extend(descriptor.numerator)
             return CompositeDimension(numerator=numerator, denominator=denominator)
-        elif isinstance(descriptor, Dimension):
+        if isinstance(descriptor, Dimension):
             denominator.append(descriptor)
             return CompositeDimension(numerator=numerator, denominator=denominator)
-        elif isinstance(descriptor, MeasurementUnit):
+        if isinstance(descriptor, MeasurementUnit):
             denominator.append(Dimension(descriptor))
             return CompositeDimension(numerator=numerator, denominator=denominator)
         raise InvalidDescriptorBinaryOperation(
