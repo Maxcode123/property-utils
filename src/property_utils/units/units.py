@@ -14,12 +14,20 @@ class NonDimensionalUnit(MeasurementUnit):
 
     NON_DIMENSIONAL = ""
 
+    @classmethod
+    def si(cls) -> "NonDimensionalUnit":
+        return cls.NON_DIMENSIONAL
+
 
 class TemperatureUnit(MeasurementUnit):
     CELCIUS = "°C"
     KELVIN = "K"
     FAHRENHEIT = "°F"
     RANKINE = "°R"
+
+    @classmethod
+    def si(cls) -> "TemperatureUnit":
+        return cls.KELVIN
 
 
 class LengthUnit(MeasurementUnit):
@@ -30,6 +38,10 @@ class LengthUnit(MeasurementUnit):
     INCH = "in"
     FOOT = "ft"
 
+    @classmethod
+    def si(cls) -> "LengthUnit":
+        return cls.METER
+
 
 class MassUnit(MeasurementUnit):
     MILLI_GRAM = "mg"
@@ -38,10 +50,18 @@ class MassUnit(MeasurementUnit):
     METRIC_TONNE = "MT"
     POUND = "lb"
 
+    @classmethod
+    def si(cls) -> "MassUnit":
+        return cls.KILO_GRAM
+
 
 class AmountUnit(MeasurementUnit):
     MOL = "mol"
     KILO_MOL = "kmol"
+
+    @classmethod
+    def si(cls) -> "AmountUnit":
+        return cls.MOL
 
 
 class TimeUnit(MeasurementUnit):
@@ -50,6 +70,10 @@ class TimeUnit(MeasurementUnit):
     MINUTE = "min"
     HOUR = "hr"
     DAY = "d"
+
+    @classmethod
+    def si(cls) -> "TimeUnit":
+        return cls.SECOND
 
 
 class PressureUnit(AliasMeasurementUnit):
@@ -62,6 +86,10 @@ class PressureUnit(AliasMeasurementUnit):
     @classmethod
     def aliased_generic_descriptor(cls) -> GenericCompositeDimension:
         return MassUnit / LengthUnit / (TimeUnit**2)
+
+    @classmethod
+    def si(cls) -> "PressureUnit":
+        return cls.PASCAL
 
 
 class EnergyUnit(AliasMeasurementUnit):
@@ -76,3 +104,7 @@ class EnergyUnit(AliasMeasurementUnit):
     @classmethod
     def aliased_generic_descriptor(cls) -> GenericCompositeDimension:
         return MassUnit * (LengthUnit**2) / (TimeUnit**2)
+
+    @classmethod
+    def si(cls) -> "EnergyUnit":
+        return cls.JOULE

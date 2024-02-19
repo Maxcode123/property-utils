@@ -40,14 +40,29 @@ descriptors_test_suite.addTests(
 
 class Unit1(MeasurementUnit):
     A = "A"
+    a = "a"
+
+    @classmethod
+    def si(cls) -> "Unit1":
+        return cls.a
 
 
 class Unit2(MeasurementUnit):
     B = "B"
+    b = "b"
+
+    @classmethod
+    def si(cls) -> "Unit2":
+        return cls.b
 
 
 class Unit3(AliasMeasurementUnit):
     C = "C"
+    c = "c"
+
+    @classmethod
+    def si(cls) -> "Unit3":
+        return cls.c
 
 
 def dimension_1(power: float = 1) -> Dimension:
@@ -635,6 +650,22 @@ class TestAliasMeasurementUnitExponentiation(TestDescriptor):
 
 
 @add_to(GenericDimension_test_suite)
+class TestGenericDimensionToSi(TestDescriptor):
+    produced_type = Dimension
+
+    def subject(self, descriptor):
+        return descriptor.to_si()
+
+    @args({"descriptor": generic_dimension_1()})
+    def test_with_generic_dimension(self):
+        self.assert_result("a")
+
+    @args({"descriptor": generic_dimension_1(2.3)})
+    def test_with_exponentiated_generic_dimension(self):
+        self.assert_result("(a^2.3)")
+
+
+@add_to(GenericDimension_test_suite)
 class TestGenericDimensionMultiplication(TestDescriptorBinaryOperation):
     operator = mul
     produced_type = GenericCompositeDimension
@@ -1002,6 +1033,26 @@ class TestDimensionEquality(TestDescriptor):
     @args({"dimension": generic_composite_dimension()})
     def test_with_generic_composite_dimension(self):
         self.assertResultFalse()
+
+
+@add_to(GenericCompositeDimension_test_suite)
+class TestGenericCompositeDimensionToSi(TestDescriptor):
+    produced_type = CompositeDimension
+
+    def subject(self, generic):
+        return generic.to_si()
+
+    @args({"generic": generic_composite_dimension()})
+    def test_with_simple_generic_composite_dimension(self):
+        self.assert_result("(a^2) * b / (c^3)")
+
+    @args({"generic": GenericCompositeDimension([generic_dimension_1()])})
+    def test_with_numerator_only(self):
+        self.assert_result("a")
+
+    @args({"generic": GenericCompositeDimension([], [generic_dimension_2()])})
+    def test_with_denominator_only(self):
+        self.assert_result(" / b")
 
 
 @add_to(GenericCompositeDimension_test_suite)

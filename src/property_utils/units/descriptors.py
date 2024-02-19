@@ -33,6 +33,11 @@ class GenericUnitDescriptor(Protocol):
     specific value like Celcius or Fahrenheit.
     """
 
+    def to_si(self) -> "UnitDescriptor":
+        """
+        Create a unit descriptor with SI units.
+        """
+
     def __mul__(
         self, generic: "GenericUnitDescriptor"
     ) -> "GenericCompositeDimension": ...
@@ -82,6 +87,22 @@ class MeasurementUnitMeta(EnumMeta):
     operations for MeasurementUnit class (and subclasses). These operations produce
     GenericUnitDescriptor(s).
     """
+
+    def to_si(cls) -> "MeasurementUnit":
+        """
+        Create a MeasurementUnit with SI units.
+
+        >>> class TemperatureUnit(MeasurementUnit):
+        ...     CELCIUS = "C"
+        ...     KELVIN = "K"
+        ...     @classmethod
+        ...     def si(cls):
+        ...         return cls.KELVIN
+        >>> assert TemperatureUnit.to_si() == TemperatureUnit.KELVIN
+        """
+        if hasattr(cls, "si"):
+            return cls.si()
+        raise NotImplementedError
 
     def __mul__(cls, other: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
@@ -173,6 +194,13 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         FAHRENHEIT = "F"
     ```
     """
+
+    @classmethod
+    def si(cls) -> "MeasurementUnit":
+        """
+        Returns the SI unit of this measurement unit.
+        """
+        raise NotImplementedError
 
     @staticmethod
     def from_descriptor(descriptor: UnitDescriptor) -> "MeasurementUnit":
@@ -382,6 +410,19 @@ class GenericDimension:
             raise InvalidDescriptorExponent
         self.unit_type = unit_type
         self.power = power
+
+    def to_si(self) -> "Dimension":
+        """
+        Create a Dimension with SI units.
+
+        >>> class TemperatureUnit(MeasurementUnit):
+        ...     CELCIUS = "C"
+        ...     KELVIN = "K"
+        ...     @classmethod
+        ...     def si(cls): return cls.KELVIN
+        >>> assert type((TemperatureUnit**2).to_si()) == Dimension
+        """
+        return Dimension(self.unit_type.to_si(), self.power)
 
     def __mul__(self, generic: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
@@ -658,6 +699,27 @@ class GenericCompositeDimension:
 
     numerator: List[GenericDimension] = field(default_factory=list)
     denominator: List[GenericDimension] = field(default_factory=list)
+
+    def to_si(self) -> "CompositeDimension":
+        """
+        Create a CompositeDimension with SI units.
+        >>> class TemperatureUnit(MeasurementUnit):
+        ...     KELVIN = "K"
+        ...     @classmethod
+        ...     def si(cls): return cls.KELVIN
+        >>> class TimeUnit(MeasurementUnit):
+        ...     SECOND = "s"
+        ...     @classmethod
+        ...     def si(cls): return cls.SECOND
+        >>> class LengthUnit(MeasurementUnit):
+        ...     METER = "m"
+        ...     @classmethod
+        ...     def si(cls): return cls.METER
+        >>> assert type((TemperatureUnit * LengthUnit / TimeUnit).to_si()) == CompositeDimension
+        """
+        return CompositeDimension(
+            [n.to_si() for n in self.numerator], [d.to_si() for d in self.denominator]
+        )
 
     def __mul__(self, generic: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
