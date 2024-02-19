@@ -29,7 +29,7 @@ test-package:
 	$(INTERPRETER) -m unittest discover -v src/property_utils/tests/
 
 doctest-package:
-	$(INTERPRETER) -m doctest -v $(PY_FILES)
+	$(INTERPRETER) -m doctest $(PY_FILES)
 
 lint-package:
 	$(INTERPRETER) -m pylint --ignore tests --disable C0114,C0301,C0302 src/property_utils
