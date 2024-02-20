@@ -408,7 +408,10 @@ class GenericDimension:
 
     def __init__(self, unit_type: MeasurementUnitType, power: float = 1) -> None:
         if not isinstance(power, (float, int)):
-            raise InvalidDescriptorExponent
+            raise InvalidDescriptorExponent(
+                f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
+                " expected float or int. "
+            )
         self.unit_type = unit_type
         self.power = power
 
@@ -484,7 +487,10 @@ class GenericDimension:
         >>> assert type((TimeUnit**2)**3) == GenericDimension
         """
         if not isinstance(power, (float, int)):
-            raise InvalidDescriptorExponent
+            raise InvalidDescriptorExponent(
+                f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
+                " expected float or int. "
+            )
         self.power *= power
         return self
 
@@ -533,7 +539,10 @@ class Dimension:
 
     def __init__(self, unit: MeasurementUnit, power: float = 1) -> None:
         if not isinstance(power, (float, int)):
-            raise InvalidDescriptorExponent
+            raise InvalidDescriptorExponent(
+                f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
+                " expected float or int. "
+            )
         self.unit = unit
         self.power = power
 
@@ -648,7 +657,10 @@ class Dimension:
         >>> assert type((TimeUnit.SECOND**2)**3) == Dimension
         """
         if not isinstance(power, (float, int)):
-            raise InvalidDescriptorExponent
+            raise InvalidDescriptorExponent(
+                f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
+                " expected float or int. "
+            )
         self.power *= power
         return self
 
