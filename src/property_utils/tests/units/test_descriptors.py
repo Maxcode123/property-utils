@@ -11,7 +11,7 @@ from property_utils.units.descriptors import (
     GenericDimension,
     GenericCompositeDimension,
 )
-from property_utils.exceptions.exceptions import (
+from property_utils.exceptions.units.descriptors import (
     InvalidDescriptorBinaryOperation,
     InvalidDescriptorExponent,
     WrongUnitDescriptorType,

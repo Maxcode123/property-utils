@@ -19,7 +19,7 @@ except ImportError:
 
 from dataclasses import dataclass, field
 
-from property_utils.exceptions.exceptions import (
+from property_utils.exceptions.units.descriptors import (
     InvalidDescriptorBinaryOperation,
     InvalidDescriptorExponent,
     WrongUnitDescriptorType,
