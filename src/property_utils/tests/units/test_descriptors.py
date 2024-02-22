@@ -1247,6 +1247,62 @@ class TestSimpleGenericCompositeDimensionEquality(TestDescriptor):
         self.assertResultTrue()
 
 
+@add_to(GenericCompositeDimension_test_suite)
+class TestNumeratorGenericCompositeDimensionEquality(TestDescriptor):
+    def subject(self, generic):
+        return self.build_descriptor() == generic
+
+    def build_descriptor(self):
+        """
+        Unit1 * Unit2
+        """
+        return GenericCompositeDimension([generic_dimension_1(), generic_dimension_2()])
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_2(), generic_dimension_1()]
+            )
+        }
+    )
+    def test_commutative_property(self):
+        self.assertResultTrue()
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_1(), generic_dimension_1(), generic_dimension_2()]
+            )
+        }
+    )
+    def test_multiple_same_dimensions(self):
+        self.assertResultFalse()
+
+
+@add_to(GenericCompositeDimension_test_suite)
+class TestDenominatorGenericCompositeDimensionEquality(TestDescriptor):
+    def subject(self, generic):
+        return self.build_descriptor() == generic
+
+    def build_descriptor(self):
+        """
+        Unit1 / Unit2 / Unit2
+        """
+        return GenericCompositeDimension(
+            [generic_dimension_1()], [generic_dimension_2(), generic_dimension_2()]
+        )
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_1()], [generic_dimension_2()]
+            )
+        }
+    )
+    def test_denominator_dimension(self):
+        self.assertResultFalse()
+
+
 @add_to(CompositeDimension_test_suite)
 class TestCompositeDimensionFromDescriptor(TestDescriptor):
     produced_type = CompositeDimension
@@ -1691,6 +1747,44 @@ class TestSimpleCompositeDimensionEquality(TestDescriptor):
     @args({"dimension": CompositeDimension([dimension_1(2)], [])})
     def test_with_composite_dimension(self):
         self.assertResultTrue()
+
+
+@add_to(CompositeDimension_test_suite)
+class TestNumeratorCompositeDimensionEquality(TestDescriptor):
+    def subject(self, dimension):
+        return self.build_descriptor() == dimension
+
+    def build_descriptor(self):
+        """
+        A * B
+        """
+        return Unit1.A * Unit2.B
+
+    @args({"dimension": CompositeDimension([dimension_2(), dimension_1()])})
+    def test_commutative_property(self):
+        self.assertResultTrue()
+
+    @args(
+        {"dimension": CompositeDimension([dimension_1(), dimension_1(), dimension_2()])}
+    )
+    def test_multiple_same_dimensions(self):
+        self.assertResultFalse()
+
+
+@add_to(CompositeDimension_test_suite)
+class TestDenominatorCompositeDimensionEquality(TestDescriptor):
+    def subject(self, dimension):
+        return self.build_descriptor() == dimension
+
+    def build_descriptor(self):
+        """
+        A / B / B
+        """
+        return CompositeDimension([dimension_1()], [dimension_2(), dimension_2()])
+
+    @args({"dimension": CompositeDimension([dimension_1()], [dimension_2()])})
+    def test_denominator_dimension(self):
+        self.assertResultFalse()
 
 
 if __name__ == "__main__":
