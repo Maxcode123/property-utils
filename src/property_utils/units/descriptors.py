@@ -9,7 +9,7 @@ can represent e.g. a temperature unit, a volume unit, a reaction rate unit etc.
 """
 
 from enum import Enum, EnumMeta
-from typing import List, Union, Protocol, Optional, TypeVar
+from typing import List, Union, Protocol, Optional, TypeVar, Dict
 from collections import Counter
 
 try:
@@ -998,7 +998,7 @@ class CompositeDimension:
         >>> composite
         <CompositeDimension: (Pa^2)*m/s>
         """
-        exponents: dict[MeasurementUnit, float] = {}
+        exponents: Dict[MeasurementUnit, float] = {}
         for n in self.numerator:
             if n.unit in exponents:
                 exponents[n.unit] += n.power
