@@ -13,7 +13,7 @@ from typing import List, Union, Protocol, Optional, TypeVar
 from collections import Counter
 
 try:
-    from typing import TypeAlias  # Python >= 3.10
+    from typing import TypeAlias  # Python >= 3.10 pylint: disable=ungrouped-imports
 except ImportError:
     from typing_extensions import TypeAlias  # Python < 3.10
 
