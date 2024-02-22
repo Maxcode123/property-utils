@@ -10,9 +10,10 @@ can represent e.g. a temperature unit, a volume unit, a reaction rate unit etc.
 
 from enum import Enum, EnumMeta
 from typing import List, Union, Protocol, Optional, TypeVar
+from collections import Counter
 
 try:
-    from typing import TypeAlias  # Python >= 3.10
+    from typing import TypeAlias  # Python >= 3.10 pylint: disable=ungrouped-imports
 except ImportError:
     from typing_extensions import TypeAlias  # Python < 3.10
 
@@ -797,9 +798,9 @@ class GenericCompositeDimension:
         """
         if not isinstance(generic, GenericCompositeDimension):
             return False
-        return set(self.numerator) == set(generic.numerator) and set(
-            self.denominator
-        ) == set(generic.denominator)
+        return Counter(self.numerator) == Counter(generic.numerator) and (
+            Counter(self.denominator) == Counter(generic.denominator)
+        )
 
     def __hash__(self) -> int:
         return hash(str(self))
@@ -1077,9 +1078,9 @@ class CompositeDimension:
         """
         if not isinstance(dimension, CompositeDimension):
             return False
-        return set(self.numerator) == set(dimension.numerator) and set(
-            self.denominator
-        ) == set(dimension.denominator)
+        return Counter(self.numerator) == Counter(dimension.numerator) and (
+            Counter(self.denominator) == Counter(dimension.denominator)
+        )
 
     def __hash__(self) -> int:
         return hash(str(self))
