@@ -23,6 +23,14 @@ from property_utils.tests.units.descriptors_utils import (
 )
 
 
+def load_tests(loader, tests, ignore):
+    from property_utils.units import descriptors
+    from doctest import DocTestSuite
+
+    tests.addTests(DocTestSuite(descriptors))
+    return tests
+
+
 descriptors_test_suite = TestSuite()
 
 descriptors_test_suite.addTests(
