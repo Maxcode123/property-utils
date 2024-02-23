@@ -18,7 +18,7 @@ from property_utils.exceptions.units.converter_types import (
     MissingConverterDependencies,
     UnsupportedConverter,
 )
-from property_utils.tests.utils import add_to
+from property_utils.tests.utils import add_to, def_load_tests
 from property_utils.tests.units.data import (
     Unit1,
     Unit2,
@@ -38,12 +38,7 @@ from property_utils.tests.units.data import (
 )
 
 
-def load_tests(loader, tests, ignore):
-    from property_utils.units import converter_types
-    from doctest import DocTestSuite
-
-    tests.addTests(DocTestSuite(converter_types))
-    return tests
+load_tests = def_load_tests("property_utils.units.converter_types")
 
 
 converter_types_test_suite = TestSuite()

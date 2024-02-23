@@ -16,7 +16,7 @@ from property_utils.exceptions.units.descriptors import (
     InvalidDescriptorExponent,
     WrongUnitDescriptorType,
 )
-from property_utils.tests.utils import add_to
+from property_utils.tests.utils import add_to, def_load_tests
 from property_utils.tests.units.descriptors_utils import (
     TestDescriptor,
     TestDescriptorBinaryOperation,
@@ -36,12 +36,7 @@ from property_utils.tests.units.data import (
 )
 
 
-def load_tests(loader, tests, ignore):
-    from property_utils.units import descriptors
-    from doctest import DocTestSuite
-
-    tests.addTests(DocTestSuite(descriptors))
-    return tests
+load_tests = def_load_tests("property_utils.units.descriptors")
 
 
 descriptors_test_suite = TestSuite()
