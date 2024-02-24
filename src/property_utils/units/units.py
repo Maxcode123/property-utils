@@ -46,6 +46,9 @@ class LengthUnit(MeasurementUnit):
     KILO_METER = "km"
     INCH = "in"
     FOOT = "ft"
+    YARD = "yd"
+    MILE = "mi"  # International mile, or land mile or statute mile.
+    NAUTICAL_MILE = "NM"
 
     @classmethod
     def si(cls) -> "LengthUnit":
@@ -79,6 +82,9 @@ class TimeUnit(MeasurementUnit):
     MINUTE = "min"
     HOUR = "hr"
     DAY = "d"
+    WEEK = "week"
+    MONTH = "month"
+    YEAR = "yr"
 
     @classmethod
     def si(cls) -> "TimeUnit":
@@ -133,6 +139,9 @@ class EnergyUnit(AliasMeasurementUnit):
     CALORIE = "cal"
     KILO_CALORIE = "kcal"
     BTU = "Btu"
+    ELECTRONVOLT = "eV"
+    WATTHOUR = "Wh"
+    KILO_WATTHOUR = "kWh"
 
     @classmethod
     def aliased_generic_descriptor(cls) -> GenericCompositeDimension:
