@@ -20,7 +20,7 @@ from property_utils.tests.units.descriptors_utils import (
     TestDescriptor,
     TestDescriptorBinaryOperation,
 )
-from property_utils.tests.units.data import (
+from property_utils.tests.data import (
     Unit1,
     Unit2,
     Unit3,

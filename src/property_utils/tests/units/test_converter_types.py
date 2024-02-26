@@ -19,7 +19,7 @@ from property_utils.exceptions.units.converter_types import (
     UnsupportedConverterError,
 )
 from property_utils.tests.utils import add_to, def_load_tests
-from property_utils.tests.units.data import (
+from property_utils.tests.data import (
     Unit1,
     Unit2,
     Unit3,
