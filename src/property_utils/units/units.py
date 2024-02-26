@@ -30,6 +30,15 @@ class TemperatureUnit(MeasurementUnit):
         return cls.KELVIN
 
 
+class AbsoluteTemperatureUnit(MeasurementUnit):
+    KELVIN = "K"
+    RANKINE = "°R"
+
+    @classmethod
+    def si(cls) -> "AbsoluteTemperatureUnit":
+        return cls.KELVIN
+
+
 class LengthUnit(MeasurementUnit):
     MILLI_METER = "mm"
     CENTI_METER = "cm"
@@ -37,6 +46,9 @@ class LengthUnit(MeasurementUnit):
     KILO_METER = "km"
     INCH = "in"
     FOOT = "ft"
+    YARD = "yd"
+    MILE = "mi"  # International mile, or land mile or statute mile.
+    NAUTICAL_MILE = "NM"
 
     @classmethod
     def si(cls) -> "LengthUnit":
@@ -70,10 +82,36 @@ class TimeUnit(MeasurementUnit):
     MINUTE = "min"
     HOUR = "hr"
     DAY = "d"
+    WEEK = "week"
+    MONTH = "month"
+    YEAR = "yr"
 
     @classmethod
     def si(cls) -> "TimeUnit":
         return cls.SECOND
+
+
+class ElectricCurrentUnit(MeasurementUnit):
+    MILLI_AMPERE = "mA"
+    AMPERE = "A"
+    KILO_AMPERE = "kA"
+
+    @classmethod
+    def si(cls) -> "ElectricCurrentUnit":
+        return cls.AMPERE
+
+
+class ForceUnit(AliasMeasurementUnit):
+    NEWTON = "N"
+    DYNE = "dyn"
+
+    @classmethod
+    def aliased_generic_descriptor(cls) -> GenericCompositeDimension:
+        return MassUnit * LengthUnit / (TimeUnit**2)
+
+    @classmethod
+    def si(cls) -> "ForceUnit":
+        return cls.NEWTON
 
 
 class PressureUnit(AliasMeasurementUnit):
@@ -82,6 +120,7 @@ class PressureUnit(AliasMeasurementUnit):
     PSI = "psi"
     PASCAL = "Pa"
     KILO_PASCAL = "kPa"
+    MEGA_PASCAL = "MPa"
 
     @classmethod
     def aliased_generic_descriptor(cls) -> GenericCompositeDimension:
@@ -100,6 +139,9 @@ class EnergyUnit(AliasMeasurementUnit):
     CALORIE = "cal"
     KILO_CALORIE = "kcal"
     BTU = "Btu"
+    ELECTRONVOLT = "eV"
+    WATTHOUR = "Wh"
+    KILO_WATTHOUR = "kWh"
 
     @classmethod
     def aliased_generic_descriptor(cls) -> GenericCompositeDimension:
@@ -108,3 +150,18 @@ class EnergyUnit(AliasMeasurementUnit):
     @classmethod
     def si(cls) -> "EnergyUnit":
         return cls.JOULE
+
+
+class PowerUnit(AliasMeasurementUnit):
+    WATT = "W"
+    KILO_WATT = "kW"
+    MEGA_WATT = "MW"
+    GIGA_WATT = "GW"
+
+    @classmethod
+    def aliased_generic_descriptor(cls) -> GenericCompositeDimension:
+        return MassUnit * (LengthUnit**2) / (TimeUnit**3)
+
+    @classmethod
+    def si(cls) -> "PowerUnit":
+        return cls.WATT

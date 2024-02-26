@@ -3,10 +3,6 @@ name: Doctest package
 on:
   workflow_call:
   workflow_dispatch:
-  push:
-    branches: ["main", "tester/*"]
-  pull_request:
-    branches: ["main"]
 
 jobs:
   doctest-package:
