@@ -748,17 +748,17 @@ class GenericCompositeDimension:
 
         >>> composite = (PressureUnit**(-2)) / (TemperatureUnit**(-1))
         >>> composite
-        <GenericCompositeDimension: (PressureUnit^-2)/(TemperatureUnit^-1)>
+        <GenericCompositeDimension: (PressureUnit^-2) / (TemperatureUnit^-1)>
         >>> composite.simplify()
         >>> composite
-        <GenericCompositeDimension: TemperatureUnit/(PressureUnit^2)>
+        <GenericCompositeDimension: TemperatureUnit / (PressureUnit^2)>
 
-        >>> composite = PressureUnit * LengthUnit * PressureUnit /TimeUnit
+        >>> composite = PressureUnit * LengthUnit * PressureUnit / TimeUnit
         >>> composite
-        <GenericCompositeDimension: LengthUnit*PressureUnit*PressureUnit/TimeUnit>
+        <GenericCompositeDimension: LengthUnit * PressureUnit * PressureUnit / TimeUnit>
         >>> composite.simplify()
         >>> composite
-        <GenericCompositeDimension: (PressureUnit^2)*LengthUnit/TimeUnit>
+        <GenericCompositeDimension: (PressureUnit^2) * LengthUnit / TimeUnit>
         """
         exponents: Dict[MeasurementUnitType, float] = {}
         for n in self.numerator:
@@ -798,15 +798,15 @@ class GenericCompositeDimension:
 
         >>> composite = (PressureUnit**(-2)) / (TemperatureUnit**(-1))
         >>> composite
-        <GenericCompositeDimension: (PressureUnit^-2)/(TemperatureUnit^-1)>
+        <GenericCompositeDimension: (PressureUnit^-2) / (TemperatureUnit^-1)>
         >>> composite.simplified()
-        <GenericCompositeDimension: TemperatureUnit/(PressureUnit^2)>
+        <GenericCompositeDimension: TemperatureUnit / (PressureUnit^2)>
 
         >>> composite = PressureUnit * LengthUnit * PressureUnit /TimeUnit
         >>> composite
-        <GenericCompositeDimension: LengthUnit*PressureUnit*PressureUnit/TimeUnit>
+        <GenericCompositeDimension: LengthUnit * PressureUnit * PressureUnit / TimeUnit>
         >>> composite.simplified()
-        <GenericCompositeDimension: (PressureUnit^2)*LengthUnit/TimeUnit>
+        <GenericCompositeDimension: (PressureUnit^2) * LengthUnit / TimeUnit>
         """
         copy = replace(self)
         copy.simplify()
@@ -903,10 +903,10 @@ class GenericCompositeDimension:
         return numerators + denominators
 
     def __repr__(self) -> str:
-        numerators = "*".join(sorted([str(n) for n in self.numerator]))
-        denominators = "/".join(sorted([str(d) for d in self.denominator]))
+        numerators = " * ".join(sorted([str(n) for n in self.numerator]))
+        denominators = " / ".join(sorted([str(d) for d in self.denominator]))
         if len(denominators) > 0:
-            denominators = "/" + denominators
+            denominators = " / " + denominators
         return f"<GenericCompositeDimension: {numerators + denominators}>"
 
 
@@ -986,7 +986,7 @@ class CompositeDimension:
         ...     KILO_GRAM = "kg"
 
         >>> (AmountUnit.MOL / MassUnit.KILO_GRAM).to_generic()
-        <GenericCompositeDimension: AmountUnit/MassUnit>
+        <GenericCompositeDimension: AmountUnit / MassUnit>
         """
         return GenericCompositeDimension(
             numerator=[n.to_generic() for n in self.numerator],
