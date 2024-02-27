@@ -812,6 +812,12 @@ class GenericCompositeDimension:
         copy.simplify()
         return copy
 
+    def _numerator_copy(self) -> List[GenericDimension]:
+        return [replace(n) for n in self.numerator]
+
+    def _denominator_copy(self) -> List[GenericDimension]:
+        return [replace(d) for d in self.denominator]
+
     def __mul__(self, generic: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
         Defines multiplication between GenericCompositeDimension(s) and other generic
@@ -1132,6 +1138,12 @@ class CompositeDimension:
         copy = replace(self)
         copy.simplify()
         return copy
+
+    def _numerator_copy(self) -> List[Dimension]:
+        return [replace(n) for n in self.numerator]
+
+    def _denominator_copy(self) -> List[Dimension]:
+        return [replace(d) for d in self.denominator]
 
     def __mul__(self, descriptor: "UnitDescriptor") -> "CompositeDimension":
         """
