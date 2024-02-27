@@ -1064,17 +1064,17 @@ class CompositeDimension:
 
         >>> composite = (PressureUnit.BAR**(-2)) / (TemperatureUnit.KELVIN**(-1))
         >>> composite
-        <CompositeDimension: (bar^-2)/(K^-1)>
+        <CompositeDimension: (bar^-2) / (K^-1)>
         >>> composite.simplify()
         >>> composite
-        <CompositeDimension: K/(bar^2)>
+        <CompositeDimension: K / (bar^2)>
 
         >>> composite = PressureUnit.PASCAL * LengthUnit.METER * PressureUnit.PASCAL /TimeUnit.SECOND
         >>> composite
-        <CompositeDimension: Pa*Pa*m/s>
+        <CompositeDimension: Pa * Pa * m / s>
         >>> composite.simplify()
         >>> composite
-        <CompositeDimension: (Pa^2)*m/s>
+        <CompositeDimension: (Pa^2) * m / s>
         """
         exponents: Dict[MeasurementUnit, float] = {}
         for n in self.numerator:
@@ -1119,15 +1119,15 @@ class CompositeDimension:
 
         >>> composite = (PressureUnit.BAR**(-2)) / (TemperatureUnit.KELVIN**(-1))
         >>> composite
-        <CompositeDimension: (bar^-2)/(K^-1)>
+        <CompositeDimension: (bar^-2) / (K^-1)>
         >>> composite.simplified()
-        <CompositeDimension: K/(bar^2)>
+        <CompositeDimension: K / (bar^2)>
 
         >>> composite = PressureUnit.PASCAL * LengthUnit.METER * PressureUnit.PASCAL /TimeUnit.SECOND
         >>> composite
-        <CompositeDimension: Pa*Pa*m/s>
+        <CompositeDimension: Pa * Pa * m / s>
         >>> composite.simplified()
-        <CompositeDimension: (Pa^2)*m/s>
+        <CompositeDimension: (Pa^2) * m / s>
         """
         copy = replace(self)
         copy.simplify()
@@ -1216,8 +1216,8 @@ class CompositeDimension:
         return numerators + denominators
 
     def __repr__(self) -> str:
-        numerators = "*".join(sorted([str(n) for n in self.numerator]))
-        denominators = "/".join(sorted([str(d) for d in self.denominator]))
+        numerators = " * ".join(sorted([str(n) for n in self.numerator]))
+        denominators = " / ".join(sorted([str(d) for d in self.denominator]))
         if len(denominators) > 0:
-            denominators = "/" + denominators
+            denominators = " / " + denominators
         return f"<CompositeDimension: {numerators + denominators}>"
