@@ -987,6 +987,99 @@ class TestGenericCompositeDimensionToSi(TestDescriptor):
 
 
 @add_to(GenericCompositeDimension_test_suite)
+class TestGenericCompositeDimensionSimplify(TestDescriptor):
+    produced_type = GenericCompositeDimension
+
+    def subject(self, generic):
+        generic.simplify()
+        return generic
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_1(2)], [generic_dimension_2(2)]
+            )
+        }
+    )
+    def test_already_simple_composite(self):
+        self.assert_result("(Unit1^2) / (Unit2^2)")
+
+    @args({"generic": GenericCompositeDimension([generic_dimension_1()])})
+    def test_numerator_composite(self):
+        self.assert_result("Unit1")
+
+    @args({"generic": GenericCompositeDimension([], [generic_dimension_1()])})
+    def test_denominator_composite(self):
+        self.assert_result(" / Unit1")
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_1(-1.2)], [generic_dimension_2(-0.2)]
+            )
+        }
+    )
+    def test_negative_exponents(self):
+        self.assert_result("(Unit2^0.2) / (Unit1^1.2)")
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_1()], [generic_dimension_1()]
+            )
+        }
+    )
+    def test_same_numerator_denominator(self):
+        self.assert_result("")
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_1(), generic_dimension_1(2)], [generic_dimension_2()]
+            )
+        }
+    )
+    def test_same_numerator_dimensions(self):
+        self.assert_result("(Unit1^3) / Unit2")
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_2()],
+                [generic_dimension_1(1.5), generic_dimension_1()],
+            )
+        }
+    )
+    def test_same_denominator_dimensions(self):
+        self.assert_result("Unit2 / (Unit1^2.5)")
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_1(2), generic_dimension_1(-2)],
+                [generic_dimension_2()],
+            )
+        }
+    )
+    def test_same_dimensions_zero_sum(self):
+        self.assert_result(" / Unit2")
+
+
+@add_to(GenericCompositeDimension_test_suite)
+class TestGenericCompositeDimensionSimplified(TestGenericCompositeDimensionSimplify):
+    """
+    Run all tests in TestGenericCompositeDimensionSimplify but with a different subject.
+    """
+
+    def subject(self, generic):
+        return generic.simplified()
+
+    def assert_result(self, result_str):
+        self.assertResultIsNot(self._subjectKwargs["generic"])
+        self.assertSequenceEqual(str(self.cachedResult()), result_str, str)
+
+
+@add_to(GenericCompositeDimension_test_suite)
 class TestGenericCompositeDimensionMultiplication(TestDescriptorBinaryOperation):
     operator = mul
     produced_type = GenericCompositeDimension
@@ -1535,6 +1628,20 @@ class TestCompositeDimensionSimplify(TestDescriptor):
     )
     def test_same_numerator_dimensions_zero_sum(self):
         self.assert_result(" / C")
+
+
+@add_to(CompositeDimension_test_suite)
+class TestCompositeDimensionSimplified(TestCompositeDimensionSimplify):
+    """
+    Run all tests in TestCompositeDimensionSimplify but with a different subject.
+    """
+
+    def subject(self, composite):
+        return composite.simplified()
+
+    def assert_result(self, result_str):
+        self.assertResultIsNot(self._subjectKwargs["composite"])
+        self.assertSequenceEqual(str(self.cachedResult()), result_str, str)
 
 
 @add_to(CompositeDimension_test_suite)
