@@ -11,13 +11,13 @@ can represent e.g. a temperature unit, a volume unit, a reaction rate unit etc.
 from enum import Enum, EnumMeta
 from typing import List, Union, Protocol, Optional, TypeVar, Dict
 from collections import Counter
+from dataclasses import dataclass, field, replace
 
 try:
     from typing import TypeAlias  # Python >= 3.10 pylint: disable=ungrouped-imports
 except ImportError:
     from typing_extensions import TypeAlias  # Python < 3.10
 
-from dataclasses import dataclass, field
 
 from property_utils.exceptions.units.descriptors import (
     InvalidDescriptorBinaryOperation,
@@ -784,6 +784,34 @@ class GenericCompositeDimension:
         self.numerator = numerator
         self.denominator = denominator
 
+    def simplified(self) -> "GenericCompositeDimension":
+        """
+        Returns a simplified version of this composite generic as a new object.
+
+        >>> class PressureUnit(AliasMeasurementUnit): ...
+
+        >>> class TemperatureUnit(MeasurementUnit): ...
+
+        >>> class LengthUnit(MeasurementUnit): ...
+
+        >>> class TimeUnit(MeasurementUnit): ...
+
+        >>> composite = (PressureUnit**(-2)) / (TemperatureUnit**(-1))
+        >>> composite
+        <GenericCompositeDimension: (PressureUnit^-2)/(TemperatureUnit^-1)>
+        >>> composite.simplified()
+        <GenericCompositeDimension: TemperatureUnit/(PressureUnit^2)>
+
+        >>> composite = PressureUnit * LengthUnit * PressureUnit /TimeUnit
+        >>> composite
+        <GenericCompositeDimension: LengthUnit*PressureUnit*PressureUnit/TimeUnit>
+        >>> composite.simplified()
+        <GenericCompositeDimension: (PressureUnit^2)*LengthUnit/TimeUnit>
+        """
+        copy = replace(self)
+        copy.simplify()
+        return copy
+
     def __mul__(self, generic: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
         Defines multiplication between GenericCompositeDimension(s) and other generic
@@ -1071,6 +1099,39 @@ class CompositeDimension:
 
         self.numerator = numerator
         self.denominator = denominator
+
+    def simplified(self) -> "CompositeDimension":
+        """
+        Returns a simplified version of this composite dimension as a new object.
+
+        >>> class PressureUnit(AliasMeasurementUnit):
+        ...     BAR = "bar"
+        ...     PASCAL = "Pa"
+
+        >>> class TemperatureUnit(MeasurementUnit):
+        ...     KELVIN = "K"
+
+        >>> class LengthUnit(MeasurementUnit):
+        ...     METER = "m"
+
+        >>> class TimeUnit(MeasurementUnit):
+        ...     SECOND = "s"
+
+        >>> composite = (PressureUnit.BAR**(-2)) / (TemperatureUnit.KELVIN**(-1))
+        >>> composite
+        <CompositeDimension: (bar^-2)/(K^-1)>
+        >>> composite.simplified()
+        <CompositeDimension: K/(bar^2)>
+
+        >>> composite = PressureUnit.PASCAL * LengthUnit.METER * PressureUnit.PASCAL /TimeUnit.SECOND
+        >>> composite
+        <CompositeDimension: Pa*Pa*m/s>
+        >>> composite.simplified()
+        <CompositeDimension: (Pa^2)*m/s>
+        """
+        copy = replace(self)
+        copy.simplify()
+        return copy
 
     def __mul__(self, descriptor: "UnitDescriptor") -> "CompositeDimension":
         """

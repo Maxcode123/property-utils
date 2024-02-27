@@ -1066,6 +1066,20 @@ class TestGenericCompositeDimensionSimplify(TestDescriptor):
 
 
 @add_to(GenericCompositeDimension_test_suite)
+class TestGenericCompositeDimensionSimplified(TestGenericCompositeDimensionSimplify):
+    """
+    Run all tests in TestGenericCompositeDimensionSimplify but with a different subject.
+    """
+
+    def subject(self, generic):
+        return generic.simplified()
+
+    def assert_result(self, result_str):
+        self.assertResultIsNot(self._subjectKwargs["generic"])
+        self.assertSequenceEqual(str(self.cachedResult()), result_str, str)
+
+
+@add_to(GenericCompositeDimension_test_suite)
 class TestGenericCompositeDimensionMultiplication(TestDescriptorBinaryOperation):
     operator = mul
     produced_type = GenericCompositeDimension
@@ -1614,6 +1628,20 @@ class TestCompositeDimensionSimplify(TestDescriptor):
     )
     def test_same_numerator_dimensions_zero_sum(self):
         self.assert_result(" / C")
+
+
+@add_to(CompositeDimension_test_suite)
+class TestCompositeDimensionSimplified(TestCompositeDimensionSimplify):
+    """
+    Run all tests in TestCompositeDimensionSimplify but with a different subject.
+    """
+
+    def subject(self, composite):
+        return composite.simplified()
+
+    def assert_result(self, result_str):
+        self.assertResultIsNot(self._subjectKwargs["composite"])
+        self.assertSequenceEqual(str(self.cachedResult()), result_str, str)
 
 
 @add_to(CompositeDimension_test_suite)
