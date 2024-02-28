@@ -16,7 +16,7 @@ from property_utils.exceptions.units.descriptors import (
     InvalidDescriptorExponent,
     WrongUnitDescriptorType,
 )
-from property_utils.tests.utils import add_to, def_load_tests
+from property_utils.tests.utils import add_to, def_load_tests, ids
 from property_utils.tests.units.descriptors_utils import (
     TestDescriptor,
     TestDescriptorBinaryOperation,
@@ -52,6 +52,13 @@ descriptors_test_suite.addTests(
         (CompositeDimension_test_suite := TestSuite()),
     ]
 )
+
+
+@add_to(MeasurementUnitMeta_test_suite)
+class TestMeasurementUnitMetaInverseGeneric(TestDescriptor):
+
+    def test_inverse_generic(self):
+        self.assertSequenceEqual(str(Unit1.inverse_generic()), " / Unit1", str)
 
 
 @add_to(MeasurementUnitMeta_test_suite)
@@ -244,6 +251,12 @@ class TestMeasurementUnitIsInstance(TestDescriptor):
 class TestMeasurementUnitToGeneric(TestDescriptor):
     def test_to_generic(self):
         self.assertEqual(Unit1.A.to_generic(), Unit1)
+
+
+@add_to(MeasurementUnit_test_suite)
+class TestMeasurementUnitInverse(TestDescriptor):
+    def test_inverse(self):
+        self.assertSequenceEqual(str(Unit1.A.inverse()), " / A", str)
 
 
 @add_to(MeasurementUnit_test_suite)
@@ -580,6 +593,12 @@ class TestAliasMeasurementUnitExponentiation(TestDescriptor):
         self.assertResultRaises(InvalidDescriptorExponent)
 
 
+@add_to(AliasMeasurementUnit_test_suite)
+class TestAliasMeasurementUnitInverse(TestDescriptor):
+    def test_inverse(self):
+        self.assertSequenceEqual(str(Unit3.C.inverse()), " / C")
+
+
 @add_to(GenericDimension_test_suite)
 class TestGenericDimensionToSi(TestDescriptor):
     produced_type = Dimension
@@ -594,6 +613,19 @@ class TestGenericDimensionToSi(TestDescriptor):
     @args({"descriptor": generic_dimension_1(2.3)})
     def test_with_exponentiated_generic_dimension(self):
         self.assert_result("(a^2.3)")
+
+
+@add_to(GenericCompositeDimension_test_suite)
+class TestGenericDimensionInverseGeneric(TestDescriptor):
+    def test_inverse_generic(self):
+        self.assertSequenceEqual(
+            str(generic_dimension_1(2).inverse_generic()), " / (Unit1^2)", str
+        )
+
+    def test_object_is_not_persisted(self):
+        generic = generic_dimension_1()
+        composite = generic.inverse_generic()
+        self.assertIsNot(composite.denominator[0], generic)
 
 
 @add_to(GenericDimension_test_suite)
@@ -874,6 +906,17 @@ class TestDimensionToGeneric(TestDescriptor):
 
 
 @add_to(Dimension_test_suite)
+class TestDimensionInverse(TestDescriptor):
+    def test_inverse(self):
+        self.assertSequenceEqual(str((Unit1.A**2).inverse()), " / (A^2)")
+
+    def test_object_is_not_persisted(self):
+        dimension = dimension_1(2)
+        composite = dimension.inverse()
+        self.assertIsNot(composite.denominator[0], dimension)
+
+
+@add_to(Dimension_test_suite)
 class TestDimensionMultiplication(TestMeasurementUnitMultiplication):
     """
     Repeat all tests in `TestMeasurementUnitMultiplication` but with dimension_1() as
@@ -1077,6 +1120,21 @@ class TestGenericCompositeDimensionSimplified(TestGenericCompositeDimensionSimpl
     def assert_result(self, result_str):
         self.assertResultIsNot(self._subjectKwargs["generic"])
         self.assertSequenceEqual(str(self.cachedResult()), result_str, str)
+
+
+@add_to(GenericCompositeDimension_test_suite)
+class TestGenericCompositeDimensionInverseGeneric(TestDescriptor):
+    def test_inverse_generic(self):
+        self.assertSequenceEqual(
+            str(generic_composite_dimension().inverse_generic()),
+            "(Unit3^3) / (Unit1^2) / Unit2",
+        )
+
+    def test_objects_are_not_persisted(self):
+        composite = generic_composite_dimension()
+        inverse = composite.inverse_generic()
+        self.assertNotEqual(ids(composite.numerator), ids(inverse.denominator))
+        self.assertNotEqual(ids(composite.denominator), ids(inverse.numerator))
 
 
 @add_to(GenericCompositeDimension_test_suite)
@@ -1642,6 +1700,21 @@ class TestCompositeDimensionSimplified(TestCompositeDimensionSimplify):
     def assert_result(self, result_str):
         self.assertResultIsNot(self._subjectKwargs["composite"])
         self.assertSequenceEqual(str(self.cachedResult()), result_str, str)
+
+
+@add_to(CompositeDimension_test_suite)
+class TestCompositeDimensionInverse(TestDescriptor):
+    def test_inverse_generic(self):
+        self.assertSequenceEqual(
+            str(composite_dimension().inverse()),
+            "(C^3) / (A^2) / B",
+        )
+
+    def test_objects_are_not_persisted(self):
+        composite = composite_dimension()
+        inverse = composite.inverse()
+        self.assertNotEqual(ids(composite.numerator), ids(inverse.denominator))
+        self.assertNotEqual(ids(composite.denominator), ids(inverse.numerator))
 
 
 @add_to(CompositeDimension_test_suite)

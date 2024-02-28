@@ -1,3 +1,5 @@
+from typing import Iterable
+from collections import Counter
 from importlib import import_module
 
 
@@ -20,3 +22,7 @@ def def_load_tests(module_path):
         return tests
 
     return load_tests
+
+
+def ids(iterable: Iterable) -> Counter:
+    return Counter(map(id, iterable))

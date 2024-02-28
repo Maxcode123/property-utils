@@ -39,6 +39,11 @@ class GenericUnitDescriptor(Protocol):
         Create a unit descriptor with SI units.
         """
 
+    def inverse_generic(self) -> "GenericCompositeDimension":
+        """
+        Create a generic composite with inverse units.
+        """
+
     def __mul__(
         self, generic: "GenericUnitDescriptor"
     ) -> "GenericCompositeDimension": ...
@@ -68,6 +73,11 @@ class UnitDescriptor(Protocol):
     def to_generic(self) -> GenericUnitDescriptor:
         """
         Create a generic descriptor from this UnitDescriptor.
+        """
+
+    def inverse(self) -> "CompositeDimension":
+        """
+        Create a composite with inverse units.
         """
 
     def __mul__(self, descriptor: "UnitDescriptor") -> "CompositeDimension": ...
@@ -104,6 +114,16 @@ class MeasurementUnitMeta(EnumMeta):
         if hasattr(cls, "si"):
             return cls.si()
         raise NotImplementedError
+
+    def inverse_generic(cls) -> "GenericCompositeDimension":
+        """
+        Create a generic composite with inverse units.
+
+        >>> class TemperatureUnit(MeasurementUnit): ...
+        >>> TemperatureUnit.inverse_generic()
+        <GenericCompositeDimension:  / TemperatureUnit>
+        """
+        return GenericCompositeDimension([], [GenericDimension(cls)])
 
     def __mul__(cls, other: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
@@ -260,6 +280,17 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         <MeasurementUnit: AmountUnit>
         """
         return self.__class__
+
+    def inverse(self) -> "CompositeDimension":
+        """
+        Create a composite with inverse units.
+
+        >>> class TemperatureUnit(MeasurementUnit):
+        ...     KELVIN = "K"
+        >>> TemperatureUnit.KELVIN.inverse()
+        <CompositeDimension:  / K>
+        """
+        return CompositeDimension([], [Dimension(self)])
 
     def __mul__(self, descriptor: UnitDescriptor) -> "CompositeDimension":
         """
@@ -427,6 +458,16 @@ class GenericDimension:
         >>> assert type((TemperatureUnit**2).to_si()) == Dimension
         """
         return Dimension(self.unit_type.to_si(), self.power)
+
+    def inverse_generic(self) -> "GenericCompositeDimension":
+        """
+        Create a generic composite with inverse units.
+
+        >>> class LengthUnit(MeasurementUnit): ...
+        >>> (LengthUnit**2).inverse_generic()
+        <GenericCompositeDimension:  / (LengthUnit^2)>
+        """
+        return GenericCompositeDimension([], [replace(self)])
 
     def __mul__(self, generic: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
@@ -600,6 +641,17 @@ class Dimension:
         """
         return GenericDimension(type(self.unit), self.power)
 
+    def inverse(self) -> "CompositeDimension":
+        """
+        Create a composite with inverse units.
+
+        >>> class LengthUnit(MeasurementUnit):
+        ...     METER = "m"
+        >>> (LengthUnit.METER**2).inverse()
+        <CompositeDimension:  / (m^2)>
+        """
+        return CompositeDimension([], [replace(self)])
+
     def __mul__(self, descriptor: "UnitDescriptor") -> "CompositeDimension":
         """
         Defines multiplication between Dimension(s) and other unit descriptors.
@@ -748,17 +800,17 @@ class GenericCompositeDimension:
 
         >>> composite = (PressureUnit**(-2)) / (TemperatureUnit**(-1))
         >>> composite
-        <GenericCompositeDimension: (PressureUnit^-2)/(TemperatureUnit^-1)>
+        <GenericCompositeDimension: (PressureUnit^-2) / (TemperatureUnit^-1)>
         >>> composite.simplify()
         >>> composite
-        <GenericCompositeDimension: TemperatureUnit/(PressureUnit^2)>
+        <GenericCompositeDimension: TemperatureUnit / (PressureUnit^2)>
 
-        >>> composite = PressureUnit * LengthUnit * PressureUnit /TimeUnit
+        >>> composite = PressureUnit * LengthUnit * PressureUnit / TimeUnit
         >>> composite
-        <GenericCompositeDimension: LengthUnit*PressureUnit*PressureUnit/TimeUnit>
+        <GenericCompositeDimension: LengthUnit * PressureUnit * PressureUnit / TimeUnit>
         >>> composite.simplify()
         >>> composite
-        <GenericCompositeDimension: (PressureUnit^2)*LengthUnit/TimeUnit>
+        <GenericCompositeDimension: (PressureUnit^2) * LengthUnit / TimeUnit>
         """
         exponents: Dict[MeasurementUnitType, float] = {}
         for n in self.numerator:
@@ -798,19 +850,39 @@ class GenericCompositeDimension:
 
         >>> composite = (PressureUnit**(-2)) / (TemperatureUnit**(-1))
         >>> composite
-        <GenericCompositeDimension: (PressureUnit^-2)/(TemperatureUnit^-1)>
+        <GenericCompositeDimension: (PressureUnit^-2) / (TemperatureUnit^-1)>
         >>> composite.simplified()
-        <GenericCompositeDimension: TemperatureUnit/(PressureUnit^2)>
+        <GenericCompositeDimension: TemperatureUnit / (PressureUnit^2)>
 
         >>> composite = PressureUnit * LengthUnit * PressureUnit /TimeUnit
         >>> composite
-        <GenericCompositeDimension: LengthUnit*PressureUnit*PressureUnit/TimeUnit>
+        <GenericCompositeDimension: LengthUnit * PressureUnit * PressureUnit / TimeUnit>
         >>> composite.simplified()
-        <GenericCompositeDimension: (PressureUnit^2)*LengthUnit/TimeUnit>
+        <GenericCompositeDimension: (PressureUnit^2) * LengthUnit / TimeUnit>
         """
         copy = replace(self)
         copy.simplify()
         return copy
+
+    def inverse_generic(self):
+        """
+        Create a generic composite with inverse units.
+
+        >>> class LengthUnit(MeasurementUnit): ...
+        >>> class TimeUnit(MeasurementUnit): ...
+
+        >>> (LengthUnit / TimeUnit).inverse_generic()
+        <GenericCompositeDimension: TimeUnit / LengthUnit>
+        """
+        return GenericCompositeDimension(
+            self._denominator_copy(), self._numerator_copy()
+        )
+
+    def _numerator_copy(self) -> List[GenericDimension]:
+        return [replace(n) for n in self.numerator]
+
+    def _denominator_copy(self) -> List[GenericDimension]:
+        return [replace(d) for d in self.denominator]
 
     def __mul__(self, generic: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
@@ -903,10 +975,10 @@ class GenericCompositeDimension:
         return numerators + denominators
 
     def __repr__(self) -> str:
-        numerators = "*".join(sorted([str(n) for n in self.numerator]))
-        denominators = "/".join(sorted([str(d) for d in self.denominator]))
+        numerators = " * ".join(sorted([str(n) for n in self.numerator]))
+        denominators = " / ".join(sorted([str(d) for d in self.denominator]))
         if len(denominators) > 0:
-            denominators = "/" + denominators
+            denominators = " / " + denominators
         return f"<GenericCompositeDimension: {numerators + denominators}>"
 
 
@@ -986,7 +1058,7 @@ class CompositeDimension:
         ...     KILO_GRAM = "kg"
 
         >>> (AmountUnit.MOL / MassUnit.KILO_GRAM).to_generic()
-        <GenericCompositeDimension: AmountUnit/MassUnit>
+        <GenericCompositeDimension: AmountUnit / MassUnit>
         """
         return GenericCompositeDimension(
             numerator=[n.to_generic() for n in self.numerator],
@@ -1064,17 +1136,17 @@ class CompositeDimension:
 
         >>> composite = (PressureUnit.BAR**(-2)) / (TemperatureUnit.KELVIN**(-1))
         >>> composite
-        <CompositeDimension: (bar^-2)/(K^-1)>
+        <CompositeDimension: (bar^-2) / (K^-1)>
         >>> composite.simplify()
         >>> composite
-        <CompositeDimension: K/(bar^2)>
+        <CompositeDimension: K / (bar^2)>
 
         >>> composite = PressureUnit.PASCAL * LengthUnit.METER * PressureUnit.PASCAL /TimeUnit.SECOND
         >>> composite
-        <CompositeDimension: Pa*Pa*m/s>
+        <CompositeDimension: Pa * Pa * m / s>
         >>> composite.simplify()
         >>> composite
-        <CompositeDimension: (Pa^2)*m/s>
+        <CompositeDimension: (Pa^2) * m / s>
         """
         exponents: Dict[MeasurementUnit, float] = {}
         for n in self.numerator:
@@ -1119,19 +1191,39 @@ class CompositeDimension:
 
         >>> composite = (PressureUnit.BAR**(-2)) / (TemperatureUnit.KELVIN**(-1))
         >>> composite
-        <CompositeDimension: (bar^-2)/(K^-1)>
+        <CompositeDimension: (bar^-2) / (K^-1)>
         >>> composite.simplified()
-        <CompositeDimension: K/(bar^2)>
+        <CompositeDimension: K / (bar^2)>
 
         >>> composite = PressureUnit.PASCAL * LengthUnit.METER * PressureUnit.PASCAL /TimeUnit.SECOND
         >>> composite
-        <CompositeDimension: Pa*Pa*m/s>
+        <CompositeDimension: Pa * Pa * m / s>
         >>> composite.simplified()
-        <CompositeDimension: (Pa^2)*m/s>
+        <CompositeDimension: (Pa^2) * m / s>
         """
         copy = replace(self)
         copy.simplify()
         return copy
+
+    def inverse(self) -> "CompositeDimension":
+        """
+        Create a composite with inverse units.
+
+        >>> class LengthUnit(MeasurementUnit):
+        ...     METER = "m"
+        >>> class TimeUnit(MeasurementUnit):
+        ...     SECOND = "s"
+
+        >>> (LengthUnit.METER / TimeUnit.SECOND).inverse()
+        <CompositeDimension: s / m>
+        """
+        return CompositeDimension(self._denominator_copy(), self._numerator_copy())
+
+    def _numerator_copy(self) -> List[Dimension]:
+        return [replace(n) for n in self.numerator]
+
+    def _denominator_copy(self) -> List[Dimension]:
+        return [replace(d) for d in self.denominator]
 
     def __mul__(self, descriptor: "UnitDescriptor") -> "CompositeDimension":
         """
@@ -1216,8 +1308,8 @@ class CompositeDimension:
         return numerators + denominators
 
     def __repr__(self) -> str:
-        numerators = "*".join(sorted([str(n) for n in self.numerator]))
-        denominators = "/".join(sorted([str(d) for d in self.denominator]))
+        numerators = " * ".join(sorted([str(n) for n in self.numerator]))
+        denominators = " / ".join(sorted([str(d) for d in self.denominator]))
         if len(denominators) > 0:
-            denominators = "/" + denominators
+            denominators = " / " + denominators
         return f"<CompositeDimension: {numerators + denominators}>"
