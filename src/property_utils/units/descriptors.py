@@ -39,6 +39,11 @@ class GenericUnitDescriptor(Protocol):
         Create a unit descriptor with SI units.
         """
 
+    def inverse_generic(self) -> "GenericCompositeDimension":
+        """
+        Create a generic composite with inverse units.
+        """
+
     def __mul__(
         self, generic: "GenericUnitDescriptor"
     ) -> "GenericCompositeDimension": ...
@@ -68,6 +73,11 @@ class UnitDescriptor(Protocol):
     def to_generic(self) -> GenericUnitDescriptor:
         """
         Create a generic descriptor from this UnitDescriptor.
+        """
+
+    def inverse(self) -> "CompositeDimension":
+        """
+        Create a composite with inverse units.
         """
 
     def __mul__(self, descriptor: "UnitDescriptor") -> "CompositeDimension": ...
@@ -104,6 +114,16 @@ class MeasurementUnitMeta(EnumMeta):
         if hasattr(cls, "si"):
             return cls.si()
         raise NotImplementedError
+
+    def inverse_generic(cls) -> "GenericCompositeDimension":
+        """
+        Create a generic composite with inverse units.
+
+        >>> class TemperatureUnit(MeasurementUnit): ...
+        >>> TemperatureUnit.inverse_generic()
+        <GenericCompositeDimension:  / TemperatureUnit>
+        """
+        return GenericCompositeDimension([], [GenericDimension(cls)])
 
     def __mul__(cls, other: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
@@ -260,6 +280,17 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         <MeasurementUnit: AmountUnit>
         """
         return self.__class__
+
+    def inverse(self) -> "CompositeDimension":
+        """
+        Create a composite with inverse units.
+
+        >>> class TemperatureUnit(MeasurementUnit):
+        ...     KELVIN = "K"
+        >>> TemperatureUnit.KELVIN.inverse()
+        <CompositeDimension:  / K>
+        """
+        return CompositeDimension([], [Dimension(self)])
 
     def __mul__(self, descriptor: UnitDescriptor) -> "CompositeDimension":
         """
@@ -427,6 +458,16 @@ class GenericDimension:
         >>> assert type((TemperatureUnit**2).to_si()) == Dimension
         """
         return Dimension(self.unit_type.to_si(), self.power)
+
+    def inverse_generic(self) -> "GenericCompositeDimension":
+        """
+        Create a generic composite with inverse units.
+
+        >>> class LengthUnit(MeasurementUnit): ...
+        >>> (LengthUnit**2).inverse_generic()
+        <GenericCompositeDimension:  / (LengthUnit^2)>
+        """
+        return GenericCompositeDimension([], [replace(self)])
 
     def __mul__(self, generic: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
@@ -599,6 +640,17 @@ class Dimension:
         <GenericDimension: AmountUnit^3.56>
         """
         return GenericDimension(type(self.unit), self.power)
+
+    def inverse(self) -> "CompositeDimension":
+        """
+        Create a composite with inverse units.
+
+        >>> class LengthUnit(MeasurementUnit):
+        ...     METER = "m"
+        >>> (LengthUnit.METER**2).inverse()
+        <CompositeDimension:  / (m^2)>
+        """
+        return CompositeDimension([], [replace(self)])
 
     def __mul__(self, descriptor: "UnitDescriptor") -> "CompositeDimension":
         """
@@ -811,6 +863,20 @@ class GenericCompositeDimension:
         copy = replace(self)
         copy.simplify()
         return copy
+
+    def inverse_generic(self):
+        """
+        Create a generic composite with inverse units.
+
+        >>> class LengthUnit(MeasurementUnit): ...
+        >>> class TimeUnit(MeasurementUnit): ...
+
+        >>> (LengthUnit / TimeUnit).inverse_generic()
+        <GenericCompositeDimension: TimeUnit / LengthUnit>
+        """
+        return GenericCompositeDimension(
+            self._denominator_copy(), self._numerator_copy()
+        )
 
     def _numerator_copy(self) -> List[GenericDimension]:
         return [replace(n) for n in self.numerator]
@@ -1138,6 +1204,20 @@ class CompositeDimension:
         copy = replace(self)
         copy.simplify()
         return copy
+
+    def inverse(self) -> "CompositeDimension":
+        """
+        Create a composite with inverse units.
+
+        >>> class LengthUnit(MeasurementUnit):
+        ...     METER = "m"
+        >>> class TimeUnit(MeasurementUnit):
+        ...     SECOND = "s"
+
+        >>> (LengthUnit.METER / TimeUnit.SECOND).inverse()
+        <CompositeDimension: s / m>
+        """
+        return CompositeDimension(self._denominator_copy(), self._numerator_copy())
 
     def _numerator_copy(self) -> List[Dimension]:
         return [replace(n) for n in self.numerator]
