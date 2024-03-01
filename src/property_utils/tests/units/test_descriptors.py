@@ -87,19 +87,19 @@ class TestMeasurementUnitMetaMultiplication(TestDescriptorBinaryOperation):
 
     @args({"descriptor": composite_dimension()})
     def test_with_composite_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": dimension_1()})
     def test_with_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": Unit2.B})
     def test_with_measurement_unit(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": 100})
     def test_with_int(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
 
 @add_to(MeasurementUnitMeta_test_suite)
@@ -126,19 +126,19 @@ class TestMeasurementUnitMetaDivision(TestDescriptorBinaryOperation):
 
     @args({"descriptor": composite_dimension()})
     def test_with_composite_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": dimension_1()})
     def test_with_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": Unit2.B})
     def test_with_measurement_unit(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": 23})
     def test_with_int(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
 
 @add_to(MeasurementUnitMeta_test_suite)
@@ -290,19 +290,19 @@ class TestMeasurementUnitMultiplication(TestDescriptorBinaryOperation):
 
     @args({"descriptor": Unit2})
     def test_with_measurement_unit_type(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": generic_dimension_1()})
     def test_with_generic_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": generic_composite_dimension()})
     def test_with_generic_composite_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": 78})
     def test_with_int(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
 
 @add_to(MeasurementUnit_test_suite)
@@ -336,19 +336,19 @@ class TestMeasurementUnitDivision(TestDescriptorBinaryOperation):
 
     @args({"descriptor": Unit2})
     def test_with_measurement_unit_type(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": generic_dimension_2()})
     def test_with_generic_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": generic_composite_dimension()})
     def test_with_generic_composite_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": 0})
     def test_with_int(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
 
 @add_to(MeasurementUnit_test_suite)
@@ -500,19 +500,19 @@ class TestAliasMeasurementUnitMultiplication(TestDescriptorBinaryOperation):
 
     @args({"descriptor": Unit1})
     def test_with_measurement_unit_type(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": generic_dimension_1()})
     def test_with_generic_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": generic_composite_dimension()})
     def test_with_generic_composite_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": -99})
     def test_with_int(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
 
 @add_to(AliasMeasurementUnit_test_suite)
@@ -550,19 +550,19 @@ class TestAliasMeasurementUnitDivision(TestDescriptorBinaryOperation):
 
     @args({"descriptor": Unit1})
     def test_with_measurement_unit_type(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": generic_dimension_1()})
     def test_with_generic_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": generic_composite_dimension()})
     def test_with_generic_composite_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": 9})
     def test_with_int(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
 
 @add_to(AliasMeasurementUnit_test_suite)
@@ -639,15 +639,15 @@ class TestGenericDimensionMultiplication(TestDescriptorBinaryOperation):
 
     @args({"descriptor": Unit1.A})
     def test_with_measurement_unit(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": dimension_2()})
     def test_with_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": composite_dimension()})
     def test_with_composite_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": Unit2})
     def test_with_measurement_unit_type(self):
@@ -671,7 +671,7 @@ class TestGenericDimensionMultiplication(TestDescriptorBinaryOperation):
 
     @args({"descriptor": 12})
     def test_with_int(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
 
 @add_to(GenericDimension_test_suite)
@@ -685,15 +685,15 @@ class TestGenericDimensionDivision(TestDescriptorBinaryOperation):
 
     @args({"descriptor": Unit1.A})
     def test_with_measurement_unit(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": dimension_2()})
     def test_with_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": composite_dimension()})
     def test_with_composite_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": Unit2})
     def test_with_measurement_unit_type(self):
@@ -717,7 +717,7 @@ class TestGenericDimensionDivision(TestDescriptorBinaryOperation):
 
     @args({"descriptor": 12})
     def test_with_int(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
 
 @add_to(GenericDimension_test_suite)
@@ -1153,15 +1153,15 @@ class TestGenericCompositeDimensionMultiplication(TestDescriptorBinaryOperation)
 
     @args({"descriptor": Unit2.B})
     def test_with_measurement_unit(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": dimension_2()})
     def test_with_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": composite_dimension()})
     def test_with_composite_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": Unit2})
     def test_with_measurement_unit_type(self):
@@ -1181,7 +1181,7 @@ class TestGenericCompositeDimensionMultiplication(TestDescriptorBinaryOperation)
 
     @args({"descriptor": 78})
     def test_with_int(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
 
 @add_to(GenericCompositeDimension_test_suite)
@@ -1200,15 +1200,15 @@ class TestGenericCompositeDimensionDivision(TestDescriptorBinaryOperation):
 
     @args({"descriptor": Unit2.B})
     def test_with_measurement_unit(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": dimension_2()})
     def test_with_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": composite_dimension()})
     def test_with_composite_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": Unit2})
     def test_with_measurement_unit_type(self):
@@ -1228,7 +1228,7 @@ class TestGenericCompositeDimensionDivision(TestDescriptorBinaryOperation):
 
     @args({"descriptor": 78})
     def test_with_int(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
 
 @add_to(GenericCompositeDimension_test_suite)
@@ -1763,15 +1763,15 @@ class TestCompositeDimensionMultiplication(TestDescriptorBinaryOperation):
 
     @args({"descriptor": Unit1})
     def test_with_measurement_unit_type(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": generic_dimension_1()})
     def test_with_generic_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": generic_composite_dimension()})
     def test_with_generic_composite_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
 
 @add_to(CompositeDimension_test_suite)
@@ -1796,15 +1796,15 @@ class TestCompositeDimensionDivision(TestDescriptorBinaryOperation):
 
     @args({"descriptor": Unit1})
     def test_with_measurement_unit_type(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": generic_dimension_1()})
     def test_with_generic_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
     @args({"descriptor": generic_composite_dimension()})
     def test_with_generic_composite_dimension(self):
-        self.assertResultRaises(InvalidDescriptorBinaryOperation)
+        self.assert_invalid()
 
 
 @add_to(CompositeDimension_test_suite)
