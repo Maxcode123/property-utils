@@ -1304,6 +1304,27 @@ class CompositeDimension:
             f"cannot divide {self} with {descriptor}. "
         )
 
+    def __pow__(self, power: float) -> "CompositeDimension":
+        """
+        Defines exponentiation for CompositeDimension(s).
+
+        >>> class TemperatureUnit(MeasurementUnit):
+        ...     CELCIUS = "C"
+        >>> class TimeUnit(MeasurementUnit):
+        ...     HOUR = "hr"
+
+        >>> (TemperatureUnit.CELCIUS / TimeUnit.HOUR)**2
+        <CompositeDimension: (C^2) / (hr^2)>
+        """
+        if not isinstance(power, (float, int)):
+            raise InvalidDescriptorExponent(
+                f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
+                " expected float or int. "
+            )
+        numerator = [n**power for n in self._numerator_copy()]
+        denominator = [d**power for d in self._denominator_copy()]
+        return CompositeDimension(numerator, denominator)
+
     def __eq__(self, dimension) -> bool:
         """
         Defines equality for CompositeDimension(s).

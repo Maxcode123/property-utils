@@ -1808,6 +1808,30 @@ class TestCompositeDimensionDivision(TestDescriptorBinaryOperation):
 
 
 @add_to(CompositeDimension_test_suite)
+class TestCompositeDimensionExponentiation(TestDescriptor):
+    produced_type = CompositeDimension
+
+    def subject(self, value):
+        return composite_dimension() ** value
+
+    @args({"value": "123"})
+    def test_with_invalid_value(self):
+        self.assertResultRaises(InvalidDescriptorExponent)
+
+    @args({"value": 1})
+    def test_with_one(self):
+        self.assert_result("(A^2) * B / (C^3)")
+
+    @args({"value": -1})
+    def test_with_minus_one(self):
+        self.assert_result("(A^-2) * (B^-1) / (C^-3)")
+
+    @args({"value": 0.5})
+    def test_with_float(self):
+        self.assert_result("(B^0.5) * A / (C^1.5)")
+
+
+@add_to(CompositeDimension_test_suite)
 class TestCompositeDimensionEquality(TestDescriptor):
     def subject(self, dimension):
         return self.build_descriptor() == dimension
