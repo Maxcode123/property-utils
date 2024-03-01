@@ -1232,6 +1232,30 @@ class TestGenericCompositeDimensionDivision(TestDescriptorBinaryOperation):
 
 
 @add_to(GenericCompositeDimension_test_suite)
+class TestGenericCompositeDimensionExponentiation(TestDescriptor):
+    produced_type = GenericCompositeDimension
+
+    def subject(self, value):
+        return generic_composite_dimension() ** value
+
+    @args({"value": "123"})
+    def test_with_invalid_value(self):
+        self.assertResultRaises(InvalidDescriptorExponent)
+
+    @args({"value": 1})
+    def test_with_one(self):
+        self.assert_result("(Unit1^2) * Unit2 / (Unit3^3)")
+
+    @args({"value": -1})
+    def test_with_minus_one(self):
+        self.assert_result("(Unit1^-2) * (Unit2^-1) / (Unit3^-3)")
+
+    @args({"value": 0.5})
+    def test_with_float(self):
+        self.assert_result("(Unit2^0.5) * Unit1 / (Unit3^1.5)")
+
+
+@add_to(GenericCompositeDimension_test_suite)
 class TestGenericCompositeDimensionEquality(TestDescriptor):
     def subject(self, generic):
         return self.build_descriptor() == generic
