@@ -52,6 +52,8 @@ class GenericUnitDescriptor(Protocol):
         self, generic: "GenericUnitDescriptor"
     ) -> "GenericCompositeDimension": ...
 
+    def __pow__(self, power: float) -> "GenericUnitDescriptor": ...
+
     def __eq__(self, generic) -> bool: ...
 
     def __hash__(self) -> int: ...
@@ -83,6 +85,8 @@ class UnitDescriptor(Protocol):
     def __mul__(self, descriptor: "UnitDescriptor") -> "CompositeDimension": ...
 
     def __truediv__(self, descriptor: "UnitDescriptor") -> "CompositeDimension": ...
+
+    def __pow__(self, power: float) -> "UnitDescriptor": ...
 
     def __hash__(self) -> int: ...
 
@@ -950,6 +954,25 @@ class GenericCompositeDimension:
             )
         raise InvalidDescriptorBinaryOperation(f"cannot divide {self} with {generic}. ")
 
+    def __pow__(self, power: float) -> "GenericCompositeDimension":
+        """
+        Defines exponentiation for GenericCompositeDimension(s).
+
+        >>> class TemperatureUnit(MeasurementUnit): ...
+        >>> class TimeUnit(MeasurementUnit): ...
+
+        >>> (TemperatureUnit / TimeUnit)**2
+        <GenericCompositeDimension: (TemperatureUnit^2) / (TimeUnit^2)>
+        """
+        if not isinstance(power, (float, int)):
+            raise InvalidDescriptorExponent(
+                f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
+                " expected float or int. "
+            )
+        numerator = [n**power for n in self._numerator_copy()]
+        denominator = [d**power for d in self._denominator_copy()]
+        return GenericCompositeDimension(numerator, denominator)
+
     def __eq__(self, generic) -> bool:
         """
         Defines equality for GenericCompositeDimension(s).
@@ -1280,6 +1303,27 @@ class CompositeDimension:
         raise InvalidDescriptorBinaryOperation(
             f"cannot divide {self} with {descriptor}. "
         )
+
+    def __pow__(self, power: float) -> "CompositeDimension":
+        """
+        Defines exponentiation for CompositeDimension(s).
+
+        >>> class TemperatureUnit(MeasurementUnit):
+        ...     CELCIUS = "C"
+        >>> class TimeUnit(MeasurementUnit):
+        ...     HOUR = "hr"
+
+        >>> (TemperatureUnit.CELCIUS / TimeUnit.HOUR)**2
+        <CompositeDimension: (C^2) / (hr^2)>
+        """
+        if not isinstance(power, (float, int)):
+            raise InvalidDescriptorExponent(
+                f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
+                " expected float or int. "
+            )
+        numerator = [n**power for n in self._numerator_copy()]
+        denominator = [d**power for d in self._denominator_copy()]
+        return CompositeDimension(numerator, denominator)
 
     def __eq__(self, dimension) -> bool:
         """
