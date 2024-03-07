@@ -354,8 +354,8 @@ class Property:
         """
         if not isinstance(other, Property):
             raise PropertyBinaryOperationError(
-                f"cannot subtact {self} from ({other}); {other} is not a Property; "
-                "only properties can be subtracted to properties. "
+                f"cannot subtract {self} from ({other}); {other} is not a Property; "
+                "only properties can be subtracted from properties. "
             )
         if not self.unit.isinstance(other.unit.to_generic()):
             raise PropertyBinaryOperationError(
