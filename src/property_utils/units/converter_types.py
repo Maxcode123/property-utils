@@ -28,11 +28,11 @@ from property_utils.units.descriptors import (
     CompositeDimension,
 )
 from property_utils.exceptions.units.converter_types import (
-    UndefinedConverter,
-    InvalidUnitConversion,
+    UndefinedConverterError,
+    UnitConversionError,
     ConversionFunctionError,
-    UnsupportedConverter,
-    MissingConverterDependencies,
+    UnsupportedConverterError,
+    ConverterDependenciesError,
 )
 from property_utils.exceptions.base import (
     PropertyUtilsTypeError,
@@ -50,7 +50,7 @@ def get_converter(generic: GenericUnitDescriptor) -> ConverterType:
 
     Raises 'PropertyUtilsTypeError' if argument is not a generic unit descriptor.
 
-    Raises 'UndefinedConverter' if a converter has not been defined for the given generic.
+    Raises 'UndefinedConverterError' if a converter has not been defined for the given generic.
     """
     if not isinstance(
         generic, (MeasurementUnitType, GenericDimension, GenericCompositeDimension)
@@ -63,7 +63,7 @@ def get_converter(generic: GenericUnitDescriptor) -> ConverterType:
             generic = generic.unit_type
         return _converters[generic]
     except KeyError:
-        raise UndefinedConverter(
+        raise UndefinedConverterError(
             f"a converter has not been defined for {generic}"
         ) from None
 
@@ -159,7 +159,7 @@ class AbsoluteUnitConverter(metaclass=ABCMeta):
     ) -> float:
         """
         Convert a value from an absolute unit to another absolute unit.
-        Raises 'InvalidUnitConversion' if 'from_descriptor' or 'to_descriptor' are not
+        Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
         an instance of the generic that is registered with the converter or if 'value'
         is not a numeric.
 
@@ -175,7 +175,7 @@ class AbsoluteUnitConverter(metaclass=ABCMeta):
         >>> assert LengthUnitConverter.convert(2, LengthUnit.INCH, LengthUnit.CENTI_METER) == 5.08
         """
         if not isinstance(value, (float, int)):
-            raise InvalidUnitConversion(f"invalid 'value': {value}; expected numeric. ")
+            raise UnitConversionError(f"invalid 'value': {value}; expected numeric. ")
         return value * cls.get_factor(from_descriptor, to_descriptor)
 
     @classmethod
@@ -185,7 +185,7 @@ class AbsoluteUnitConverter(metaclass=ABCMeta):
         """
         Get the multiplication factor for the conversion from 'from_descriptor' to
         'to_descriptor'.
-        Raises 'InvalidUnitConversion' if 'from_descriptor' or 'to_descriptor' are not
+        Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
         an instance of the generic that is registered with the converter.
 
         >>> class LengthUnit(MeasurementUnit):
@@ -200,11 +200,11 @@ class AbsoluteUnitConverter(metaclass=ABCMeta):
         >>> assert LengthUnitConverter.get_factor(LengthUnit.CENTI_METER, LengthUnit.INCH) == 1/2.54
         """
         if not from_descriptor.isinstance(cls.generic_unit_descriptor):
-            raise InvalidUnitConversion(
+            raise UnitConversionError(
                 f"invalid 'from_descriptor; expected an instance of {cls.generic_unit_descriptor}. "
             )
         if not to_descriptor.isinstance(cls.generic_unit_descriptor):
-            raise InvalidUnitConversion(
+            raise UnitConversionError(
                 f"invalid 'to_descriptor'; expected an instance of {cls.generic_unit_descriptor}. "
             )
         from_unit = MeasurementUnit.from_descriptor(from_descriptor)
@@ -212,7 +212,7 @@ class AbsoluteUnitConverter(metaclass=ABCMeta):
         try:
             return cls._to_reference(from_unit) * cls.conversion_map[to_unit]
         except KeyError:
-            raise InvalidUnitConversion(
+            raise UnitConversionError(
                 f"cannot convert to {to_unit}; unit is not registered in {cls.__name__}'s conversion map. ",
             ) from None
 
@@ -221,7 +221,7 @@ class AbsoluteUnitConverter(metaclass=ABCMeta):
         try:
             return 1 / cls.conversion_map[from_unit]
         except KeyError:
-            raise InvalidUnitConversion(
+            raise UnitConversionError(
                 f"cannot convert from {from_unit}; unit is not registered in {cls.__name__}'s conversion map. ",
             ) from None
 
@@ -276,7 +276,7 @@ class RelativeUnitConverter(
         """
         Convert a value from a relative unit to another relative unit.
 
-        Raises 'InvalidUnitConversion' if 'from_descriptor' or 'to_descriptor' are not
+        Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
         an instance of the generic that is registered with the converter or if 'value'
         is not a numeric.
 
@@ -302,7 +302,7 @@ class RelativeUnitConverter(
         >>> assert TemperatureUnitConverter.convert(100, TemperatureUnit.CELCIUS, TemperatureUnit.FAHRENHEIT) == 212
         """
         if not isinstance(value, (float, int)):
-            raise InvalidUnitConversion(f"invalid 'value': {value}; expected numeric. ")
+            raise UnitConversionError(f"invalid 'value': {value}; expected numeric. ")
         return cls._from_reference(
             cls._to_reference(value, from_descriptor), to_descriptor
         )
@@ -310,14 +310,14 @@ class RelativeUnitConverter(
     @classmethod
     def _to_reference(cls, value: float, from_descriptor: UnitDescriptor) -> float:
         if not from_descriptor.isinstance(cls.generic_unit_descriptor):
-            raise InvalidUnitConversion(
+            raise UnitConversionError(
                 f"invalid 'from_descriptor; expected an instance of {cls.generic_unit_descriptor}. "
             )
         from_unit = MeasurementUnit.from_descriptor(from_descriptor)
         try:
             conversion_func = cls.conversion_map[from_unit]
         except KeyError:
-            raise InvalidUnitConversion(
+            raise UnitConversionError(
                 f"cannot convert from {from_unit}; unit is not in {cls.__name__}'s conversion map. ",
             ) from None
         try:
@@ -330,14 +330,14 @@ class RelativeUnitConverter(
     @classmethod
     def _from_reference(cls, value: float, to_descriptor: UnitDescriptor) -> float:
         if not to_descriptor.isinstance(cls.generic_unit_descriptor):
-            raise InvalidUnitConversion(
+            raise UnitConversionError(
                 f"invalid 'to_descriptor'; expected an instance of {cls.generic_unit_descriptor}. "
             )
         to_unit = MeasurementUnit.from_descriptor(to_descriptor)
         try:
             conversion_func = cls.reference_conversion_map[to_unit]
         except KeyError:
-            raise InvalidUnitConversion(
+            raise UnitConversionError(
                 f"cannot convert to {to_unit}; unit is not registered in {cls.__name__}'s reference conversion map. ",
             ) from None
         try:
@@ -382,14 +382,14 @@ class ExponentiatedUnitConverter(metaclass=ABCMeta):
         exponentiated unit. In order to use this converter a converter must exist for
         the base unit.
 
-        Raises 'InvalidUnitConversion' if 'from_descriptor' or 'to_descriptor' are not
+        Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
         an instance of the generic that is registered with the converter or if 'value'
         is not a numeric.
 
-        Raises 'MissingConverterDependencies' if a converter for the base unit has not
+        Raises 'ConverterDependenciesError' if a converter for the base unit has not
         been defined/registered.
 
-        Raises 'UnsupportedConverter' if the base unit is a relative unit.
+        Raises 'UnsupportedConverterError' if the base unit is a relative unit.
 
         >>> class LengthUnit(MeasurementUnit):
         ...     CENTI_METER = "cm"
@@ -406,7 +406,7 @@ class ExponentiatedUnitConverter(metaclass=ABCMeta):
         >>> assert AreaUnitConverter.convert(10, LengthUnit.INCH**2, LengthUnit.CENTI_METER**2) == 64.516
         """
         if not isinstance(value, (float, int)):
-            raise InvalidUnitConversion(f"invalid 'value': {value}; expected numeric. ")
+            raise UnitConversionError(f"invalid 'value': {value}; expected numeric. ")
         return value * cls.get_factor(from_descriptor, to_descriptor)
 
     @classmethod
@@ -417,13 +417,13 @@ class ExponentiatedUnitConverter(metaclass=ABCMeta):
         Get the multiplication factor for the conversion from 'from_descriptor' to
         'to_descriptor'.
 
-        Raises 'InvalidUnitConversion' if 'from_descriptor' or 'to_descriptor' are not
+        Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
         an instance of the generic that is registered with the converter.
 
-        Raises 'MissingConverterDependencies' if a converter for the base unit has not
+        Raises 'ConverterDependenciesError' if a converter for the base unit has not
         been defined/registered.
 
-        Raises 'UnsupportedConverter' if the base unit is a relative unit.
+        Raises 'UnsupportedConverterError' if the base unit is a relative unit.
 
         >>> class LengthUnit(MeasurementUnit):
         ...     CENTI_METER = "cm"
@@ -440,26 +440,26 @@ class ExponentiatedUnitConverter(metaclass=ABCMeta):
         >>> assert AreaUnitConverter.get_factor(LengthUnit.INCH**2, LengthUnit.CENTI_METER**2) == 6.4516
         """
         if not from_descriptor.isinstance(cls.generic_unit_descriptor):
-            raise InvalidUnitConversion(
+            raise UnitConversionError(
                 f"invalid 'from_descriptor; expected an instance of {cls.generic_unit_descriptor}. "
             )
         if not to_descriptor.isinstance(cls.generic_unit_descriptor):
-            raise InvalidUnitConversion(
+            raise UnitConversionError(
                 f"invalid 'to_descriptor'; expected an instance of {cls.generic_unit_descriptor}. "
             )
         from_dimension = Dimension.from_descriptor(from_descriptor)
         to_dimension = Dimension.from_descriptor(to_descriptor)
         try:
             converter = get_converter(cls.generic_unit_descriptor.unit_type)
-        except UndefinedConverter:
-            raise MissingConverterDependencies(
+        except UndefinedConverterError:
+            raise ConverterDependenciesError(
                 f"converter {cls.__name__} depends on a converter for "
                 f"{cls.generic_unit_descriptor.unit_type}. Did you forget to register "
                 f" a converter for {cls.generic_unit_descriptor.unit_type}? "
             ) from None
         if not issubclass(converter, AbsoluteUnitConverter):
             # NOTE: provide a link to documentation for the error.
-            raise UnsupportedConverter(
+            raise UnsupportedConverterError(
                 f"converter {cls.__name__} is not supported since "
                 f"{cls.generic_unit_descriptor.unit_type} is not an absolute unit;"
                 " conversion between exponentiated relative units is invalid. "
@@ -509,14 +509,14 @@ class CompositeUnitConverter(metaclass=ABCMeta):
         """
         Convert a value from a composite unit to another composite unit.
 
-        Raises 'InvalidUnitConversion' if 'from_descriptor' or 'to_descriptor' are not
+        Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
         an instance of the generic that is registered with the converter or if 'value'
         is not a numeric.
 
-        Raises 'MissingConverterDependencies' if a converter for an invdividual unit has
+        Raises 'ConverterDependenciesError' if a converter for an invdividual unit has
         not been defined/registered.
 
-        Raises 'UnsupportedConverter' if an individual unit is a relative unit.
+        Raises 'UnsupportedConverterError' if an individual unit is a relative unit.
 
         >>> class LengthUnit(MeasurementUnit):
         ...     CENTI_METER = "cm"
@@ -542,7 +542,7 @@ class CompositeUnitConverter(metaclass=ABCMeta):
         >>> assert VelocityUnitConverter.convert(100, LengthUnit.INCH/TimeUnit.SECOND, LengthUnit.CENTI_METER/TimeUnit.SECOND) == 254
         """
         if not isinstance(value, (float, int)):
-            raise InvalidUnitConversion(f"invalid 'value': {value}; expected numeric. ")
+            raise UnitConversionError(f"invalid 'value': {value}; expected numeric. ")
         return value * cls.get_factor(from_descriptor, to_descriptor)
 
     @classmethod
@@ -553,13 +553,13 @@ class CompositeUnitConverter(metaclass=ABCMeta):
         Get the multiplication factor for the conversion from 'from_descriptor' to
         'to_descriptor'.
 
-        Raises 'InvalidUnitConversion' if 'from_descriptor' or 'to_descriptor' are not
+        Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
         an instance of the generic that is registered with the converter.
 
-        Raises 'MissingConverterDependencies' if a converter for an invdividual unit has
+        Raises 'ConverterDependenciesError' if a converter for an invdividual unit has
         not been defined/registered.
 
-        Raises 'UnsupportedConverter' if an individual unit is a relative unit.
+        Raises 'UnsupportedConverterError' if an individual unit is a relative unit.
 
         >>> class LengthUnit(MeasurementUnit):
         ...     CENTI_METER = "cm"
@@ -585,11 +585,11 @@ class CompositeUnitConverter(metaclass=ABCMeta):
         >>> assert VelocityUnitConverter.get_factor(LengthUnit.INCH/TimeUnit.MINUTE, LengthUnit.CENTI_METER/TimeUnit.SECOND) == 2.54/60
         """
         if not from_descriptor.isinstance(cls.generic_unit_descriptor):
-            raise InvalidUnitConversion(
+            raise UnitConversionError(
                 f"invalid 'from_descriptor; expected an instance of {cls.generic_unit_descriptor}. "
             )
         if not to_descriptor.isinstance(cls.generic_unit_descriptor):
-            raise InvalidUnitConversion(
+            raise UnitConversionError(
                 f"invalid 'to_descriptor'; expected an instance of {cls.generic_unit_descriptor}. "
             )
         from_dimension = CompositeDimension.from_descriptor(from_descriptor)
@@ -606,20 +606,20 @@ class CompositeUnitConverter(metaclass=ABCMeta):
         for from_d in from_dimension.numerator:
             to_d = to_dimension.get_numerator(from_d.to_generic())
             if to_d is None:
-                raise InvalidUnitConversion(
+                raise UnitConversionError(
                     f"cannot convert from {from_dimension} to {to_dimension}"
                 )
             try:
                 converter = get_converter(type(from_d.unit))
-            except UndefinedConverter:
-                raise MissingConverterDependencies(
+            except UndefinedConverterError:
+                raise ConverterDependenciesError(
                     f"converter {cls.__name__} depends on a converter for "
                     f"{type(from_d.unit)}. Did you forget to register "
                     f" a converter for {type(from_d.unit)}? "
                 ) from None
             if not issubclass(converter, AbsoluteUnitConverter):
                 # NOTE: provide a link to documentation for the error.
-                raise UnsupportedConverter(
+                raise UnsupportedConverterError(
                     f"converter {cls.__name__} is not supported since "
                     f"{type(from_d.unit)} is not an absolute unit;"
                     " conversion between composite relative units is invalid. "
@@ -637,20 +637,20 @@ class CompositeUnitConverter(metaclass=ABCMeta):
         for from_d in from_dimension.denominator:
             to_d = to_dimension.get_denominator(from_d.to_generic())
             if to_d is None:
-                raise InvalidUnitConversion(
+                raise UnitConversionError(
                     f"cannot convert from {from_dimension} to {to_dimension}"
                 )
             try:
                 converter = get_converter(type(from_d.unit))
-            except UndefinedConverter:
-                raise MissingConverterDependencies(
+            except UndefinedConverterError:
+                raise ConverterDependenciesError(
                     f"converter {cls.__name__} depends on a converter for "
                     f"{type(from_d.unit)}. Did you forget to register "
                     f" a converter for {type(from_d.unit)}? "
                 ) from None
             if not issubclass(converter, AbsoluteUnitConverter):
                 # NOTE: provide a link to documentation for the error.
-                raise UnsupportedConverter(
+                raise UnsupportedConverterError(
                     f"converter {cls.__name__} is not supported since "
                     f"{type(from_d.unit)} is not an absolute unit;"
                     " conversion between composite relative units is invalid. "

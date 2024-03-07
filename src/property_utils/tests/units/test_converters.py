@@ -28,7 +28,7 @@ from property_utils.units.converters import (
     AliasEnergyUnitConverter,
     AliasPowerUnitConverter,
 )
-from property_utils.exceptions.units.converter_types import InvalidUnitConversion
+from property_utils.exceptions.units.converter_types import UnitConversionError
 from property_utils.tests.utils import add_to, def_load_tests
 
 
@@ -74,11 +74,11 @@ class TestTemperatureUnitConverterConvertToReference(TestCase):
 
     @args({"value": 467, "from_descriptor": LengthUnit.CENTI_METER})
     def test_from_invalid_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": "231.2", "from_descriptor": TemperatureUnit.KELVIN})
     def test_with_invalid_value(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
 
 @add_to(TemperatureUnitConverter_test_suite)
@@ -106,7 +106,7 @@ class TestTemperatureUnitConverterConvertFromReference(TestCase):
 
     @args({"value": 467, "to_descriptor": LengthUnit.FOOT})
     def test_to_invalid_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
 
 @add_to(AbsoluteTemperatureUnitConverter_test_suite)

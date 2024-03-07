@@ -4,25 +4,25 @@ from property_utils.exceptions.base import (
 )
 
 
-class UndefinedConverter(PropertyUtilsException):
+class UndefinedConverterError(PropertyUtilsException):
     """
     A converter has not been defined.
     """
 
 
-class UnsupportedConverter(PropertyUtilsException):
+class UnsupportedConverterError(PropertyUtilsException):
     """
     A converter is not supported, i.e. a converter for exponentiated relative units.
     """
 
 
-class MissingConverterDependencies(PropertyUtilsException):
+class ConverterDependenciesError(PropertyUtilsException):
     """
     A converter is defined that depends on converters that have not been defined.
     """
 
 
-class InvalidUnitConversion(PropertyUtilsTypeError):
+class UnitConversionError(PropertyUtilsTypeError):
     """
     Invalid unit conversion; e.g. from TemperatureUnit to LengthUnit.
 

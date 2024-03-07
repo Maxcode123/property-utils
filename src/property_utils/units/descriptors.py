@@ -237,7 +237,7 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         is intended to be used to convert an unknown unit descriptor to a
         MeasurementUnit.
 
-        Raises WrongUnitDescriptorType if given descriptor cannot be translated
+        Raises UnitDescriptorTypeError if given descriptor cannot be translated
         to a MeasurementUnit instance.
 
         >>> class TemperatureUnit(MeasurementUnit):
@@ -392,7 +392,7 @@ class AliasMeasurementUnit(MeasurementUnit):
         Subclasses should implement aliased_generic_descriptor and alias_mapping
         methods.
 
-        Raises WrongUnitDescriptorType if given descriptor cannot be translated
+        Raises UnitDescriptorTypeError if given descriptor cannot be translated
         to an AliasMeasurementUnit  instance.
 
         >>> class PressureUnit(AliasMeasurementUnit):
@@ -598,7 +598,7 @@ class Dimension:
         This function does not serve as a constructor for Dimension, rather it
         is intended to be used to convert an unknown unit descriptor to a Dimension.
 
-        Raises WrongUnitDescriptorType if given descriptor cannot be translated
+        Raises UnitDescriptorTypeError if given descriptor cannot be translated
         to a Dimension instance.
         """
         if isinstance(descriptor, Dimension):
@@ -1036,7 +1036,7 @@ class CompositeDimension:
         is intended to be used to convert an unknown unit descriptor to a
         CompositeDimension.
 
-        Raises WrongUnitDescriptorType if given descriptor cannot be translated
+        Raises UnitDescriptorTypeError if given descriptor cannot be translated
         to a CompositeDimension instance.
         """
         if not isinstance(descriptor, CompositeDimension):
