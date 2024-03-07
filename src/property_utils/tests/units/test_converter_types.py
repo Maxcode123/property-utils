@@ -12,11 +12,11 @@ from property_utils.exceptions.base import (
     PropertyUtilsValueError,
 )
 from property_utils.exceptions.units.converter_types import (
-    UndefinedConverter,
-    InvalidUnitConversion,
+    UndefinedConverterError,
+    UnitConversionError,
     ConversionFunctionError,
-    MissingConverterDependencies,
-    UnsupportedConverter,
+    ConverterDependenciesError,
+    UnsupportedConverterError,
 )
 from property_utils.tests.utils import add_to, def_load_tests
 from property_utils.tests.units.data import (
@@ -66,7 +66,7 @@ class TestGetConverter(TestCase):
 
     @args({"generic": Unit3})
     def test_with_unregistered_generic(self):
-        self.assertResultRaises(UndefinedConverter)
+        self.assertResultRaises(UndefinedConverterError)
 
     @args({"generic": Unit2})
     def test_with_measurement_unit_type(self):
@@ -111,23 +111,23 @@ class TestAbsoluteUnitConverterConvert(TestCase):
 
     @args({"value": "12.34", "from_descriptor": Unit1.A, "to_descriptor": Unit1.a})
     def test_with_invalid_value(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 10, "from_descriptor": Unit2.B, "to_descriptor": Unit1.A})
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 2, "from_descriptor": Unit1.A, "to_descriptor": Unit2.b})
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 5, "from_descriptor": Unit1.A2, "to_descriptor": Unit1.A})
     def test_with_unregistered_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 9, "from_descriptor": Unit1.A, "to_descriptor": Unit1.A2})
     def test_with_unregistered_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 10.1, "from_descriptor": Unit1.A, "to_descriptor": Unit1.a})
     def test_valid_conversion_from_A_to_a(self):
@@ -145,19 +145,19 @@ class TestAbsoluteUnitConverterGetFactor(TestCase):
 
     @args({"from_descriptor": Unit2.B, "to_descriptor": Unit1.A})
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.a, "to_descriptor": Unit2.B})
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.A2, "to_descriptor": Unit1.A})
     def test_with_unregistered_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.A, "to_descriptor": Unit1.A2})
     def test_with_unregistered_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.A, "to_descriptor": Unit1.a})
     def test_from_A_to_a(self):
@@ -175,23 +175,23 @@ class TestRelativeUnitConverterConvert(TestCase):
 
     @args({"value": "0.98", "from_descriptor": Unit2.B, "to_descriptor": Unit2.B})
     def test_with_invalid_value(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 12, "from_descriptor": Unit1.A, "to_descriptor": Unit2.B})
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 9, "from_descriptor": Unit2.B, "to_descriptor": Unit1.A})
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 5, "from_descriptor": Unit2.B2, "to_descriptor": Unit2.B})
     def test_with_unregistered_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 4, "from_descriptor": Unit2.B, "to_descriptor": Unit2.B2})
     def test_with_unregistered_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 10, "from_descriptor": Unit2.B3, "to_descriptor": Unit2.B})
     def test_from_descriptor_with_erroneous_conversion_function(self):
@@ -219,27 +219,27 @@ class TestExponentiatedUnitConverterConvert(TestCase):
         {"value": "1", "from_descriptor": Unit1.A**3.14, "to_descriptor": Unit1.A**3.14}
     )
     def test_with_invalid_value(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 9, "from_descriptor": Unit1.A**2, "to_descriptor": Unit1.A**3.14})
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 2, "from_descriptor": Unit1.A**3.14, "to_descriptor": Unit1.A})
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args(
         {"value": -1, "from_descriptor": Unit1.A2**3.14, "to_descriptor": Unit1.A**3.14}
     )
     def test_with_unregistered_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args(
         {"value": 5, "from_descriptor": Unit1.A**3.14, "to_descriptor": Unit1.A2**3.14}
     )
     def test_with_unregistered_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args(
         {"value": 7, "from_descriptor": Unit1.A**3.14, "to_descriptor": Unit1.a**3.14}
@@ -261,19 +261,19 @@ class TestExponentiatedUnitConverterWithMissingDependenciesConvert(TestCase):
 
     @args({"value": "abs", "from_descriptor": Unit3.C**2, "to_descriptor": Unit3.c**2})
     def test_with_invalid_value(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 45, "from_descriptor": Unit2.B**2, "to_descriptor": Unit3.C**2})
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 12, "from_descriptor": Unit3.c**2, "to_descriptor": Unit2.B**2})
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 5, "from_descriptor": Unit3.C**2, "to_descriptor": Unit3.c**2})
     def test_from_C_to_c(self):
-        self.assertResultRaises(MissingConverterDependencies)
+        self.assertResultRaises(ConverterDependenciesError)
 
 
 @add_to(ExponentiatedUnitConverter_test_suite)
@@ -283,19 +283,19 @@ class TestUnsupportedExponentiatedUnitConverterConvert(TestCase):
 
     @args({"value": "plk", "from_descriptor": Unit2.B**4, "to_descriptor": Unit2.b**4})
     def test_with_invalid_value(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 15, "from_descriptor": Unit1.A**4, "to_descriptor": Unit2.b**4})
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 4, "from_descriptor": Unit2.B**4, "to_descriptor": Unit1.A**4})
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"value": 6, "from_descriptor": Unit2.B**4, "to_descriptor": Unit2.b**4})
     def test_from_B_to_b(self):
-        self.assertResultRaises(UnsupportedConverter)
+        self.assertResultRaises(UnsupportedConverterError)
 
 
 @add_to(ExponentiatedUnitConverter_test_suite)
@@ -305,19 +305,19 @@ class TestExponentiatedUnitConverterGetFactor(TestCase):
 
     @args({"from_descriptor": Unit2.B**3.14, "to_descriptor": Unit1.A**3.14})
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.a**3.14, "to_descriptor": Unit2.B**3.14})
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.A2**3.14, "to_descriptor": Unit1.A**3.14})
     def test_with_unregistered_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.A**3.14, "to_descriptor": Unit1.A2**3.14})
     def test_with_unregistered_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.A**3.14, "to_descriptor": Unit1.a**3.14})
     def test_from_A_to_a(self):
@@ -335,15 +335,15 @@ class TestExponentiatedUnitConverterWithMissingDependenciesGetFactor(TestCase):
 
     @args({"from_descriptor": Unit2.B**2, "to_descriptor": Unit3.C**2})
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit3.c**2, "to_descriptor": Unit2.B**2})
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit3.C**2, "to_descriptor": Unit3.c**2})
     def test_from_C_to_c(self):
-        self.assertResultRaises(MissingConverterDependencies)
+        self.assertResultRaises(ConverterDependenciesError)
 
 
 @add_to(ExponentiatedUnitConverter_test_suite)
@@ -353,15 +353,15 @@ class TestUnsupportedExponentiatedUnitConverterGetFactor(TestCase):
 
     @args({"from_descriptor": Unit1.A**4, "to_descriptor": Unit2.b**4})
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit2.B**4, "to_descriptor": Unit1.A**4})
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit2.B**4, "to_descriptor": Unit2.b**4})
     def test_from_B_to_b(self):
-        self.assertResultRaises(UnsupportedConverter)
+        self.assertResultRaises(UnsupportedConverterError)
 
 
 @add_to(CompositeUnitConverter_test_suite)
@@ -377,7 +377,7 @@ class TestCompositeUnitConverterConvert(TestCase):
         }
     )
     def test_with_invalid_value(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args(
         {
@@ -387,7 +387,7 @@ class TestCompositeUnitConverterConvert(TestCase):
         }
     )
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args(
         {
@@ -397,7 +397,7 @@ class TestCompositeUnitConverterConvert(TestCase):
         }
     )
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args(
         {
@@ -407,7 +407,7 @@ class TestCompositeUnitConverterConvert(TestCase):
         }
     )
     def test_with_unregistered_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args(
         {
@@ -417,7 +417,7 @@ class TestCompositeUnitConverterConvert(TestCase):
         }
     )
     def test_with_unregistered_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args(
         {
@@ -463,7 +463,7 @@ class TestCompositeUnitConverterWithMissingDependenciesConvert(TestCase):
         }
     )
     def test_with_invalid_value(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args(
         {
@@ -473,7 +473,7 @@ class TestCompositeUnitConverterWithMissingDependenciesConvert(TestCase):
         }
     )
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args(
         {
@@ -483,7 +483,7 @@ class TestCompositeUnitConverterWithMissingDependenciesConvert(TestCase):
         }
     )
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args(
         {
@@ -493,7 +493,7 @@ class TestCompositeUnitConverterWithMissingDependenciesConvert(TestCase):
         }
     )
     def test_from_AC_to_ac(self):
-        self.assertResultRaises(MissingConverterDependencies)
+        self.assertResultRaises(ConverterDependenciesError)
 
 
 @add_to(CompositeUnitConverter_test_suite)
@@ -509,7 +509,7 @@ class TestUnsupportedCompositeUnitConverterConvert(TestCase):
         }
     )
     def test_with_invalid_value(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args(
         {
@@ -519,7 +519,7 @@ class TestUnsupportedCompositeUnitConverterConvert(TestCase):
         }
     )
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args(
         {
@@ -529,7 +529,7 @@ class TestUnsupportedCompositeUnitConverterConvert(TestCase):
         }
     )
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args(
         {
@@ -539,7 +539,7 @@ class TestUnsupportedCompositeUnitConverterConvert(TestCase):
         }
     )
     def test_from_AB_to_ab(self):
-        self.assertResultRaises(UnsupportedConverter)
+        self.assertResultRaises(UnsupportedConverterError)
 
 
 @add_to(CompositeUnitConverter_test_suite)
@@ -613,19 +613,19 @@ class TestCompositeUnitConverterGetFactor(TestCase):
 
     @args({"from_descriptor": Unit3.C * Unit2.B, "to_descriptor": Unit1.A * Unit4.D})
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.A * Unit4.D, "to_descriptor": Unit3.C * Unit1.A})
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.A2 * Unit4.D, "to_descriptor": Unit1.A * Unit4.D})
     def test_with_unregistered_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.A * Unit4.D, "to_descriptor": Unit1.A * Unit4.D2})
     def test_with_unregistered_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.A * Unit4.D, "to_descriptor": Unit1.a * Unit4.d})
     def test_valid_conversion_from_AD_to_ad(self):
@@ -647,15 +647,15 @@ class TestCompositeUnitConverterWithMissingDependenciesGetFactor(TestCase):
 
     @args({"from_descriptor": Unit1.A * Unit2.B, "to_descriptor": Unit1.A * Unit3.C})
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.A * Unit3.C, "to_descriptor": Unit1.A * Unit2.B})
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.A * Unit3.C, "to_descriptor": Unit1.a * Unit3.c})
     def test_from_AC_to_ac(self):
-        self.assertResultRaises(MissingConverterDependencies)
+        self.assertResultRaises(ConverterDependenciesError)
 
 
 @add_to(CompositeUnitConverter_test_suite)
@@ -665,15 +665,15 @@ class TestUnsupportedCompositeUnitConverterGetFactor(TestCase):
 
     @args({"from_descriptor": Unit1.A * Unit3.C, "to_descriptor": Unit1.A * Unit2.B})
     def test_with_invalid_from_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.A * Unit2.B, "to_descriptor": Unit1.A * Unit3.C})
     def test_with_invalid_to_descriptor(self):
-        self.assertResultRaises(InvalidUnitConversion)
+        self.assertResultRaises(UnitConversionError)
 
     @args({"from_descriptor": Unit1.A * Unit2.B, "to_descriptor": Unit1.a * Unit2.b})
     def test_from_AB_to_ab(self):
-        self.assertResultRaises(UnsupportedConverter)
+        self.assertResultRaises(UnsupportedConverterError)
 
 
 if __name__ == "__main__":
