@@ -1,20 +1,20 @@
 from property_utils.exceptions.base import PropertyUtilsTypeError
 
 
-class InvalidDescriptorBinaryOperation(PropertyUtilsTypeError):
+class DescriptorBinaryOperationError(PropertyUtilsTypeError):
     """
     Occurs in multiplication or division between a generic unit descriptor and a unit
     descriptor.
     """
 
 
-class InvalidDescriptorExponent(PropertyUtilsTypeError):
+class DescriptorExponentError(PropertyUtilsTypeError):
     """
     Invalid exponent, i.e. non-numeric.
     """
 
 
-class WrongUnitDescriptorType(PropertyUtilsTypeError):
+class UnitDescriptorTypeError(PropertyUtilsTypeError):
     """
     Expected different unit descriptor type.
     """
