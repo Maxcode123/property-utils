@@ -6,6 +6,11 @@ from dataclasses import dataclass
 from typing import Type, Optional
 from math import isclose
 
+try:
+    from typing import Self  # Python > 3.10 pylint: disable=ungrouped-imports
+except ImportError:
+    from typing_extensions import Self  # Python <= 3.10
+
 from property_utils.units.descriptors import (
     MeasurementUnit,
     Dimension,
@@ -262,7 +267,7 @@ class Property:
             "numerator must be numeric or Property. "
         )
 
-    def __add__(self, other) -> "Property":
+    def __add__(self, other) -> Self:
         """
         Defines addition between properties.
 
@@ -272,10 +277,10 @@ class Property:
         >>> x1 + x2
         <Property: 20 m>
         """
-        if not isinstance(other, Property):
+        if not isinstance(other, self.__class__):
             raise PropertyBinaryOperationError(
-                f"cannot add {other} to ({self}); {other} is not a Property; "
-                "only properties can be added to properties. "
+                f"cannot add {other} to ({self}); {other} is not a {self.__class__}; "
+                "only same properties can be added to each other. "
             )
         if not self.unit.isinstance(other.unit.to_generic()):
             raise PropertyBinaryOperationError(
@@ -294,9 +299,9 @@ class Property:
             raise PropertyBinaryOperationError(
                 f"cannot add ({other}) to ({self});", exc
             ) from None
-        return Property(self.value + prop.value, self.unit)
+        return self.__class__(self.value + prop.value, self.unit)
 
-    def __radd__(self, other) -> "Property":
+    def __radd__(self, other) -> Self:
         """
         Defines right addition between properties.
 
@@ -308,7 +313,7 @@ class Property:
         """
         return self.__add__(other)
 
-    def __sub__(self, other) -> "Property":
+    def __sub__(self, other) -> Self:
         """
         Defines subtraction between properties.
 
@@ -318,10 +323,11 @@ class Property:
         >>> t1 - t2
         <Property: 1.0 min>
         """
-        if not isinstance(other, Property):
+        if not isinstance(other, self.__class__):
             raise PropertyBinaryOperationError(
-                f"cannot subtract {other} from ({self}); {other} is not a Property; "
-                "only properties can be subtracted from properties. "
+                f"cannot subtract {other} from ({self}); {other} is not a "
+                f"{self.__class__}; only same properties can be subtracted from each "
+                "other. "
             )
         if not self.unit.isinstance(other.unit.to_generic()):
             raise PropertyBinaryOperationError(
@@ -340,9 +346,9 @@ class Property:
             raise PropertyBinaryOperationError(
                 f"cannot subtract ({other}) from ({self});", exc
             ) from None
-        return Property(self.value - prop.value, self.unit)
+        return self.__class__(self.value - prop.value, self.unit)
 
-    def __rsub__(self, other) -> "Property":
+    def __rsub__(self, other) -> Self:
         """
         Defines right subtraction between properties.
 
@@ -352,10 +358,11 @@ class Property:
         >>> t1 - t2
         <Property: 1.0 min>
         """
-        if not isinstance(other, Property):
+        if not isinstance(other, self.__class__):
             raise PropertyBinaryOperationError(
-                f"cannot subtract {self} from ({other}); {other} is not a Property; "
-                "only properties can be subtracted from properties. "
+                f"cannot subtract {self} from ({other}); {other} is not a "
+                f"{self.__class__}; only same properties can be subtracted from each "
+                "other. "
             )
         if not self.unit.isinstance(other.unit.to_generic()):
             raise PropertyBinaryOperationError(
