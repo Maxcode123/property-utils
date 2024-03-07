@@ -20,9 +20,9 @@ except ImportError:
 
 
 from property_utils.exceptions.units.descriptors import (
-    InvalidDescriptorBinaryOperation,
-    InvalidDescriptorExponent,
-    WrongUnitDescriptorType,
+    DescriptorBinaryOperationError,
+    DescriptorExponentError,
+    UnitDescriptorTypeError,
 )
 
 
@@ -154,7 +154,7 @@ class MeasurementUnitMeta(EnumMeta):
                     GenericDimension(other),
                 ]
             )
-        raise InvalidDescriptorBinaryOperation(f"cannot multiply {cls} with {other}. ")
+        raise DescriptorBinaryOperationError(f"cannot multiply {cls} with {other}. ")
 
     def __truediv__(cls, other: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
@@ -181,7 +181,7 @@ class MeasurementUnitMeta(EnumMeta):
                 numerator=[GenericDimension(cls)],
                 denominator=[GenericDimension(other)],
             )
-        raise InvalidDescriptorBinaryOperation(f"cannot divide {cls} with {other}. ")
+        raise DescriptorBinaryOperationError(f"cannot divide {cls} with {other}. ")
 
     def __pow__(cls, power: float) -> "GenericDimension":
         """
@@ -250,7 +250,7 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
             return descriptor.unit
         if isinstance(descriptor, MeasurementUnit):
             return descriptor
-        raise WrongUnitDescriptorType(
+        raise UnitDescriptorTypeError(
             f"cannot create MeasurementUnit from descriptor: {descriptor}"
         )
 
@@ -310,7 +310,7 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
             return Dimension(self) * Dimension(descriptor)
         if isinstance(descriptor, (Dimension, CompositeDimension)):
             return Dimension(self) * descriptor
-        raise InvalidDescriptorBinaryOperation(
+        raise DescriptorBinaryOperationError(
             f"cannot multiply {self} with {descriptor}. "
         )
 
@@ -328,7 +328,7 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
             return Dimension(self) / Dimension(descriptor)
         if isinstance(descriptor, (Dimension, CompositeDimension)):
             return Dimension(self) / descriptor
-        raise InvalidDescriptorBinaryOperation(
+        raise DescriptorBinaryOperationError(
             f"cannot divide {self} with {descriptor}. "
         )
 
@@ -407,7 +407,7 @@ class AliasMeasurementUnit(MeasurementUnit):
             return descriptor.unit
         if isinstance(descriptor, AliasMeasurementUnit):
             return descriptor
-        raise WrongUnitDescriptorType(
+        raise UnitDescriptorTypeError(
             f"cannot create AliasMeasurementUnit from descriptor {descriptor}"
         )
 
@@ -443,7 +443,7 @@ class GenericDimension:
 
     def __init__(self, unit_type: MeasurementUnitType, power: float = 1) -> None:
         if not isinstance(power, (float, int)):
-            raise InvalidDescriptorExponent(
+            raise DescriptorExponentError(
                 f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
                 " expected float or int. "
             )
@@ -495,9 +495,7 @@ class GenericDimension:
             return GenericCompositeDimension(
                 numerator=[self, GenericDimension(generic)]
             )
-        raise InvalidDescriptorBinaryOperation(
-            f"cannot multiply {self} with {generic}. "
-        )
+        raise DescriptorBinaryOperationError(f"cannot multiply {self} with {generic}. ")
 
     def __truediv__(
         self, generic: GenericUnitDescriptor
@@ -522,7 +520,7 @@ class GenericDimension:
             return GenericCompositeDimension(
                 numerator=[self], denominator=[GenericDimension(generic)]
             )
-        raise InvalidDescriptorBinaryOperation(f"cannot divide {self} with {generic}. ")
+        raise DescriptorBinaryOperationError(f"cannot divide {self} with {generic}. ")
 
     def __pow__(self, power: float) -> "GenericDimension":
         """
@@ -532,7 +530,7 @@ class GenericDimension:
         >>> assert type((TimeUnit**2)**3) == GenericDimension
         """
         if not isinstance(power, (float, int)):
-            raise InvalidDescriptorExponent(
+            raise DescriptorExponentError(
                 f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
                 " expected float or int. "
             )
@@ -584,7 +582,7 @@ class Dimension:
 
     def __init__(self, unit: MeasurementUnit, power: float = 1) -> None:
         if not isinstance(power, (float, int)):
-            raise InvalidDescriptorExponent(
+            raise DescriptorExponentError(
                 f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
                 " expected float or int. "
             )
@@ -607,7 +605,7 @@ class Dimension:
             return descriptor
         if isinstance(descriptor, MeasurementUnit):
             return Dimension(descriptor)
-        raise WrongUnitDescriptorType(
+        raise UnitDescriptorTypeError(
             f"cannot create Dimension from descriptor: {descriptor}"
         )
 
@@ -675,7 +673,7 @@ class Dimension:
             return CompositeDimension(numerator=[self, descriptor])
         if isinstance(descriptor, MeasurementUnit):
             return CompositeDimension(numerator=[self, Dimension(descriptor)])
-        raise InvalidDescriptorBinaryOperation(
+        raise DescriptorBinaryOperationError(
             f"cannot multiply {self} with {descriptor}. "
         )
 
@@ -700,7 +698,7 @@ class Dimension:
             return CompositeDimension(
                 numerator=[self], denominator=[Dimension(descriptor)]
             )
-        raise InvalidDescriptorBinaryOperation(
+        raise DescriptorBinaryOperationError(
             f"cannot divide {self} with  {descriptor}. "
         )
 
@@ -713,7 +711,7 @@ class Dimension:
         >>> assert type((TimeUnit.SECOND**2)**3) == Dimension
         """
         if not isinstance(power, (float, int)):
-            raise InvalidDescriptorExponent(
+            raise DescriptorExponentError(
                 f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
                 " expected float or int. "
             )
@@ -918,9 +916,7 @@ class GenericCompositeDimension:
             return GenericCompositeDimension(
                 numerator=numerator, denominator=denominator
             )
-        raise InvalidDescriptorBinaryOperation(
-            f"cannot multiply {self} with {generic}. "
-        )
+        raise DescriptorBinaryOperationError(f"cannot multiply {self} with {generic}. ")
 
     def __truediv__(
         self, generic: GenericUnitDescriptor
@@ -952,7 +948,7 @@ class GenericCompositeDimension:
             return GenericCompositeDimension(
                 numerator=numerator, denominator=denominator
             )
-        raise InvalidDescriptorBinaryOperation(f"cannot divide {self} with {generic}. ")
+        raise DescriptorBinaryOperationError(f"cannot divide {self} with {generic}. ")
 
     def __pow__(self, power: float) -> "GenericCompositeDimension":
         """
@@ -965,7 +961,7 @@ class GenericCompositeDimension:
         <GenericCompositeDimension: (TemperatureUnit^2) / (TimeUnit^2)>
         """
         if not isinstance(power, (float, int)):
-            raise InvalidDescriptorExponent(
+            raise DescriptorExponentError(
                 f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
                 " expected float or int. "
             )
@@ -1044,7 +1040,7 @@ class CompositeDimension:
         to a CompositeDimension instance.
         """
         if not isinstance(descriptor, CompositeDimension):
-            raise WrongUnitDescriptorType(
+            raise UnitDescriptorTypeError(
                 f"cannot create CompositeDimension from descriptor {descriptor}"
             )
         return descriptor
@@ -1272,7 +1268,7 @@ class CompositeDimension:
         if isinstance(descriptor, MeasurementUnit):
             numerator.append(Dimension(descriptor))
             return CompositeDimension(numerator=numerator, denominator=denominator)
-        raise InvalidDescriptorBinaryOperation(
+        raise DescriptorBinaryOperationError(
             f"cannot multiply {self} with {descriptor}. "
         )
 
@@ -1300,7 +1296,7 @@ class CompositeDimension:
         if isinstance(descriptor, MeasurementUnit):
             denominator.append(Dimension(descriptor))
             return CompositeDimension(numerator=numerator, denominator=denominator)
-        raise InvalidDescriptorBinaryOperation(
+        raise DescriptorBinaryOperationError(
             f"cannot divide {self} with {descriptor}. "
         )
 
@@ -1317,7 +1313,7 @@ class CompositeDimension:
         <CompositeDimension: (C^2) / (hr^2)>
         """
         if not isinstance(power, (float, int)):
-            raise InvalidDescriptorExponent(
+            raise DescriptorExponentError(
                 f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
                 " expected float or int. "
             )

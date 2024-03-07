@@ -4,7 +4,7 @@ from abc import abstractmethod
 from unittest_extensions import TestCase
 
 from property_utils.units.descriptors import Descriptor
-from property_utils.exceptions.units.descriptors import InvalidDescriptorBinaryOperation
+from property_utils.exceptions.units.descriptors import DescriptorBinaryOperationError
 
 
 class TestDescriptor(TestCase):
@@ -20,11 +20,9 @@ class TestDescriptor(TestCase):
 
     def assert_invalid(self, expected_regex=None):
         if expected_regex is None:
-            self.assertResultRaises(InvalidDescriptorBinaryOperation)
+            self.assertResultRaises(DescriptorBinaryOperationError)
         else:
-            self.assertResultRaisesRegex(
-                InvalidDescriptorBinaryOperation, expected_regex
-            )
+            self.assertResultRaisesRegex(DescriptorBinaryOperationError, expected_regex)
 
 
 class TestDescriptorBinaryOperation(TestDescriptor):

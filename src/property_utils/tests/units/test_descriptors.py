@@ -12,9 +12,8 @@ from property_utils.units.descriptors import (
     GenericCompositeDimension,
 )
 from property_utils.exceptions.units.descriptors import (
-    InvalidDescriptorBinaryOperation,
-    InvalidDescriptorExponent,
-    WrongUnitDescriptorType,
+    DescriptorExponentError,
+    UnitDescriptorTypeError,
 )
 from property_utils.tests.utils import add_to, def_load_tests, ids
 from property_utils.tests.units.descriptors_utils import (
@@ -170,7 +169,7 @@ class TestMeasurementUnitMetaExponentiation(TestDescriptor):
 
     @args({"value": None})
     def test_with_none(self):
-        self.assertResultRaises(InvalidDescriptorExponent)
+        self.assertResultRaises(DescriptorExponentError)
 
 
 @add_to(MeasurementUnit_test_suite)
@@ -197,19 +196,19 @@ class TestMeasurementUnitFromDescriptor(TestDescriptor):
 
     @args({"descriptor": composite_dimension()})
     def test_with_composite_dimension(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": Unit1})
     def test_with_measurement_unit_type(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": generic_dimension_1()})
     def test_with_generic_dimension(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": generic_composite_dimension()})
     def test_with_generic_composite_dimension(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
 
 @add_to(MeasurementUnit_test_suite)
@@ -376,7 +375,7 @@ class TestMeasurementUnitExponentiation(TestDescriptor):
 
     @args({"value": None})
     def test_with_none(self):
-        self.assertResultRaises(InvalidDescriptorExponent)
+        self.assertResultRaises(DescriptorExponentError)
 
 
 @add_to(AliasMeasurementUnit_test_suite)
@@ -386,7 +385,7 @@ class TestAliasMeasurementUnitFromDescriptor(TestDescriptor):
 
     @args({"descriptor": Unit1.A})
     def test_with_measurement_unit(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": Unit3.C})
     def test_with_aliased_measurement_unit(self):
@@ -398,7 +397,7 @@ class TestAliasMeasurementUnitFromDescriptor(TestDescriptor):
 
     @args({"descriptor": dimension_1()})
     def test_with_dimension(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": dimension_3()})
     def test_with_aliased_dimension(self):
@@ -406,19 +405,19 @@ class TestAliasMeasurementUnitFromDescriptor(TestDescriptor):
 
     @args({"descriptor": composite_dimension()})
     def test_with_composite_dimension(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": Unit2})
     def test_with_measurement_unit_type(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": generic_dimension_1()})
     def test_with_generic_dimension(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": generic_composite_dimension()})
     def test_with_generic_composite_dimension(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
 
 @add_to(AliasMeasurementUnit_test_suite)
@@ -590,7 +589,7 @@ class TestAliasMeasurementUnitExponentiation(TestDescriptor):
 
     @args({"value": None})
     def test_with_none(self):
-        self.assertResultRaises(InvalidDescriptorExponent)
+        self.assertResultRaises(DescriptorExponentError)
 
 
 @add_to(AliasMeasurementUnit_test_suite)
@@ -745,7 +744,7 @@ class TestGenericDimensionExponentiation(TestDescriptor):
 
     @args({"value": None})
     def test_with_none(self):
-        self.assertResultRaises(InvalidDescriptorExponent)
+        self.assertResultRaises(DescriptorExponentError)
 
 
 @add_to(GenericCompositeDimension_test_suite)
@@ -773,7 +772,7 @@ class TestExponentiatedGenericDimensionExponentiation(TestDescriptor):
 
     @args({"value": None})
     def test_with_none(self):
-        self.assertResultRaises(InvalidDescriptorExponent)
+        self.assertResultRaises(DescriptorExponentError)
 
 
 @add_to(GenericCompositeDimension_test_suite)
@@ -843,19 +842,19 @@ class TestDimensionFromDescriptor(TestDescriptor):
 
     @args({"descriptor": composite_dimension()})
     def test_with_composite_dimension(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": Unit2})
     def test_with_measurement_unit_type(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": generic_dimension_1()})
     def test_with_generic_dimension(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": generic_composite_dimension()})
     def test_with_generic_composite_dimension(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
 
 @add_to(Dimension_test_suite)
@@ -976,7 +975,7 @@ class TestExponentiatedDimensionExponentiation(TestDescriptor):
 
     @args({"value": None})
     def test_with_none(self):
-        self.assertResultRaises(InvalidDescriptorExponent)
+        self.assertResultRaises(DescriptorExponentError)
 
 
 @add_to(Dimension_test_suite)
@@ -1240,7 +1239,7 @@ class TestGenericCompositeDimensionExponentiation(TestDescriptor):
 
     @args({"value": "123"})
     def test_with_invalid_value(self):
-        self.assertResultRaises(InvalidDescriptorExponent)
+        self.assertResultRaises(DescriptorExponentError)
 
     @args({"value": 1})
     def test_with_one(self):
@@ -1418,11 +1417,11 @@ class TestCompositeDimensionFromDescriptor(TestDescriptor):
 
     @args({"descriptor": Unit1.A})
     def test_with_measurement_unit(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": dimension_1()})
     def test_with_dimension(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": composite_dimension()})
     def test_with_composite_dimension(self):
@@ -1434,15 +1433,15 @@ class TestCompositeDimensionFromDescriptor(TestDescriptor):
 
     @args({"descriptor": Unit1})
     def test_with_measurement_unit_type(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": generic_dimension_1()})
     def test_with_generic_dimension(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
     @args({"descriptor": generic_composite_dimension()})
     def test_with_generic_composite_dimension(self):
-        self.assertResultRaises(WrongUnitDescriptorType)
+        self.assertResultRaises(UnitDescriptorTypeError)
 
 
 @add_to(CompositeDimension_test_suite)
@@ -1816,7 +1815,7 @@ class TestCompositeDimensionExponentiation(TestDescriptor):
 
     @args({"value": "123"})
     def test_with_invalid_value(self):
-        self.assertResultRaises(InvalidDescriptorExponent)
+        self.assertResultRaises(DescriptorExponentError)
 
     @args({"value": 1})
     def test_with_one(self):
