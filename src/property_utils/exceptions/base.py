@@ -15,3 +15,9 @@ class PropertyUtilsTypeError(PropertyUtilsException):
     """
     Wrong argument type.
     """
+
+
+class PropertyUtilsValidationError(PropertyUtilsException):
+    """
+    An object is created with invalid values.
+    """

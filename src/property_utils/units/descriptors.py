@@ -193,10 +193,10 @@ class MeasurementUnitMeta(EnumMeta):
         return GenericDimension(cls, power)
 
     def __str__(cls) -> str:
-        return f"<MeasurementUnit: {cls.__name__}>"
+        return cls.__name__
 
     def __repr__(cls) -> str:
-        return str(cls)
+        return f"<MeasurementUnit: {str(cls)}>"
 
 
 class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):

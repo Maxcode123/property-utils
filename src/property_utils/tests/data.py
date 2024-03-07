@@ -85,6 +85,10 @@ class Unit4Converter(AbsoluteUnitConverter):
     conversion_map = {Unit4.D: 1, Unit4.d: 5}
 
 
+@register_converter(Unit1**2)
+class Unit1_2Converter(ExponentiatedUnitConverter): ...
+
+
 @register_converter(Unit1**3.14)
 class Unit1_314Converter(ExponentiatedUnitConverter): ...
 
