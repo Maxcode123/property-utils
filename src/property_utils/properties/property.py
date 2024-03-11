@@ -97,7 +97,7 @@ class Property:
             ) from None
         return isclose(self.value, prop.value, rel_tol=rel_tol, abs_tol=abs_tol)
 
-    def to_si(self) -> "Property":
+    def to_si(self) -> Self:
         """
         Create a new property with SI units.
 
@@ -121,7 +121,7 @@ class Property:
             f"cannot convert Property to SI; 'unit' is invalid: {self.unit}. "
         )
 
-    def to_unit(self, unit: UnitDescriptor) -> "Property":
+    def to_unit(self, unit: UnitDescriptor) -> Self:
         """
         Create a new property with specified unit.
 
@@ -154,9 +154,9 @@ class Property:
             value = converter.convert(self.value, self.unit, unit)
         except UnitConversionError as exc:
             raise exc from None
-        return Property(value=value, unit=unit)
+        return self.__class__(value=value, unit=unit)
 
-    def __neg__(self) -> "Property":
+    def __neg__(self) -> Self:
         """
         Defines negation of properties.
 
@@ -165,7 +165,7 @@ class Property:
         >>> -T
         <Property: -3 °C>
         """
-        return Property(-self.value, self.unit)
+        return self.__class__(-self.value, self.unit)
 
     def __mul__(self, other) -> "Property":
         """
