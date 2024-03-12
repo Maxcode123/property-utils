@@ -13,6 +13,8 @@ from property_utils.units.converter_types import (
     ExponentiatedUnitConverter,
     CompositeUnitConverter,
 )
+from property_utils.properties.validated_property import ValidatedProperty
+from property_utils.exceptions.properties.property import PropertyValidationError
 
 
 class Unit1(MeasurementUnit):
@@ -177,3 +179,20 @@ def generic_composite_dimension() -> GenericCompositeDimension:
     return GenericCompositeDimension(
         [generic_dimension_1(2), generic_dimension_2()], [generic_dimension_3(3)]
     )
+
+
+class BiggerThan5Prop(ValidatedProperty):
+    generic_unit_descriptor = Unit1
+
+    def validate_value(self, value: float) -> None:
+        if value <= 5:
+            raise PropertyValidationError
+
+
+class PositiveProp(ValidatedProperty):
+    generic_unit_descriptor = Unit1
+    default_units = Unit1.A2
+
+    def validate_value(self, value: float) -> None:
+        if value <= 0:
+            raise PropertyValidationError

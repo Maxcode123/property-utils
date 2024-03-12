@@ -6,7 +6,7 @@ from property_utils.properties.property import Property
 from property_utils.exceptions.properties.property import (
     PropertyBinaryOperationError,
     PropertyUnitConversionError,
-    PropertyUtilsValidationError,
+    PropertyValidationError,
 )
 from property_utils.exceptions.units.converter_types import UnitConversionError
 from property_utils.exceptions.base import PropertyUtilsException
@@ -39,7 +39,7 @@ class TestProperty(TestCase):
         self._assert_error(PropertyBinaryOperationError, expected_regex)
 
     def assert_validation_error(self, expected_regex=None):
-        self._assert_error(PropertyUtilsValidationError, expected_regex)
+        self._assert_error(PropertyValidationError, expected_regex)
 
     def assert_result(self, result_str):
         self.assertResultIsNot(self.prop())
