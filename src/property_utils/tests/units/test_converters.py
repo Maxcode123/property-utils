@@ -60,7 +60,7 @@ class TestTemperatureUnitConverterConvertToReference(TestCase):
             value, from_descriptor, TemperatureUnit.CELCIUS
         )
 
-    @args({"value": 300, "from_descriptor": TemperatureUnit.KELVIN})
+    @args({"value": 300, "from_descriptor": AbsoluteTemperatureUnit.KELVIN})
     def test_from_kelvin(self):
         self.assertResultAlmost(26.85, 2)
 
@@ -68,7 +68,7 @@ class TestTemperatureUnitConverterConvertToReference(TestCase):
     def test_from_fahrenheit(self):
         self.assertResultAlmost(142.905, 2)
 
-    @args({"value": 467, "from_descriptor": TemperatureUnit.RANKINE})
+    @args({"value": 467, "from_descriptor": AbsoluteTemperatureUnit.RANKINE})
     def test_from_rankine(self):
         self.assertResultAlmost(-13.705, 2)
 
@@ -76,7 +76,7 @@ class TestTemperatureUnitConverterConvertToReference(TestCase):
     def test_from_invalid_descriptor(self):
         self.assertResultRaises(UnitConversionError)
 
-    @args({"value": "231.2", "from_descriptor": TemperatureUnit.KELVIN})
+    @args({"value": "231.2", "from_descriptor": AbsoluteTemperatureUnit.KELVIN})
     def test_with_invalid_value(self):
         self.assertResultRaises(UnitConversionError)
 
@@ -92,7 +92,7 @@ class TestTemperatureUnitConverterConvertFromReference(TestCase):
     def test_to_celcius(self):
         self.assertResult(100)
 
-    @args({"value": 10, "to_descriptor": TemperatureUnit.KELVIN})
+    @args({"value": 10, "to_descriptor": AbsoluteTemperatureUnit.KELVIN})
     def test_to_kelvin(self):
         self.assertResult(283.15)
 
@@ -100,7 +100,7 @@ class TestTemperatureUnitConverterConvertFromReference(TestCase):
     def test_to_fahrenheit(self):
         self.assertResult(212)
 
-    @args({"value": 67.98, "to_descriptor": TemperatureUnit.RANKINE})
+    @args({"value": 67.98, "to_descriptor": AbsoluteTemperatureUnit.RANKINE})
     def test_to_rankine(self):
         self.assertResultAlmost(614.03, 2)
 
@@ -124,6 +124,14 @@ class TestAbsoluteTemperatureUnitConverterConvertToReference(TestCase):
     def test_from_rankine(self):
         self.assertResultAlmost(450 / 1.8)
 
+    @args({"value": 25, "from_descriptor": TemperatureUnit.CELCIUS})
+    def test_from_celcius(self):
+        self.assertResult(298.15)
+
+    @args({"value": 212, "from_descriptor": TemperatureUnit.FAHRENHEIT})
+    def test_from_fahrenheit(self):
+        self.assertResultAlmost(373.15)
+
 
 @add_to(AbsoluteTemperatureUnitConverter_test_suite)
 class TestAbsoluteTemperatureUnitConverterConvertFromReference(TestCase):
@@ -139,6 +147,14 @@ class TestAbsoluteTemperatureUnitConverterConvertFromReference(TestCase):
     @args({"value": 200.50, "to_descriptor": AbsoluteTemperatureUnit.RANKINE})
     def test_to_rankine(self):
         self.assertResult(200.50 * 1.8)
+
+    @args({"value": 10.5, "to_descriptor": TemperatureUnit.CELCIUS})
+    def test_to_celcius(self):
+        self.assertResult(-262.65)
+
+    @args({"value": 400, "to_descriptor": TemperatureUnit.FAHRENHEIT})
+    def test_to_fahrenheit(self):
+        self.assertResultAlmost(260.33)
 
 
 @add_to(LengthUnitConverter_test_suite)

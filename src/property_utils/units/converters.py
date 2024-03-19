@@ -5,6 +5,13 @@ well as some converters for common exponentiated units (area and volume).
 
 from enum import Enum
 
+try:
+    from typing import override  # Python < 3.12
+except ImportError:
+    from typing_extensions import override  # Python >= 3.12
+
+from property_utils.units.descriptors import UnitDescriptor
+from property_utils.exceptions.units.converter_types import UnitConversionError
 from property_utils.units.units import (
     TemperatureUnit,
     AbsoluteTemperatureUnit,
@@ -94,15 +101,15 @@ class TemperatureUnitConverter(
     reference_unit = TemperatureUnit.CELCIUS
     conversion_map = {
         TemperatureUnit.CELCIUS: lambda t: t,
-        TemperatureUnit.KELVIN: lambda t: t - 273.15,
+        AbsoluteTemperatureUnit.KELVIN: lambda t: t - 273.15,
         TemperatureUnit.FAHRENHEIT: lambda t: (t - 32) / 1.8,
-        TemperatureUnit.RANKINE: lambda t: (t / 1.8) - 273.15,
+        AbsoluteTemperatureUnit.RANKINE: lambda t: (t / 1.8) - 273.15,
     }
     reference_conversion_map = {
         TemperatureUnit.CELCIUS: lambda t: t,
-        TemperatureUnit.KELVIN: lambda t: t + 273.15,
+        AbsoluteTemperatureUnit.KELVIN: lambda t: t + 273.15,
         TemperatureUnit.FAHRENHEIT: lambda t: (t * 1.8) + 32,
-        TemperatureUnit.RANKINE: lambda t: (t + 273.15) * 1.8,
+        AbsoluteTemperatureUnit.RANKINE: lambda t: (t + 273.15) * 1.8,
     }
 
 
@@ -120,6 +127,24 @@ class AbsoluteTemperatureUnitConverter(AbsoluteUnitConverter):
         AbsoluteTemperatureUnit.KELVIN: 1,
         AbsoluteTemperatureUnit.RANKINE: 1.8,
     }
+
+    @override
+    @classmethod
+    def convert(
+        cls,
+        value: float,
+        from_descriptor: UnitDescriptor,
+        to_descriptor: UnitDescriptor,
+    ) -> float:
+        if not isinstance(value, (float, int)):
+            raise UnitConversionError(f"invalid 'value': {value}; expected numeric. ")
+        if from_descriptor.isinstance(TemperatureUnit) or to_descriptor.isinstance(
+            TemperatureUnit
+        ):
+            return TemperatureUnitConverter.convert(
+                value, from_descriptor, to_descriptor
+            )
+        return value * cls.get_factor(from_descriptor, to_descriptor)
 
 
 @register_converter(LengthUnit)

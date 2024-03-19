@@ -1,5 +1,6 @@
 # pylint: disable=missing-class-docstring
 from property_utils.units.descriptors import (
+    GenericUnitDescriptor,
     MeasurementUnit,
     AliasMeasurementUnit,
     GenericCompositeDimension,
@@ -36,13 +37,14 @@ class NonDimensionalUnit(MeasurementUnit):
 
 class TemperatureUnit(MeasurementUnit):
     CELCIUS = "°C"
-    KELVIN = "K"
     FAHRENHEIT = "°F"
-    RANKINE = "°R"
 
     @classmethod
-    def si(cls) -> "TemperatureUnit":
-        return cls.KELVIN
+    def si(cls) -> "AbsoluteTemperatureUnit":
+        return AbsoluteTemperatureUnit.KELVIN
+
+    def isinstance(self, generic: GenericUnitDescriptor) -> bool:
+        return super().isinstance(generic) or generic == AbsoluteTemperatureUnit
 
 
 class AbsoluteTemperatureUnit(MeasurementUnit):
@@ -52,6 +54,9 @@ class AbsoluteTemperatureUnit(MeasurementUnit):
     @classmethod
     def si(cls) -> "AbsoluteTemperatureUnit":
         return cls.KELVIN
+
+    def isinstance(self, generic: GenericUnitDescriptor) -> bool:
+        return super().isinstance(generic) or generic == TemperatureUnit
 
 
 class LengthUnit(MeasurementUnit):

@@ -74,9 +74,9 @@ class Property:
         Raises `PropertyBinaryOperationError` if an error occurs during conversion
         of other's units.
 
-        >>> from property_utils.units.units import TemperatureUnit, LengthUnit
-        >>> T1 = Property(33.333333, TemperatureUnit.KELVIN)
-        >>> T2 = Property(100/3, TemperatureUnit.KELVIN)
+        >>> from property_utils.units.units import AbsoluteTemperatureUnit, LengthUnit
+        >>> T1 = Property(33.333333, AbsoluteTemperatureUnit.KELVIN)
+        >>> T2 = Property(100/3, AbsoluteTemperatureUnit.KELVIN)
         >>> T1 == T2
         False
         >>> T1.eq(T2)
@@ -171,8 +171,8 @@ class Property:
         """
         Defines multiplication between properties and numerics.
 
-        >>> from property_utils.units.units import TemperatureUnit, LengthUnit
-        >>> T = Property(300, TemperatureUnit.KELVIN)
+        >>> from property_utils.units.units import AbsoluteTemperatureUnit, LengthUnit
+        >>> T = Property(300, AbsoluteTemperatureUnit.KELVIN)
         >>> 2*T
         <Property: 600 K>
         >>> A = Property(10, LengthUnit.METER**2)
@@ -194,8 +194,8 @@ class Property:
         """
         Defines multiplication between properties and numerics.
 
-        >>> from property_utils.units.units import TemperatureUnit, LengthUnit
-        >>> T = Property(300, TemperatureUnit.KELVIN)
+        >>> from property_utils.units.units import AbsoluteTemperatureUnit, LengthUnit
+        >>> T = Property(300, AbsoluteTemperatureUnit.KELVIN)
         >>> 2*T
         <Property: 600 K>
         >>> A = Property(10, LengthUnit.METER**2)
@@ -208,8 +208,8 @@ class Property:
         """
         Defines division between properties and numerics.
 
-        >>> from property_utils.units.units import TemperatureUnit, LengthUnit
-        >>> T = Property(500, TemperatureUnit.KELVIN)
+        >>> from property_utils.units.units import AbsoluteTemperatureUnit, LengthUnit
+        >>> T = Property(500, AbsoluteTemperatureUnit.KELVIN)
         >>> T/2
         <Property: 250.0 K>
         >>> A = Property(10, LengthUnit.METER**2)
@@ -241,8 +241,8 @@ class Property:
         """
         Defines right division between properties and numerics.
 
-        >>> from property_utils.units.units import TemperatureUnit
-        >>> T = Property(500, TemperatureUnit.KELVIN)
+        >>> from property_utils.units.units import AbsoluteTemperatureUnit
+        >>> T = Property(500, AbsoluteTemperatureUnit.KELVIN)
         >>> 100/T
         <Property: 0.2  / K>
         """
