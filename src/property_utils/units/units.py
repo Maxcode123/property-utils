@@ -8,7 +8,7 @@ from property_utils.units.descriptors import (
 
 __all__ = [
     "NonDimensionalUnit",
-    "TemperatureUnit",
+    "RelativeTemperatureUnit",
     "AbsoluteTemperatureUnit",
     "LengthUnit",
     "MassUnit",
@@ -35,7 +35,7 @@ class NonDimensionalUnit(MeasurementUnit):
         return cls.NON_DIMENSIONAL
 
 
-class TemperatureUnit(MeasurementUnit):
+class RelativeTemperatureUnit(MeasurementUnit):
     CELCIUS = "°C"
     FAHRENHEIT = "°F"
 
@@ -56,7 +56,7 @@ class AbsoluteTemperatureUnit(MeasurementUnit):
         return cls.KELVIN
 
     def isinstance(self, generic: GenericUnitDescriptor) -> bool:
-        return super().isinstance(generic) or generic == TemperatureUnit
+        return super().isinstance(generic) or generic == RelativeTemperatureUnit
 
 
 class LengthUnit(MeasurementUnit):

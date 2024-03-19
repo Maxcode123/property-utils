@@ -2,9 +2,9 @@
 from property_utils.units.units import *
 
 NON_DIMENSIONAL = NonDimensionalUnit.NON_DIMENSIONAL
-CELCIUS = TemperatureUnit.CELCIUS
+CELCIUS = RelativeTemperatureUnit.CELCIUS
 KELVIN = AbsoluteTemperatureUnit.KELVIN
-FAHRENHEIT = TemperatureUnit.FAHRENHEIT
+FAHRENHEIT = RelativeTemperatureUnit.FAHRENHEIT
 RANKINE = AbsoluteTemperatureUnit.RANKINE
 MILLI_METER = LengthUnit.MILLI_METER
 CENTI_METER = LengthUnit.CENTI_METER

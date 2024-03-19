@@ -106,8 +106,8 @@ class Property:
 
         Raises `InvalidUnitConversion` if any error occurs in the unit conversion.
 
-        >>> from property_utils.units.units import TemperatureUnit
-        >>> T = Property(100, TemperatureUnit.CELCIUS)
+        >>> from property_utils.units.units import RelativeTemperatureUnit
+        >>> T = Property(100, RelativeTemperatureUnit.CELCIUS)
         >>> T.to_si()
         <Property: 373.15 K>
         """
@@ -132,9 +132,9 @@ class Property:
 
         Raises `UnitConversionError` if any error occurs in the unit conversion.
 
-        >>> from property_utils.units.units import TemperatureUnit
-        >>> T = Property(100, TemperatureUnit.CELCIUS)
-        >>> T.to_unit(TemperatureUnit.FAHRENHEIT)
+        >>> from property_utils.units.units import RelativeTemperatureUnit
+        >>> T = Property(100, RelativeTemperatureUnit.CELCIUS)
+        >>> T.to_unit(RelativeTemperatureUnit.FAHRENHEIT)
         <Property: 212.0 °F>
         """
         if not unit.isinstance(self.unit.to_generic()):
@@ -160,8 +160,8 @@ class Property:
         """
         Defines negation of properties.
 
-        >>> from property_utils.units.units import TemperatureUnit
-        >>> T = Property(3, TemperatureUnit.CELCIUS)
+        >>> from property_utils.units.units import RelativeTemperatureUnit
+        >>> T = Property(3, RelativeTemperatureUnit.CELCIUS)
         >>> -T
         <Property: -3 °C>
         """
@@ -437,9 +437,9 @@ class Property:
         """
         Defines comparison between properties.
 
-        >>> from property_utils.units.units import TemperatureUnit
-        >>> T1 = Property(100, TemperatureUnit.CELCIUS)
-        >>> T2 = Property(213, TemperatureUnit.FAHRENHEIT)
+        >>> from property_utils.units.units import RelativeTemperatureUnit
+        >>> T1 = Property(100, RelativeTemperatureUnit.CELCIUS)
+        >>> T2 = Property(213, RelativeTemperatureUnit.FAHRENHEIT)
         >>> T1 > T2
         False
         """
@@ -462,9 +462,9 @@ class Property:
         """
         Defines comparison between properties.
 
-        >>> from property_utils.units.units import TemperatureUnit
-        >>> T1 = Property(100, TemperatureUnit.CELCIUS)
-        >>> T2 = Property(212, TemperatureUnit.FAHRENHEIT)
+        >>> from property_utils.units.units import RelativeTemperatureUnit
+        >>> T1 = Property(100, RelativeTemperatureUnit.CELCIUS)
+        >>> T2 = Property(212, RelativeTemperatureUnit.FAHRENHEIT)
         >>> T1 >= T2
         True
         """
@@ -487,9 +487,9 @@ class Property:
         """
         Defines comparison between properties.
 
-        >>> from property_utils.units.units import TemperatureUnit
-        >>> T1 = Property(100, TemperatureUnit.CELCIUS)
-        >>> T2 = Property(213, TemperatureUnit.FAHRENHEIT)
+        >>> from property_utils.units.units import RelativeTemperatureUnit
+        >>> T1 = Property(100, RelativeTemperatureUnit.CELCIUS)
+        >>> T2 = Property(213, RelativeTemperatureUnit.FAHRENHEIT)
         >>> T1 < T2
         True
         """
@@ -512,9 +512,9 @@ class Property:
         """
         Defines comparison between properties.
 
-        >>> from property_utils.units.units import TemperatureUnit
-        >>> T1 = Property(100, TemperatureUnit.CELCIUS)
-        >>> T2 = Property(213, TemperatureUnit.FAHRENHEIT)
+        >>> from property_utils.units.units import RelativeTemperatureUnit
+        >>> T1 = Property(100, RelativeTemperatureUnit.CELCIUS)
+        >>> T2 = Property(213, RelativeTemperatureUnit.FAHRENHEIT)
         >>> T1 <= T2
         True
         """

@@ -6,14 +6,14 @@ well as some converters for common exponentiated units (area and volume).
 from enum import Enum
 
 try:
-    from typing import override  # Python < 3.12
+    from typing import override  # Python >= 3.12
 except ImportError:
-    from typing_extensions import override  # Python >= 3.12
+    from typing_extensions import override  # Python < 3.12
 
 from property_utils.units.descriptors import UnitDescriptor
 from property_utils.exceptions.units.converter_types import UnitConversionError
 from property_utils.units.units import (
-    TemperatureUnit,
+    RelativeTemperatureUnit,
     AbsoluteTemperatureUnit,
     LengthUnit,
     MassUnit,
@@ -35,7 +35,7 @@ from property_utils.units.converter_types import (
 
 __all__ = [
     "UnitPrefix",
-    "TemperatureUnitConverter",
+    "RelativeTemperatureUnitConverter",
     "AbsoluteTemperatureUnitConverter",
     "LengthUnitConverter",
     "MassUnitConverter",
@@ -87,28 +87,28 @@ class UnitPrefix(float, Enum):
         return 1 / self.value
 
 
-@register_converter(TemperatureUnit)
-class TemperatureUnitConverter(
+@register_converter(RelativeTemperatureUnit)
+class RelativeTemperatureUnitConverter(
     RelativeUnitConverter
 ):  # pylint: disable=too-few-public-methods
     """
     Convert temperature units with this converter.
 
-    >>> TemperatureUnitConverter.convert(100, TemperatureUnit.CELCIUS, TemperatureUnit.FAHRENHEIT)
+    >>> RelativeTemperatureUnitConverter.convert(100, RelativeTemperatureUnit.CELCIUS, RelativeTemperatureUnit.FAHRENHEIT)
     212.0
     """
 
-    reference_unit = TemperatureUnit.CELCIUS
+    reference_unit = RelativeTemperatureUnit.CELCIUS
     conversion_map = {
-        TemperatureUnit.CELCIUS: lambda t: t,
+        RelativeTemperatureUnit.CELCIUS: lambda t: t,
         AbsoluteTemperatureUnit.KELVIN: lambda t: t - 273.15,
-        TemperatureUnit.FAHRENHEIT: lambda t: (t - 32) / 1.8,
+        RelativeTemperatureUnit.FAHRENHEIT: lambda t: (t - 32) / 1.8,
         AbsoluteTemperatureUnit.RANKINE: lambda t: (t / 1.8) - 273.15,
     }
     reference_conversion_map = {
-        TemperatureUnit.CELCIUS: lambda t: t,
+        RelativeTemperatureUnit.CELCIUS: lambda t: t,
         AbsoluteTemperatureUnit.KELVIN: lambda t: t + 273.15,
-        TemperatureUnit.FAHRENHEIT: lambda t: (t * 1.8) + 32,
+        RelativeTemperatureUnit.FAHRENHEIT: lambda t: (t * 1.8) + 32,
         AbsoluteTemperatureUnit.RANKINE: lambda t: (t + 273.15) * 1.8,
     }
 
@@ -138,10 +138,10 @@ class AbsoluteTemperatureUnitConverter(AbsoluteUnitConverter):
     ) -> float:
         if not isinstance(value, (float, int)):
             raise UnitConversionError(f"invalid 'value': {value}; expected numeric. ")
-        if from_descriptor.isinstance(TemperatureUnit) or to_descriptor.isinstance(
-            TemperatureUnit
-        ):
-            return TemperatureUnitConverter.convert(
+        if from_descriptor.isinstance(
+            RelativeTemperatureUnit
+        ) or to_descriptor.isinstance(RelativeTemperatureUnit):
+            return RelativeTemperatureUnitConverter.convert(
                 value, from_descriptor, to_descriptor
             )
         return value * cls.get_factor(from_descriptor, to_descriptor)
