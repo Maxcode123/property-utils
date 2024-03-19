@@ -142,9 +142,9 @@ class TestPropertyToSi(TestProperty):
     def test_with_composite_non_si_units(self):
         self.assert_result("400.0 a / d")
 
-    @args({"unit": Unit1.A**8.19})
+    @args({"unit": Unit1.A**4})
     def test_with_dimension_unregistered_unit_converter(self):
-        self.assert_impossible_conversion()
+        self.assert_result("2000000.0 (a^4)")
 
     @args({"unit": Unit3.C})
     def test_with_simple_unit_unregistered_unit_converter(self):
