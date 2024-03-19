@@ -11,6 +11,11 @@ try:
 except ImportError:
     from typing_extensions import Self  # Python <= 3.10
 
+try:
+    from typing import TypeAlias  # Python >= 3.10 pylint: disable=ungrouped-imports
+except ImportError:
+    from typing_extensions import TypeAlias  # Python < 3.10
+
 from property_utils.units.descriptors import (
     MeasurementUnit,
     Dimension,
@@ -568,3 +573,6 @@ class Property:
                 f"cannot compare ({other}) to ({self}); "
                 f"({other}) must have ({self.unit.to_generic()}) units. "
             )
+
+
+p: TypeAlias = Property
