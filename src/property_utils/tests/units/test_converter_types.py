@@ -85,6 +85,26 @@ class TestGetConverter(TestCase):
         self.assertResult(Unit1Unit4Converter)
 
 
+@add_to(GetConverter_test_suite)
+class TestGetUnregisteredDimensionConverter(TestCase):
+    def subject(self, generic):
+        return get_converter(generic)
+
+    def assert_convert(self, value, from_unit, to_unit):
+        self.assertResultIsNot(None)
+        self.assertEqual(self.cachedResult().convert(10, from_unit, to_unit), value)
+
+    @args({"generic": Unit1 * (Unit4**2)})
+    def test_with_unregistered_composite_dimension(self):
+        self.assert_convert(
+            10 * 10 * (5**2), Unit1.A * (Unit4.D**2), Unit1.a * (Unit4.d**2)
+        )
+
+    @args({"generic": Unit1**2.45})
+    def test_with_unregistered_dimension(self):
+        self.assert_convert(10 * (10**2.45), Unit1.A**2.45, Unit1.a**2.45)
+
+
 @add_to(RegisterConverter_test_suite)
 class TestRegisterConverter(TestCase):
     def subject(self, generic):

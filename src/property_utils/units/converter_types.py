@@ -58,9 +58,17 @@ def get_converter(generic: GenericUnitDescriptor) -> ConverterType:
         raise PropertyUtilsTypeError(
             f"cannot get converter; argument: {generic} is not a generic unit descriptor. "
         )
+    if isinstance(generic, GenericDimension) and generic.power == 1:
+        generic = generic.unit_type
+    elif isinstance(generic, GenericDimension) and generic not in _converters:
+        register_converter(generic)(
+            type(f"{generic}_Converter", (ExponentiatedUnitConverter,), {})
+        )
+    elif isinstance(generic, GenericCompositeDimension) and generic not in _converters:
+        register_converter(generic)(
+            type(f"{generic}_Converter", (CompositeUnitConverter,), {})
+        )
     try:
-        if isinstance(generic, GenericDimension) and generic.power == 1:
-            generic = generic.unit_type
         return _converters[generic]
     except KeyError:
         raise UndefinedConverterError(
