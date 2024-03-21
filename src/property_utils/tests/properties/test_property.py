@@ -1,8 +1,9 @@
 from unittest import TestSuite, TextTestRunner
 
-from unittest_extensions import args
+from unittest_extensions import args, TestCase
 
-from property_utils.properties.property import Property
+from property_utils.properties.property import Property, p
+from property_utils.units.units import NonDimensionalUnit, PressureUnit
 from property_utils.exceptions.properties.property import (
     PropertyExponentError,
 )
@@ -60,6 +61,20 @@ class TestPropertyInit(TestProperty):
     @args({"value": 0.98, "unit": Unit1.A})
     def test_does_not_initialize_converter(self):
         self.assertIsNone(self.result().unit_converter)
+
+
+@add_to(property_test_suite)
+class TestPropertyConstructor(TestCase):
+    def subject(self, **kwargs):
+        return p(**kwargs)
+
+    @args({"value": 5})
+    def test_with_no_unit(self):
+        self.assertEqual(self.result().unit, NonDimensionalUnit.NON_DIMENSIONAL)
+
+    @args({"value": 5, "unit": PressureUnit.BAR})
+    def test_with_unit(self):
+        self.assertEqual(self.result().unit, PressureUnit.BAR)
 
 
 @add_to(property_test_suite, "eq")

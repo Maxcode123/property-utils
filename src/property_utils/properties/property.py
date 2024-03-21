@@ -11,11 +11,6 @@ try:
 except ImportError:
     from typing_extensions import Self  # Python <= 3.10
 
-try:
-    from typing import TypeAlias  # Python >= 3.10 pylint: disable=ungrouped-imports
-except ImportError:
-    from typing_extensions import TypeAlias  # Python < 3.10
-
 from property_utils.units.descriptors import (
     MeasurementUnit,
     Dimension,
@@ -25,6 +20,7 @@ from property_utils.units.descriptors import (
 
 # pylint: disable=unused-wildcard-import, wildcard-import
 from property_utils.units.converters import *
+from property_utils.units.units import NonDimensionalUnit
 from property_utils.units.converter_types import UnitConverter, get_converter
 from property_utils.exceptions.units.converter_types import UndefinedConverterError
 from property_utils.exceptions.properties.property import (
@@ -35,6 +31,23 @@ from property_utils.exceptions.properties.property import (
 )
 from property_utils.exceptions.units.converter_types import UnitConversionError
 from property_utils.exceptions.base import PropertyUtilsException
+
+
+def p(
+    value: float, unit: UnitDescriptor = NonDimensionalUnit.NON_DIMENSIONAL
+) -> "Property":
+    """
+    Create a property with a value and a unit.
+    Default unit is non-dimensional, i.e. no unit.
+
+    >>> from property_utils.units import KELVIN
+    >>> p(350, KELVIN)
+    <Property: 350 K>
+
+    >>> p(20.23)
+    <Property: 20.23 >
+    """
+    return Property(value, unit)
 
 
 @dataclass
@@ -573,6 +586,3 @@ class Property:
                 f"cannot compare ({other}) to ({self}); "
                 f"({other}) must have ({self.unit.to_generic()}) units. "
             )
-
-
-p: TypeAlias = Property
