@@ -15,6 +15,8 @@ nav:
       - descriptors: descriptors.md
       - converters: converters.md
       - converter types: converter_types.md
+    
+  - Feedback: feedback.md
 
 theme:
   name: material
