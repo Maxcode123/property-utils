@@ -1,0 +1,2675 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maxcode123.github.io/property-utils/converters/">
+      
+      
+        <link rel="prev" href="../descriptors/">
+      
+      
+        <link rel="next" href="../converter_types/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.15">
+    
+    
+      
+        <title>converters - property-utils</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e359304.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#property_utils.units.converters" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="property-utils" class="md-header__button md-logo" aria-label="property-utils" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            property-utils
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              converters
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  Get started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../property/" class="md-tabs__link">
+          
+  
+  API Documentation
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="property-utils" class="md-nav__button md-logo" aria-label="property-utils" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    property-utils
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Get started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Get started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    What is property-utils?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    API Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            API Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    properties
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            properties
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    property
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validated_property.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    validated property
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    units
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            units
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../units/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    units
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../descriptors/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    descriptors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    converters
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    converters
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters" class="md-nav__link">
+    <span class="md-ellipsis">
+      converters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.AbsoluteTemperatureUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AbsoluteTemperatureUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.AliasEnergyUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AliasEnergyUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.AliasForceUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AliasForceUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.AliasPowerUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AliasPowerUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.AliasPressureUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AliasPressureUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.AmountUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AmountUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.AreaUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AreaUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.ElectricCurrentUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      ElectricCurrentUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.EnergyUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      EnergyUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.ForceUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      ForceUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.LengthUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      LengthUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.MassUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      MassUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.PowerUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      PowerUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.PressureUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      PressureUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.RelativeTemperatureUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelativeTemperatureUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.TimeUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      TimeUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.UnitPrefix" class="md-nav__link">
+    <span class="md-ellipsis">
+      UnitPrefix
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="UnitPrefix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converters.UnitPrefix.inverse" class="md-nav__link">
+    <span class="md-ellipsis">
+      inverse
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.VolumeUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      VolumeUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../converter_types/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    converter types
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters" class="md-nav__link">
+    <span class="md-ellipsis">
+      converters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.AbsoluteTemperatureUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AbsoluteTemperatureUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.AliasEnergyUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AliasEnergyUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.AliasForceUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AliasForceUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.AliasPowerUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AliasPowerUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.AliasPressureUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AliasPressureUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.AmountUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AmountUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.AreaUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AreaUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.ElectricCurrentUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      ElectricCurrentUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.EnergyUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      EnergyUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.ForceUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      ForceUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.LengthUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      LengthUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.MassUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      MassUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.PowerUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      PowerUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.PressureUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      PressureUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.RelativeTemperatureUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelativeTemperatureUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.TimeUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      TimeUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.UnitPrefix" class="md-nav__link">
+    <span class="md-ellipsis">
+      UnitPrefix
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="UnitPrefix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converters.UnitPrefix.inverse" class="md-nav__link">
+    <span class="md-ellipsis">
+      inverse
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converters.VolumeUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      VolumeUnitConverter
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>converters</h1>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="property_utils.units.converters"></a>
+  <div class="doc doc-contents first">
+  
+      <p>This module defines unit converters for the units in 'property_utils.units.units' as
+well as some converters for common exponentiated units (area and volume).</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.AbsoluteTemperatureUnitConverter" class="doc doc-heading">
+          <code>AbsoluteTemperatureUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.AbsoluteUnitConverter" href="../converter_types/#property_utils.units.converter_types.AbsoluteUnitConverter">AbsoluteUnitConverter</a></code></p>
+
+  
+      <p>Convert absolute temperature with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>AbsoluteTemperatureUnitConverter.convert(10, AbsoluteTemperatureUnit.KELVIN, AbsoluteTemperatureUnit.RANKINE)
+18.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">AbsoluteTemperatureUnit</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AbsoluteTemperatureUnitConverter</span><span class="p">(</span><span class="n">AbsoluteUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert absolute temperature with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; AbsoluteTemperatureUnitConverter.convert(10, AbsoluteTemperatureUnit.KELVIN, AbsoluteTemperatureUnit.RANKINE)</span>
+<span class="sd">    18.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">reference_unit</span> <span class="o">=</span> <span class="n">AbsoluteTemperatureUnit</span><span class="o">.</span><span class="n">KELVIN</span>
+    <span class="n">conversion_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">AbsoluteTemperatureUnit</span><span class="o">.</span><span class="n">KELVIN</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">AbsoluteTemperatureUnit</span><span class="o">.</span><span class="n">RANKINE</span><span class="p">:</span> <span class="mf">1.8</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="nd">@override</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+        <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid &#39;value&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">; expected numeric. &quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">from_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span>
+            <span class="n">RelativeTemperatureUnit</span>
+        <span class="p">)</span> <span class="ow">or</span> <span class="n">to_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="n">RelativeTemperatureUnit</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">RelativeTemperatureUnitConverter</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span>
+                <span class="n">value</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_factor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.AliasEnergyUnitConverter" class="doc doc-heading">
+          <code>AliasEnergyUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.AbsoluteUnitConverter" href="../converter_types/#property_utils.units.converter_types.AbsoluteUnitConverter">AbsoluteUnitConverter</a></code></p>
+
+  
+      <p>Convert energy units with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>AliasEnergyUnitConverter.convert(2500, EnergyUnit.JOULE, EnergyUnit.KILO_JOULE)
+2.5</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">EnergyUnit</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AliasEnergyUnitConverter</span><span class="p">(</span><span class="n">AbsoluteUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert energy units with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; AliasEnergyUnitConverter.convert(2500, EnergyUnit.JOULE, EnergyUnit.KILO_JOULE)</span>
+<span class="sd">    2.5</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">reference_unit</span> <span class="o">=</span> <span class="n">EnergyUnit</span><span class="o">.</span><span class="n">JOULE</span>
+    <span class="n">conversion_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">EnergyUnit</span><span class="o">.</span><span class="n">JOULE</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">EnergyUnit</span><span class="o">.</span><span class="n">KILO_JOULE</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">KILO</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+        <span class="n">EnergyUnit</span><span class="o">.</span><span class="n">MEGA_JOULE</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">MEGA</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+        <span class="n">EnergyUnit</span><span class="o">.</span><span class="n">GIGA_JOULE</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">GIGA</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+        <span class="n">EnergyUnit</span><span class="o">.</span><span class="n">CALORIE</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">4.184</span><span class="p">,</span>
+        <span class="n">EnergyUnit</span><span class="o">.</span><span class="n">KILO_CALORIE</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mf">4.184</span><span class="p">)</span> <span class="o">*</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">KILO</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+        <span class="n">EnergyUnit</span><span class="o">.</span><span class="n">BTU</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">1055.0</span><span class="p">,</span>
+        <span class="n">EnergyUnit</span><span class="o">.</span><span class="n">ELECTRONVOLT</span><span class="p">:</span> <span class="mf">6.242e18</span><span class="p">,</span>
+        <span class="n">EnergyUnit</span><span class="o">.</span><span class="n">WATTHOUR</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">3600</span><span class="p">,</span>
+        <span class="n">EnergyUnit</span><span class="o">.</span><span class="n">KILO_WATTHOUR</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">*</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">KILO</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+    <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.AliasForceUnitConverter" class="doc doc-heading">
+          <code>AliasForceUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.AbsoluteUnitConverter" href="../converter_types/#property_utils.units.converter_types.AbsoluteUnitConverter">AbsoluteUnitConverter</a></code></p>
+
+  
+      <p>Convert force units with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>AliasForceUnitConverter.convert(2, ForceUnit.NEWTON, ForceUnit.DYNE)
+200000.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">ForceUnit</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AliasForceUnitConverter</span><span class="p">(</span><span class="n">AbsoluteUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert force units with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; AliasForceUnitConverter.convert(2, ForceUnit.NEWTON, ForceUnit.DYNE)</span>
+<span class="sd">    200000.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">reference_unit</span> <span class="o">=</span> <span class="n">ForceUnit</span><span class="o">.</span><span class="n">NEWTON</span>
+    <span class="n">conversion_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">ForceUnit</span><span class="o">.</span><span class="n">NEWTON</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ForceUnit</span><span class="o">.</span><span class="n">DYNE</span><span class="p">:</span> <span class="mi">100_000</span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.AliasPowerUnitConverter" class="doc doc-heading">
+          <code>AliasPowerUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.AbsoluteUnitConverter" href="../converter_types/#property_utils.units.converter_types.AbsoluteUnitConverter">AbsoluteUnitConverter</a></code></p>
+
+  
+      <p>Convert power units with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>AliasPowerUnitConverter.convert(5, PowerUnit.KILO_WATT, PowerUnit.WATT)
+5000.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">PowerUnit</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AliasPowerUnitConverter</span><span class="p">(</span><span class="n">AbsoluteUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert power units with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; AliasPowerUnitConverter.convert(5, PowerUnit.KILO_WATT, PowerUnit.WATT)</span>
+<span class="sd">    5000.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">reference_unit</span> <span class="o">=</span> <span class="n">PowerUnit</span><span class="o">.</span><span class="n">WATT</span>
+    <span class="n">conversion_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">PowerUnit</span><span class="o">.</span><span class="n">WATT</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">PowerUnit</span><span class="o">.</span><span class="n">KILO_WATT</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">KILO</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+        <span class="n">PowerUnit</span><span class="o">.</span><span class="n">MEGA_WATT</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">MEGA</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+        <span class="n">PowerUnit</span><span class="o">.</span><span class="n">GIGA_WATT</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">GIGA</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+    <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.AliasPressureUnitConverter" class="doc doc-heading">
+          <code>AliasPressureUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.AbsoluteUnitConverter" href="../converter_types/#property_utils.units.converter_types.AbsoluteUnitConverter">AbsoluteUnitConverter</a></code></p>
+
+  
+      <p>Convert pressure units with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>AliasPressureUnitConverter.convert(2, PressureUnit.BAR, PressureUnit.KILO_PASCAL)
+200.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">PressureUnit</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AliasPressureUnitConverter</span><span class="p">(</span><span class="n">AbsoluteUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert pressure units with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; AliasPressureUnitConverter.convert(2, PressureUnit.BAR, PressureUnit.KILO_PASCAL)</span>
+<span class="sd">    200.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">reference_unit</span> <span class="o">=</span> <span class="n">PressureUnit</span><span class="o">.</span><span class="n">BAR</span>
+    <span class="n">conversion_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">PressureUnit</span><span class="o">.</span><span class="n">MILLI_BAR</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">MILLI</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+        <span class="n">PressureUnit</span><span class="o">.</span><span class="n">BAR</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">PressureUnit</span><span class="o">.</span><span class="n">PSI</span><span class="p">:</span> <span class="mf">14.5038</span><span class="p">,</span>
+        <span class="n">PressureUnit</span><span class="o">.</span><span class="n">PASCAL</span><span class="p">:</span> <span class="mi">100_000</span><span class="p">,</span>
+        <span class="n">PressureUnit</span><span class="o">.</span><span class="n">KILO_PASCAL</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">PressureUnit</span><span class="o">.</span><span class="n">MEGA_PASCAL</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.AmountUnitConverter" class="doc doc-heading">
+          <code>AmountUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.AbsoluteUnitConverter" href="../converter_types/#property_utils.units.converter_types.AbsoluteUnitConverter">AbsoluteUnitConverter</a></code></p>
+
+  
+      <p>Convert amount units with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>AmountUnitConverter.convert(2000, AmountUnit.MOL, AmountUnit.KILO_MOL)
+2.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">AmountUnit</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AmountUnitConverter</span><span class="p">(</span><span class="n">AbsoluteUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert amount units with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; AmountUnitConverter.convert(2000, AmountUnit.MOL, AmountUnit.KILO_MOL)</span>
+<span class="sd">    2.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">reference_unit</span> <span class="o">=</span> <span class="n">AmountUnit</span><span class="o">.</span><span class="n">MOL</span>
+    <span class="n">conversion_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">AmountUnit</span><span class="o">.</span><span class="n">MOL</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="n">AmountUnit</span><span class="o">.</span><span class="n">KILO_MOL</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">KILO</span><span class="o">.</span><span class="n">inverse</span><span class="p">()}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.AreaUnitConverter" class="doc doc-heading">
+          <code>AreaUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.ExponentiatedUnitConverter" href="../converter_types/#property_utils.units.converter_types.ExponentiatedUnitConverter">ExponentiatedUnitConverter</a></code></p>
+
+  
+      <p>Convert area units with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>AreaUnitConverter.convert(1, LengthUnit.METER<strong>2, LengthUnit.CENTI_METER</strong>2)
+10000.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">LengthUnit</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AreaUnitConverter</span><span class="p">(</span><span class="n">ExponentiatedUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert area units with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; AreaUnitConverter.convert(1, LengthUnit.METER**2, LengthUnit.CENTI_METER**2)</span>
+<span class="sd">    10000.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.ElectricCurrentUnitConverter" class="doc doc-heading">
+          <code>ElectricCurrentUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.AbsoluteUnitConverter" href="../converter_types/#property_utils.units.converter_types.AbsoluteUnitConverter">AbsoluteUnitConverter</a></code></p>
+
+  
+      <p>Convert electric current units with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>ElectricCurrentUnitConverter.convert(1000, ElectricCurrentUnit.MILLI_AMPERE, ElectricCurrentUnit.AMPERE)
+1.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">ElectricCurrentUnit</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ElectricCurrentUnitConverter</span><span class="p">(</span><span class="n">AbsoluteUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert electric current units with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; ElectricCurrentUnitConverter.convert(1000, ElectricCurrentUnit.MILLI_AMPERE, ElectricCurrentUnit.AMPERE)</span>
+<span class="sd">    1.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">reference_unit</span> <span class="o">=</span> <span class="n">ElectricCurrentUnit</span><span class="o">.</span><span class="n">AMPERE</span>
+    <span class="n">conversion_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">ElectricCurrentUnit</span><span class="o">.</span><span class="n">MILLI_AMPERE</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">MILLI</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+        <span class="n">ElectricCurrentUnit</span><span class="o">.</span><span class="n">AMPERE</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">ElectricCurrentUnit</span><span class="o">.</span><span class="n">KILO_AMPERE</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">KILO</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+    <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.EnergyUnitConverter" class="doc doc-heading">
+          <code>EnergyUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.CompositeUnitConverter" href="../converter_types/#property_utils.units.converter_types.CompositeUnitConverter">CompositeUnitConverter</a></code></p>
+
+  
+      <p>Convert energy units (mass * length^2 / time^2) with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from_unit = MassUnit.KILO_GRAM * (LengthUnit.METER<strong>2) / (TimeUnit.MINUTE</strong>2)
+to_unit = MassUnit.METRIC_TONNE * (LengthUnit.CENTI_METER<strong>2) / (TimeUnit.MINUTE</strong>2)
+EnergyUnitConverter.convert(25, from_unit, to_unit)
+250.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">EnergyUnit</span><span class="o">.</span><span class="n">aliased_generic_descriptor</span><span class="p">())</span>
+<span class="k">class</span> <span class="nc">EnergyUnitConverter</span><span class="p">(</span><span class="n">CompositeUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert energy units (mass * length^2 / time^2) with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; from_unit = MassUnit.KILO_GRAM * (LengthUnit.METER**2) / (TimeUnit.MINUTE**2)</span>
+<span class="sd">    &gt;&gt;&gt; to_unit = MassUnit.METRIC_TONNE * (LengthUnit.CENTI_METER**2) / (TimeUnit.MINUTE**2)</span>
+<span class="sd">    &gt;&gt;&gt; EnergyUnitConverter.convert(25, from_unit, to_unit)</span>
+<span class="sd">    250.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.ForceUnitConverter" class="doc doc-heading">
+          <code>ForceUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.CompositeUnitConverter" href="../converter_types/#property_utils.units.converter_types.CompositeUnitConverter">CompositeUnitConverter</a></code></p>
+
+  
+      <p>Convert force units (mass * length / time^2) with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from_unit = MassUnit.KILO_GRAM * LengthUnit.CENTI_METER / (TimeUnit.SECOND<strong>2)
+to_unit = MassUnit.GRAM * LengthUnit.METER / (TimeUnit.SECOND</strong>2)
+ForceUnitConverter.convert(100, from_unit, to_unit)
+1000.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">ForceUnit</span><span class="o">.</span><span class="n">aliased_generic_descriptor</span><span class="p">())</span>
+<span class="k">class</span> <span class="nc">ForceUnitConverter</span><span class="p">(</span><span class="n">CompositeUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert force units (mass * length / time^2) with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; from_unit = MassUnit.KILO_GRAM * LengthUnit.CENTI_METER / (TimeUnit.SECOND**2)</span>
+<span class="sd">    &gt;&gt;&gt; to_unit = MassUnit.GRAM * LengthUnit.METER / (TimeUnit.SECOND**2)</span>
+<span class="sd">    &gt;&gt;&gt; ForceUnitConverter.convert(100, from_unit, to_unit)</span>
+<span class="sd">    1000.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.LengthUnitConverter" class="doc doc-heading">
+          <code>LengthUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.AbsoluteUnitConverter" href="../converter_types/#property_utils.units.converter_types.AbsoluteUnitConverter">AbsoluteUnitConverter</a></code></p>
+
+  
+      <p>Convert length units with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>LengthUnitConverter.convert(2000, LengthUnit.MILLI_METER, LengthUnit.METER)
+2.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">LengthUnit</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">LengthUnitConverter</span><span class="p">(</span><span class="n">AbsoluteUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert length units with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; LengthUnitConverter.convert(2000, LengthUnit.MILLI_METER, LengthUnit.METER)</span>
+<span class="sd">    2.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">reference_unit</span> <span class="o">=</span> <span class="n">LengthUnit</span><span class="o">.</span><span class="n">METER</span>
+    <span class="n">conversion_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">LengthUnit</span><span class="o">.</span><span class="n">MILLI_METER</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">MILLI</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+        <span class="n">LengthUnit</span><span class="o">.</span><span class="n">CENTI_METER</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">CENTI</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+        <span class="n">LengthUnit</span><span class="o">.</span><span class="n">METER</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">LengthUnit</span><span class="o">.</span><span class="n">KILO_METER</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">KILO</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+        <span class="n">LengthUnit</span><span class="o">.</span><span class="n">INCH</span><span class="p">:</span> <span class="mf">39.37</span><span class="p">,</span>
+        <span class="n">LengthUnit</span><span class="o">.</span><span class="n">FOOT</span><span class="p">:</span> <span class="mf">3.281</span><span class="p">,</span>
+        <span class="n">LengthUnit</span><span class="o">.</span><span class="n">YARD</span><span class="p">:</span> <span class="mf">1.094</span><span class="p">,</span>
+        <span class="n">LengthUnit</span><span class="o">.</span><span class="n">MILE</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">1609</span><span class="p">,</span>
+        <span class="n">LengthUnit</span><span class="o">.</span><span class="n">NAUTICAL_MILE</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">1852</span><span class="p">,</span>
+    <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.MassUnitConverter" class="doc doc-heading">
+          <code>MassUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.AbsoluteUnitConverter" href="../converter_types/#property_utils.units.converter_types.AbsoluteUnitConverter">AbsoluteUnitConverter</a></code></p>
+
+  
+      <p>Convert mass units with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>MassUnitConverter.convert(10, MassUnit.KILO_GRAM, MassUnit.GRAM)
+10000.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">MassUnit</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">MassUnitConverter</span><span class="p">(</span><span class="n">AbsoluteUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert mass units with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; MassUnitConverter.convert(10, MassUnit.KILO_GRAM, MassUnit.GRAM)</span>
+<span class="sd">    10000.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">reference_unit</span> <span class="o">=</span> <span class="n">MassUnit</span><span class="o">.</span><span class="n">KILO_GRAM</span>
+    <span class="n">conversion_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">MassUnit</span><span class="o">.</span><span class="n">MILLI_GRAM</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">KILO</span> <span class="o">*</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">MILLI</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+        <span class="n">MassUnit</span><span class="o">.</span><span class="n">GRAM</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">KILO</span><span class="p">,</span>
+        <span class="n">MassUnit</span><span class="o">.</span><span class="n">KILO_GRAM</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">MassUnit</span><span class="o">.</span><span class="n">METRIC_TONNE</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">1_000.0</span><span class="p">,</span>
+        <span class="n">MassUnit</span><span class="o">.</span><span class="n">POUND</span><span class="p">:</span> <span class="mf">2.205</span><span class="p">,</span>
+    <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.PowerUnitConverter" class="doc doc-heading">
+          <code>PowerUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.CompositeUnitConverter" href="../converter_types/#property_utils.units.converter_types.CompositeUnitConverter">CompositeUnitConverter</a></code></p>
+
+  
+      <p>Convert power units (mass * length^2 / time^3) with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from_unit = MassUnit.KILO_GRAM * (LengthUnit.METER<strong>2) / (TimeUnit.MINUTE</strong>3)
+to_unit = MassUnit.METRIC_TONNE * (LengthUnit.CENTI_METER<strong>2) / (TimeUnit.MINUTE</strong>3)
+PowerUnitConverter.convert(15, from_unit, to_unit)
+150.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">PowerUnit</span><span class="o">.</span><span class="n">aliased_generic_descriptor</span><span class="p">())</span>
+<span class="k">class</span> <span class="nc">PowerUnitConverter</span><span class="p">(</span><span class="n">CompositeUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert power units (mass * length^2 / time^3) with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; from_unit = MassUnit.KILO_GRAM * (LengthUnit.METER**2) / (TimeUnit.MINUTE**3)</span>
+<span class="sd">    &gt;&gt;&gt; to_unit = MassUnit.METRIC_TONNE * (LengthUnit.CENTI_METER**2) / (TimeUnit.MINUTE**3)</span>
+<span class="sd">    &gt;&gt;&gt; PowerUnitConverter.convert(15, from_unit, to_unit)</span>
+<span class="sd">    150.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.PressureUnitConverter" class="doc doc-heading">
+          <code>PressureUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.CompositeUnitConverter" href="../converter_types/#property_utils.units.converter_types.CompositeUnitConverter">CompositeUnitConverter</a></code></p>
+
+  
+      <p>Convert pressure units (mass / length / time^2) with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from_unit = MassUnit.GRAM / LengthUnit.CENTI_METER / (TimeUnit.HOUR<strong>2)
+to_unit = MassUnit.KILO_GRAM / LengthUnit.METER / (TimeUnit.HOUR</strong>2)
+PressureUnitConverter.convert(50, from_unit, to_unit)
+5.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">PressureUnit</span><span class="o">.</span><span class="n">aliased_generic_descriptor</span><span class="p">())</span>
+<span class="k">class</span> <span class="nc">PressureUnitConverter</span><span class="p">(</span><span class="n">CompositeUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert pressure units (mass / length / time^2) with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; from_unit = MassUnit.GRAM / LengthUnit.CENTI_METER / (TimeUnit.HOUR**2)</span>
+<span class="sd">    &gt;&gt;&gt; to_unit = MassUnit.KILO_GRAM / LengthUnit.METER / (TimeUnit.HOUR**2)</span>
+<span class="sd">    &gt;&gt;&gt; PressureUnitConverter.convert(50, from_unit, to_unit)</span>
+<span class="sd">    5.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.RelativeTemperatureUnitConverter" class="doc doc-heading">
+          <code>RelativeTemperatureUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.RelativeUnitConverter" href="../converter_types/#property_utils.units.converter_types.RelativeUnitConverter">RelativeUnitConverter</a></code></p>
+
+  
+      <p>Convert temperature units with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>RelativeTemperatureUnitConverter.convert(100, RelativeTemperatureUnit.CELCIUS, RelativeTemperatureUnit.FAHRENHEIT)
+212.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">RelativeTemperatureUnit</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">RelativeTemperatureUnitConverter</span><span class="p">(</span>
+    <span class="n">RelativeUnitConverter</span>
+<span class="p">):</span>  <span class="c1"># pylint: disable=too-few-public-methods</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert temperature units with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; RelativeTemperatureUnitConverter.convert(100, RelativeTemperatureUnit.CELCIUS, RelativeTemperatureUnit.FAHRENHEIT)</span>
+<span class="sd">    212.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">reference_unit</span> <span class="o">=</span> <span class="n">RelativeTemperatureUnit</span><span class="o">.</span><span class="n">CELCIUS</span>
+    <span class="n">conversion_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">RelativeTemperatureUnit</span><span class="o">.</span><span class="n">CELCIUS</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span>
+        <span class="n">AbsoluteTemperatureUnit</span><span class="o">.</span><span class="n">KELVIN</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span> <span class="o">-</span> <span class="mf">273.15</span><span class="p">,</span>
+        <span class="n">RelativeTemperatureUnit</span><span class="o">.</span><span class="n">FAHRENHEIT</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="mi">32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1.8</span><span class="p">,</span>
+        <span class="n">AbsoluteTemperatureUnit</span><span class="o">.</span><span class="n">RANKINE</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="mf">1.8</span><span class="p">)</span> <span class="o">-</span> <span class="mf">273.15</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">reference_conversion_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">RelativeTemperatureUnit</span><span class="o">.</span><span class="n">CELCIUS</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span>
+        <span class="n">AbsoluteTemperatureUnit</span><span class="o">.</span><span class="n">KELVIN</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span> <span class="o">+</span> <span class="mf">273.15</span><span class="p">,</span>
+        <span class="n">RelativeTemperatureUnit</span><span class="o">.</span><span class="n">FAHRENHEIT</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mf">1.8</span><span class="p">)</span> <span class="o">+</span> <span class="mi">32</span><span class="p">,</span>
+        <span class="n">AbsoluteTemperatureUnit</span><span class="o">.</span><span class="n">RANKINE</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.8</span><span class="p">,</span>
+    <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.TimeUnitConverter" class="doc doc-heading">
+          <code>TimeUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.AbsoluteUnitConverter" href="../converter_types/#property_utils.units.converter_types.AbsoluteUnitConverter">AbsoluteUnitConverter</a></code></p>
+
+  
+      <p>Convert time units with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>TimeUnitConverter.convert(1, TimeUnit.HOUR, TimeUnit.SECOND)
+3600.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">TimeUnit</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">TimeUnitConverter</span><span class="p">(</span><span class="n">AbsoluteUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert time units with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; TimeUnitConverter.convert(1, TimeUnit.HOUR, TimeUnit.SECOND)</span>
+<span class="sd">    3600.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">reference_unit</span> <span class="o">=</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="n">SECOND</span>
+    <span class="n">conversion_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">TimeUnit</span><span class="o">.</span><span class="n">MILLI_SECOND</span><span class="p">:</span> <span class="n">UnitPrefix</span><span class="o">.</span><span class="n">MILLI</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span>
+        <span class="n">TimeUnit</span><span class="o">.</span><span class="n">SECOND</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">TimeUnit</span><span class="o">.</span><span class="n">MINUTE</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">60.0</span><span class="p">,</span>
+        <span class="n">TimeUnit</span><span class="o">.</span><span class="n">HOUR</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">60.0</span> <span class="o">/</span> <span class="mf">60.0</span><span class="p">,</span>
+        <span class="n">TimeUnit</span><span class="o">.</span><span class="n">DAY</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">60.0</span> <span class="o">/</span> <span class="mf">60.0</span> <span class="o">/</span> <span class="mf">24.0</span><span class="p">,</span>
+        <span class="n">TimeUnit</span><span class="o">.</span><span class="n">WEEK</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">60.0</span> <span class="o">/</span> <span class="mf">60.0</span> <span class="o">/</span> <span class="mf">24.0</span> <span class="o">/</span> <span class="mi">7</span><span class="p">,</span>
+        <span class="n">TimeUnit</span><span class="o">.</span><span class="n">MONTH</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">60.0</span> <span class="o">/</span> <span class="mf">60.0</span> <span class="o">/</span> <span class="mf">24.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">365</span> <span class="o">/</span> <span class="mi">12</span><span class="p">),</span>
+        <span class="n">TimeUnit</span><span class="o">.</span><span class="n">YEAR</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">60.0</span> <span class="o">/</span> <span class="mf">60.0</span> <span class="o">/</span> <span class="mf">24.0</span> <span class="o">/</span> <span class="mi">365</span><span class="p">,</span>
+    <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.UnitPrefix" class="doc doc-heading">
+          <code>UnitPrefix</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code>float</code>, <code><span title="enum.Enum">Enum</span></code></p>
+
+  
+      <p>Enumeration of unit prefixes.
+Handy when converting to and fro prefixed units.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>centimeters = 225
+meters = centimeters * UnitPrefix.CENTI
+assert meters == 2.25</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">UnitPrefix</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration of unit prefixes.</span>
+<span class="sd">    Handy when converting to and fro prefixed units.</span>
+<span class="sd">    &gt;&gt;&gt; centimeters = 225</span>
+<span class="sd">    &gt;&gt;&gt; meters = centimeters * UnitPrefix.CENTI</span>
+<span class="sd">    &gt;&gt;&gt; assert meters == 2.25</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">PICO</span> <span class="o">=</span> <span class="mf">1e-12</span>
+    <span class="n">NANO</span> <span class="o">=</span> <span class="mf">1e-9</span>
+    <span class="n">MICRO</span> <span class="o">=</span> <span class="mf">1e-6</span>
+    <span class="n">MILLI</span> <span class="o">=</span> <span class="mf">1e-3</span>
+    <span class="n">CENTI</span> <span class="o">=</span> <span class="mf">1e-2</span>
+    <span class="n">DECI</span> <span class="o">=</span> <span class="mf">1e-1</span>
+    <span class="n">DECA</span> <span class="o">=</span> <span class="mf">1e1</span>
+    <span class="n">HECTO</span> <span class="o">=</span> <span class="mf">1e2</span>
+    <span class="n">KILO</span> <span class="o">=</span> <span class="mf">1e3</span>
+    <span class="n">MEGA</span> <span class="o">=</span> <span class="mf">1e6</span>
+    <span class="n">GIGA</span> <span class="o">=</span> <span class="mf">1e9</span>
+    <span class="n">TERA</span> <span class="o">=</span> <span class="mf">1e12</span>
+
+    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the inverse of the unit prefix. Use when prefixing a unit.</span>
+<span class="sd">        &gt;&gt;&gt; meters = 50.26</span>
+<span class="sd">        &gt;&gt;&gt; centimeters = meters * UnitPrefix.CENTI.inverse()</span>
+<span class="sd">        &gt;&gt;&gt; assert centimeters == 5026</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="property_utils.units.converters.UnitPrefix.inverse" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">inverse</span><span class="p">()</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Return the inverse of the unit prefix. Use when prefixing a unit.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>meters = 50.26
+centimeters = meters * UnitPrefix.CENTI.inverse()
+assert centimeters == 5026</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+          <details class="quote">
+            <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the inverse of the unit prefix. Use when prefixing a unit.</span>
+<span class="sd">    &gt;&gt;&gt; meters = 50.26</span>
+<span class="sd">    &gt;&gt;&gt; centimeters = meters * UnitPrefix.CENTI.inverse()</span>
+<span class="sd">    &gt;&gt;&gt; assert centimeters == 5026</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converters.VolumeUnitConverter" class="doc doc-heading">
+          <code>VolumeUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="property_utils.units.converter_types.ExponentiatedUnitConverter" href="../converter_types/#property_utils.units.converter_types.ExponentiatedUnitConverter">ExponentiatedUnitConverter</a></code></p>
+
+  
+      <p>Convert volume units with this converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>VolumeUnitConverter.convert(1, LengthUnit.METER<strong>3, LengthUnit.CENTI_METER</strong>3)
+1000000.0</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@register_converter</span><span class="p">(</span><span class="n">LengthUnit</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">VolumeUnitConverter</span><span class="p">(</span><span class="n">ExponentiatedUnitConverter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert volume units with this converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; VolumeUnitConverter.convert(1, LengthUnit.METER**3, LengthUnit.CENTI_METER**3)</span>
+<span class="sd">    1000000.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  </div>
+
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.path"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.bd41221c.min.js"></script>
+      
+    
+  </body>
+</html>

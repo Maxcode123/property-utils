@@ -1,0 +1,3749 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maxcode123.github.io/property-utils/converter_types/">
+      
+      
+        <link rel="prev" href="../converters/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.15">
+    
+    
+      
+        <title>converter types - property-utils</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e359304.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#property_utils.units.converter_types" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="property-utils" class="md-header__button md-logo" aria-label="property-utils" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            property-utils
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              converter types
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  Get started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../property/" class="md-tabs__link">
+          
+  
+  API Documentation
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="property-utils" class="md-nav__button md-logo" aria-label="property-utils" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    property-utils
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Get started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Get started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    What is property-utils?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    API Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            API Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    properties
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            properties
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    property
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validated_property.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    validated property
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    units
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            units
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../units/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    units
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../descriptors/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    descriptors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../converters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    converters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    converter types
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    converter types
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types" class="md-nav__link">
+    <span class="md-ellipsis">
+      converter_types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.AbsoluteUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AbsoluteUnitConverter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AbsoluteUnitConverter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.AbsoluteUnitConverter.convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      convert
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.AbsoluteUnitConverter.get_factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_factor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.CompositeUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      CompositeUnitConverter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CompositeUnitConverter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.CompositeUnitConverter.convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      convert
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.CompositeUnitConverter.get_factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_factor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.ExponentiatedUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      ExponentiatedUnitConverter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ExponentiatedUnitConverter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.ExponentiatedUnitConverter.convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      convert
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.ExponentiatedUnitConverter.get_factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_factor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.RelativeUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelativeUnitConverter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RelativeUnitConverter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.RelativeUnitConverter.convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      convert
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.UnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      UnitConverter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="UnitConverter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.UnitConverter.convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      convert
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.get_converter" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_converter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.register_converter" class="md-nav__link">
+    <span class="md-ellipsis">
+      register_converter
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types" class="md-nav__link">
+    <span class="md-ellipsis">
+      converter_types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.AbsoluteUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      AbsoluteUnitConverter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AbsoluteUnitConverter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.AbsoluteUnitConverter.convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      convert
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.AbsoluteUnitConverter.get_factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_factor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.CompositeUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      CompositeUnitConverter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CompositeUnitConverter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.CompositeUnitConverter.convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      convert
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.CompositeUnitConverter.get_factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_factor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.ExponentiatedUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      ExponentiatedUnitConverter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ExponentiatedUnitConverter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.ExponentiatedUnitConverter.convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      convert
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.ExponentiatedUnitConverter.get_factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_factor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.RelativeUnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelativeUnitConverter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RelativeUnitConverter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.RelativeUnitConverter.convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      convert
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.UnitConverter" class="md-nav__link">
+    <span class="md-ellipsis">
+      UnitConverter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="UnitConverter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.UnitConverter.convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      convert
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.get_converter" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_converter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property_utils.units.converter_types.register_converter" class="md-nav__link">
+    <span class="md-ellipsis">
+      register_converter
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>converter types</h1>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="property_utils.units.converter_types"></a>
+  <div class="doc doc-contents first">
+  
+      <p>This module defines:
+* Functions to fetch and register unit converters
+* Unit converter protocol
+* Base abstract classes for different types of unit converters</p>
+<p>Converters implement a 2-step process to convert 'from_unit' to 'to_unit'.
+1. Convert the 'from_unit' to a reference unit.
+2. Convert the reference unit to the 'to_unit'.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converter_types.AbsoluteUnitConverter" class="doc doc-heading">
+          <code>AbsoluteUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Base converter class for measurement units that are absolute, i.e. not relative.</p>
+<p>e.g.
+Pressure units are absolute because the following applies:
+unit_i = unit_j * constant,
+where unit_i and unit_j can be any pressure units.</p>
+<p>Temperature units are not absolute because the above equation does not apply when
+converting from a relative temperature to an absolute temperature (e.g. from Celcius
+to Kelvin, or Fahrenheit to Rankine).</p>
+<p>Use the 'register_converter' decorator when subclassing and define the
+'reference_unit' and 'conversion_map' attributes. It does not matter what unit you
+shall choose to be the reference; although you have to define the conversion map
+accordingly. The conversion map is a dictionary that holds the conversion factors
+from the reference unit to other units. e.g. in the below example: 1 in = 2.54 cm</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>class LengthUnit(MeasurementUnit):
+...     CENTI_METER = "cm"
+...     INCH = "in"</p>
+<p>@register_converter(LengthUnit)
+... class LengthUnitConverter(AbsoluteUnitConverter):
+...     reference_unit = LengthUnit.INCH
+...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AbsoluteUnitConverter</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base converter class for measurement units that are absolute, i.e. not relative.</span>
+
+<span class="sd">    e.g.</span>
+<span class="sd">    Pressure units are absolute because the following applies:</span>
+<span class="sd">    unit_i = unit_j * constant,</span>
+<span class="sd">    where unit_i and unit_j can be any pressure units.</span>
+
+<span class="sd">    Temperature units are not absolute because the above equation does not apply when</span>
+<span class="sd">    converting from a relative temperature to an absolute temperature (e.g. from Celcius</span>
+<span class="sd">    to Kelvin, or Fahrenheit to Rankine).</span>
+
+<span class="sd">    Use the &#39;register_converter&#39; decorator when subclassing and define the</span>
+<span class="sd">    &#39;reference_unit&#39; and &#39;conversion_map&#39; attributes. It does not matter what unit you</span>
+<span class="sd">    shall choose to be the reference; although you have to define the conversion map</span>
+<span class="sd">    accordingly. The conversion map is a dictionary that holds the conversion factors</span>
+<span class="sd">    from the reference unit to other units. e.g. in the below example: 1 in = 2.54 cm</span>
+
+<span class="sd">    &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">    ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">    ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">    ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">    ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">    ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">generic_unit_descriptor</span><span class="p">:</span> <span class="n">MeasurementUnitType</span>
+    <span class="n">reference_unit</span><span class="p">:</span> <span class="n">MeasurementUnit</span>
+    <span class="n">conversion_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">MeasurementUnit</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+        <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert a value from an absolute unit to another absolute unit.</span>
+<span class="sd">        Raises &#39;UnitConversionError&#39; if &#39;from_descriptor&#39; or &#39;to_descriptor&#39; are not</span>
+<span class="sd">        an instance of the generic that is registered with the converter or if &#39;value&#39;</span>
+<span class="sd">        is not a numeric.</span>
+
+<span class="sd">        &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">        ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">        ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">        &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">        ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">        ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+
+<span class="sd">        &gt;&gt;&gt; assert LengthUnitConverter.convert(2, LengthUnit.INCH, LengthUnit.CENTI_METER) == 5.08</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid &#39;value&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">; expected numeric. &quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_factor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_factor</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the multiplication factor for the conversion from &#39;from_descriptor&#39; to</span>
+<span class="sd">        &#39;to_descriptor&#39;.</span>
+<span class="sd">        Raises &#39;UnitConversionError&#39; if &#39;from_descriptor&#39; or &#39;to_descriptor&#39; are not</span>
+<span class="sd">        an instance of the generic that is registered with the converter.</span>
+
+<span class="sd">        &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">        ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">        ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">        &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">        ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">        ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+
+<span class="sd">        &gt;&gt;&gt; assert LengthUnitConverter.get_factor(LengthUnit.CENTI_METER, LengthUnit.INCH) == 1/2.54</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">from_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;invalid &#39;from_descriptor; expected an instance of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">to_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;invalid &#39;to_descriptor&#39;; expected an instance of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="p">)</span>
+        <span class="n">from_unit</span> <span class="o">=</span> <span class="n">MeasurementUnit</span><span class="o">.</span><span class="n">from_descriptor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">)</span>
+        <span class="n">to_unit</span> <span class="o">=</span> <span class="n">MeasurementUnit</span><span class="o">.</span><span class="n">from_descriptor</span><span class="p">(</span><span class="n">to_descriptor</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_to_reference</span><span class="p">(</span><span class="n">from_unit</span><span class="p">)</span> <span class="o">*</span> <span class="bp">cls</span><span class="o">.</span><span class="n">conversion_map</span><span class="p">[</span><span class="n">to_unit</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;cannot convert to </span><span class="si">{</span><span class="n">to_unit</span><span class="si">}</span><span class="s2">; unit is not registered in </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39;s conversion map. &quot;</span><span class="p">,</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_to_reference</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">from_unit</span><span class="p">:</span> <span class="n">MeasurementUnit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">cls</span><span class="o">.</span><span class="n">conversion_map</span><span class="p">[</span><span class="n">from_unit</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;cannot convert from </span><span class="si">{</span><span class="n">from_unit</span><span class="si">}</span><span class="s2">; unit is not registered in </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39;s conversion map. &quot;</span><span class="p">,</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="property_utils.units.converter_types.AbsoluteUnitConverter.convert" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">convert</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Convert a value from an absolute unit to another absolute unit.
+Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
+an instance of the generic that is registered with the converter or if 'value'
+is not a numeric.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>class LengthUnit(MeasurementUnit):
+...     CENTI_METER = "cm"
+...     INCH = "in"</p>
+<p>@register_converter(LengthUnit)
+... class LengthUnitConverter(AbsoluteUnitConverter):
+...     reference_unit = LengthUnit.INCH
+...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</p>
+<p>assert LengthUnitConverter.convert(2, LengthUnit.INCH, LengthUnit.CENTI_METER) == 5.08</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+          <details class="quote">
+            <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span> <span class="nf">convert</span><span class="p">(</span>
+    <span class="bp">cls</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+    <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a value from an absolute unit to another absolute unit.</span>
+<span class="sd">    Raises &#39;UnitConversionError&#39; if &#39;from_descriptor&#39; or &#39;to_descriptor&#39; are not</span>
+<span class="sd">    an instance of the generic that is registered with the converter or if &#39;value&#39;</span>
+<span class="sd">    is not a numeric.</span>
+
+<span class="sd">    &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">    ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">    ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">    ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">    ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">    ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+
+<span class="sd">    &gt;&gt;&gt; assert LengthUnitConverter.convert(2, LengthUnit.INCH, LengthUnit.CENTI_METER) == 5.08</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid &#39;value&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">; expected numeric. &quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_factor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="property_utils.units.converter_types.AbsoluteUnitConverter.get_factor" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">get_factor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the multiplication factor for the conversion from 'from_descriptor' to
+'to_descriptor'.
+Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
+an instance of the generic that is registered with the converter.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>class LengthUnit(MeasurementUnit):
+...     CENTI_METER = "cm"
+...     INCH = "in"</p>
+<p>@register_converter(LengthUnit)
+... class LengthUnitConverter(AbsoluteUnitConverter):
+...     reference_unit = LengthUnit.INCH
+...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</p>
+<p>assert LengthUnitConverter.get_factor(LengthUnit.CENTI_METER, LengthUnit.INCH) == 1/2.54</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+          <details class="quote">
+            <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span> <span class="nf">get_factor</span><span class="p">(</span>
+    <span class="bp">cls</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the multiplication factor for the conversion from &#39;from_descriptor&#39; to</span>
+<span class="sd">    &#39;to_descriptor&#39;.</span>
+<span class="sd">    Raises &#39;UnitConversionError&#39; if &#39;from_descriptor&#39; or &#39;to_descriptor&#39; are not</span>
+<span class="sd">    an instance of the generic that is registered with the converter.</span>
+
+<span class="sd">    &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">    ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">    ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">    ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">    ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">    ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+
+<span class="sd">    &gt;&gt;&gt; assert LengthUnitConverter.get_factor(LengthUnit.CENTI_METER, LengthUnit.INCH) == 1/2.54</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">from_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;invalid &#39;from_descriptor; expected an instance of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="si">}</span><span class="s2">. &quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">to_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;invalid &#39;to_descriptor&#39;; expected an instance of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="si">}</span><span class="s2">. &quot;</span>
+        <span class="p">)</span>
+    <span class="n">from_unit</span> <span class="o">=</span> <span class="n">MeasurementUnit</span><span class="o">.</span><span class="n">from_descriptor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">)</span>
+    <span class="n">to_unit</span> <span class="o">=</span> <span class="n">MeasurementUnit</span><span class="o">.</span><span class="n">from_descriptor</span><span class="p">(</span><span class="n">to_descriptor</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_to_reference</span><span class="p">(</span><span class="n">from_unit</span><span class="p">)</span> <span class="o">*</span> <span class="bp">cls</span><span class="o">.</span><span class="n">conversion_map</span><span class="p">[</span><span class="n">to_unit</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;cannot convert to </span><span class="si">{</span><span class="n">to_unit</span><span class="si">}</span><span class="s2">; unit is not registered in </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39;s conversion map. &quot;</span><span class="p">,</span>
+        <span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converter_types.CompositeUnitConverter" class="doc doc-heading">
+          <code>CompositeUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Base converter for composite units.</p>
+<p>Use the 'register_converter' decorator when subclassing. This converter requires
+the converters for the individul measurement units to be defined.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>class LengthUnit(MeasurementUnit):
+...     CENTI_METER = "cm"
+...     INCH = "in"</p>
+<p>class TimeUnit(MeasurementUnit):
+...     SECOND = "s"
+...     MINUTE = "min"</p>
+<p>@register_converter(LengthUnit)
+... class LengthUnitConverter(AbsoluteUnitConverter):
+...     reference_unit = LengthUnit.INCH
+...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</p>
+<p>@register_converter(TimeUnit)
+... class TimeUnitConverter(AbsoluteUnitConverter):
+...     reference_unit = TimeUnit.MINUTE
+...     conversion_map = {TimeUnit.MINUTE: 1, TimeUnit.SECOND: 60}</p>
+<p>@register_converter(LengthUnit / TimeUnit)
+... class VelocityUnitConverter(CompositeUnitConverter): ...</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">479</span>
+<span class="normal">480</span>
+<span class="normal">481</span>
+<span class="normal">482</span>
+<span class="normal">483</span>
+<span class="normal">484</span>
+<span class="normal">485</span>
+<span class="normal">486</span>
+<span class="normal">487</span>
+<span class="normal">488</span>
+<span class="normal">489</span>
+<span class="normal">490</span>
+<span class="normal">491</span>
+<span class="normal">492</span>
+<span class="normal">493</span>
+<span class="normal">494</span>
+<span class="normal">495</span>
+<span class="normal">496</span>
+<span class="normal">497</span>
+<span class="normal">498</span>
+<span class="normal">499</span>
+<span class="normal">500</span>
+<span class="normal">501</span>
+<span class="normal">502</span>
+<span class="normal">503</span>
+<span class="normal">504</span>
+<span class="normal">505</span>
+<span class="normal">506</span>
+<span class="normal">507</span>
+<span class="normal">508</span>
+<span class="normal">509</span>
+<span class="normal">510</span>
+<span class="normal">511</span>
+<span class="normal">512</span>
+<span class="normal">513</span>
+<span class="normal">514</span>
+<span class="normal">515</span>
+<span class="normal">516</span>
+<span class="normal">517</span>
+<span class="normal">518</span>
+<span class="normal">519</span>
+<span class="normal">520</span>
+<span class="normal">521</span>
+<span class="normal">522</span>
+<span class="normal">523</span>
+<span class="normal">524</span>
+<span class="normal">525</span>
+<span class="normal">526</span>
+<span class="normal">527</span>
+<span class="normal">528</span>
+<span class="normal">529</span>
+<span class="normal">530</span>
+<span class="normal">531</span>
+<span class="normal">532</span>
+<span class="normal">533</span>
+<span class="normal">534</span>
+<span class="normal">535</span>
+<span class="normal">536</span>
+<span class="normal">537</span>
+<span class="normal">538</span>
+<span class="normal">539</span>
+<span class="normal">540</span>
+<span class="normal">541</span>
+<span class="normal">542</span>
+<span class="normal">543</span>
+<span class="normal">544</span>
+<span class="normal">545</span>
+<span class="normal">546</span>
+<span class="normal">547</span>
+<span class="normal">548</span>
+<span class="normal">549</span>
+<span class="normal">550</span>
+<span class="normal">551</span>
+<span class="normal">552</span>
+<span class="normal">553</span>
+<span class="normal">554</span>
+<span class="normal">555</span>
+<span class="normal">556</span>
+<span class="normal">557</span>
+<span class="normal">558</span>
+<span class="normal">559</span>
+<span class="normal">560</span>
+<span class="normal">561</span>
+<span class="normal">562</span>
+<span class="normal">563</span>
+<span class="normal">564</span>
+<span class="normal">565</span>
+<span class="normal">566</span>
+<span class="normal">567</span>
+<span class="normal">568</span>
+<span class="normal">569</span>
+<span class="normal">570</span>
+<span class="normal">571</span>
+<span class="normal">572</span>
+<span class="normal">573</span>
+<span class="normal">574</span>
+<span class="normal">575</span>
+<span class="normal">576</span>
+<span class="normal">577</span>
+<span class="normal">578</span>
+<span class="normal">579</span>
+<span class="normal">580</span>
+<span class="normal">581</span>
+<span class="normal">582</span>
+<span class="normal">583</span>
+<span class="normal">584</span>
+<span class="normal">585</span>
+<span class="normal">586</span>
+<span class="normal">587</span>
+<span class="normal">588</span>
+<span class="normal">589</span>
+<span class="normal">590</span>
+<span class="normal">591</span>
+<span class="normal">592</span>
+<span class="normal">593</span>
+<span class="normal">594</span>
+<span class="normal">595</span>
+<span class="normal">596</span>
+<span class="normal">597</span>
+<span class="normal">598</span>
+<span class="normal">599</span>
+<span class="normal">600</span>
+<span class="normal">601</span>
+<span class="normal">602</span>
+<span class="normal">603</span>
+<span class="normal">604</span>
+<span class="normal">605</span>
+<span class="normal">606</span>
+<span class="normal">607</span>
+<span class="normal">608</span>
+<span class="normal">609</span>
+<span class="normal">610</span>
+<span class="normal">611</span>
+<span class="normal">612</span>
+<span class="normal">613</span>
+<span class="normal">614</span>
+<span class="normal">615</span>
+<span class="normal">616</span>
+<span class="normal">617</span>
+<span class="normal">618</span>
+<span class="normal">619</span>
+<span class="normal">620</span>
+<span class="normal">621</span>
+<span class="normal">622</span>
+<span class="normal">623</span>
+<span class="normal">624</span>
+<span class="normal">625</span>
+<span class="normal">626</span>
+<span class="normal">627</span>
+<span class="normal">628</span>
+<span class="normal">629</span>
+<span class="normal">630</span>
+<span class="normal">631</span>
+<span class="normal">632</span>
+<span class="normal">633</span>
+<span class="normal">634</span>
+<span class="normal">635</span>
+<span class="normal">636</span>
+<span class="normal">637</span>
+<span class="normal">638</span>
+<span class="normal">639</span>
+<span class="normal">640</span>
+<span class="normal">641</span>
+<span class="normal">642</span>
+<span class="normal">643</span>
+<span class="normal">644</span>
+<span class="normal">645</span>
+<span class="normal">646</span>
+<span class="normal">647</span>
+<span class="normal">648</span>
+<span class="normal">649</span>
+<span class="normal">650</span>
+<span class="normal">651</span>
+<span class="normal">652</span>
+<span class="normal">653</span>
+<span class="normal">654</span>
+<span class="normal">655</span>
+<span class="normal">656</span>
+<span class="normal">657</span>
+<span class="normal">658</span>
+<span class="normal">659</span>
+<span class="normal">660</span>
+<span class="normal">661</span>
+<span class="normal">662</span>
+<span class="normal">663</span>
+<span class="normal">664</span>
+<span class="normal">665</span>
+<span class="normal">666</span>
+<span class="normal">667</span>
+<span class="normal">668</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">CompositeUnitConverter</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base converter for composite units.</span>
+
+<span class="sd">    Use the &#39;register_converter&#39; decorator when subclassing. This converter requires</span>
+<span class="sd">    the converters for the individul measurement units to be defined.</span>
+
+<span class="sd">    &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">    ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">    ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; class TimeUnit(MeasurementUnit):</span>
+<span class="sd">    ...     SECOND = &quot;s&quot;</span>
+<span class="sd">    ...     MINUTE = &quot;min&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">    ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">    ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">    ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(TimeUnit)</span>
+<span class="sd">    ... class TimeUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">    ...     reference_unit = TimeUnit.MINUTE</span>
+<span class="sd">    ...     conversion_map = {TimeUnit.MINUTE: 1, TimeUnit.SECOND: 60}</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit / TimeUnit)</span>
+<span class="sd">    ... class VelocityUnitConverter(CompositeUnitConverter): ...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">generic_unit_descriptor</span><span class="p">:</span> <span class="n">GenericUnitDescriptor</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+        <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert a value from a composite unit to another composite unit.</span>
+
+<span class="sd">        Raises &#39;UnitConversionError&#39; if &#39;from_descriptor&#39; or &#39;to_descriptor&#39; are not</span>
+<span class="sd">        an instance of the generic that is registered with the converter or if &#39;value&#39;</span>
+<span class="sd">        is not a numeric.</span>
+
+<span class="sd">        Raises &#39;ConverterDependenciesError&#39; if a converter for an invdividual unit has</span>
+<span class="sd">        not been defined/registered.</span>
+
+<span class="sd">        Raises &#39;UnsupportedConverterError&#39; if an individual unit is a relative unit.</span>
+
+<span class="sd">        &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">        ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">        ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">        &gt;&gt;&gt; class TimeUnit(MeasurementUnit):</span>
+<span class="sd">        ...     SECOND = &quot;s&quot;</span>
+<span class="sd">        ...     MINUTE = &quot;min&quot;</span>
+
+<span class="sd">        &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">        ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">        ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+
+<span class="sd">        &gt;&gt;&gt; @register_converter(TimeUnit)</span>
+<span class="sd">        ... class TimeUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">        ...     reference_unit = TimeUnit.MINUTE</span>
+<span class="sd">        ...     conversion_map = {TimeUnit.MINUTE: 1, TimeUnit.SECOND: 60}</span>
+
+<span class="sd">        &gt;&gt;&gt; @register_converter(LengthUnit / TimeUnit)</span>
+<span class="sd">        ... class VelocityUnitConverter(CompositeUnitConverter): ...</span>
+
+<span class="sd">        &gt;&gt;&gt; assert VelocityUnitConverter.convert(100, LengthUnit.INCH/TimeUnit.SECOND, LengthUnit.CENTI_METER/TimeUnit.SECOND) == 254</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid &#39;value&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">; expected numeric. &quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_factor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_factor</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the multiplication factor for the conversion from &#39;from_descriptor&#39; to</span>
+<span class="sd">        &#39;to_descriptor&#39;.</span>
+
+<span class="sd">        Raises &#39;UnitConversionError&#39; if &#39;from_descriptor&#39; or &#39;to_descriptor&#39; are not</span>
+<span class="sd">        an instance of the generic that is registered with the converter.</span>
+
+<span class="sd">        Raises &#39;ConverterDependenciesError&#39; if a converter for an invdividual unit has</span>
+<span class="sd">        not been defined/registered.</span>
+
+<span class="sd">        Raises &#39;UnsupportedConverterError&#39; if an individual unit is a relative unit.</span>
+
+<span class="sd">        &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">        ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">        ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">        &gt;&gt;&gt; class TimeUnit(MeasurementUnit):</span>
+<span class="sd">        ...     SECOND = &quot;s&quot;</span>
+<span class="sd">        ...     MINUTE = &quot;min&quot;</span>
+
+<span class="sd">        &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">        ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">        ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+
+<span class="sd">        &gt;&gt;&gt; @register_converter(TimeUnit)</span>
+<span class="sd">        ... class TimeUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">        ...     reference_unit = TimeUnit.MINUTE</span>
+<span class="sd">        ...     conversion_map = {TimeUnit.MINUTE: 1, TimeUnit.SECOND: 60}</span>
+
+<span class="sd">        &gt;&gt;&gt; @register_converter(LengthUnit / TimeUnit)</span>
+<span class="sd">        ... class VelocityUnitConverter(CompositeUnitConverter): ...</span>
+
+<span class="sd">        &gt;&gt;&gt; assert VelocityUnitConverter.get_factor(LengthUnit.INCH/TimeUnit.MINUTE, LengthUnit.CENTI_METER/TimeUnit.SECOND) == 2.54/60</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">from_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;invalid &#39;from_descriptor; expected an instance of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">to_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;invalid &#39;to_descriptor&#39;; expected an instance of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="p">)</span>
+        <span class="n">from_dimension</span> <span class="o">=</span> <span class="n">CompositeDimension</span><span class="o">.</span><span class="n">from_descriptor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">)</span>
+        <span class="n">to_dimension</span> <span class="o">=</span> <span class="n">CompositeDimension</span><span class="o">.</span><span class="n">from_descriptor</span><span class="p">(</span><span class="n">to_descriptor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_get_numerator_factor</span><span class="p">(</span>
+            <span class="n">from_dimension</span><span class="p">,</span> <span class="n">to_dimension</span>
+        <span class="p">)</span> <span class="o">/</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_get_denominator_factor</span><span class="p">(</span><span class="n">from_dimension</span><span class="p">,</span> <span class="n">to_dimension</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_get_numerator_factor</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">from_dimension</span><span class="p">:</span> <span class="n">CompositeDimension</span><span class="p">,</span> <span class="n">to_dimension</span><span class="p">:</span> <span class="n">CompositeDimension</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">numerator_factor</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="k">for</span> <span class="n">from_d</span> <span class="ow">in</span> <span class="n">from_dimension</span><span class="o">.</span><span class="n">numerator</span><span class="p">:</span>
+            <span class="n">to_d</span> <span class="o">=</span> <span class="n">to_dimension</span><span class="o">.</span><span class="n">get_numerator</span><span class="p">(</span><span class="n">from_d</span><span class="o">.</span><span class="n">to_generic</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">to_d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;cannot convert from </span><span class="si">{</span><span class="n">from_dimension</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">to_dimension</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">converter</span> <span class="o">=</span> <span class="n">get_converter</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">from_d</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span>
+            <span class="k">except</span> <span class="n">UndefinedConverterError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ConverterDependenciesError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;converter </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> depends on a converter for &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">from_d</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span><span class="si">}</span><span class="s2">. Did you forget to register &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot; a converter for </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">from_d</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span><span class="si">}</span><span class="s2">? &quot;</span>
+                <span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">converter</span><span class="p">,</span> <span class="n">AbsoluteUnitConverter</span><span class="p">):</span>
+                <span class="c1"># NOTE: provide a link to documentation for the error.</span>
+                <span class="k">raise</span> <span class="n">UnsupportedConverterError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;converter </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> is not supported since &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">from_d</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span><span class="si">}</span><span class="s2"> is not an absolute unit;&quot;</span>
+                    <span class="s2">&quot; conversion between composite relative units is invalid. &quot;</span>
+                <span class="p">)</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="p">(</span><span class="n">converter</span><span class="o">.</span><span class="n">get_factor</span><span class="p">(</span><span class="n">from_d</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span> <span class="n">to_d</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span> <span class="o">**</span> <span class="n">from_d</span><span class="o">.</span><span class="n">power</span>
+            <span class="n">numerator_factor</span> <span class="o">*=</span> <span class="n">factor</span>
+        <span class="k">return</span> <span class="n">numerator_factor</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_get_denominator_factor</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">from_dimension</span><span class="p">:</span> <span class="n">CompositeDimension</span><span class="p">,</span> <span class="n">to_dimension</span><span class="p">:</span> <span class="n">CompositeDimension</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">denominator_factor</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+        <span class="k">for</span> <span class="n">from_d</span> <span class="ow">in</span> <span class="n">from_dimension</span><span class="o">.</span><span class="n">denominator</span><span class="p">:</span>
+            <span class="n">to_d</span> <span class="o">=</span> <span class="n">to_dimension</span><span class="o">.</span><span class="n">get_denominator</span><span class="p">(</span><span class="n">from_d</span><span class="o">.</span><span class="n">to_generic</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">to_d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;cannot convert from </span><span class="si">{</span><span class="n">from_dimension</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">to_dimension</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">converter</span> <span class="o">=</span> <span class="n">get_converter</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">from_d</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span>
+            <span class="k">except</span> <span class="n">UndefinedConverterError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ConverterDependenciesError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;converter </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> depends on a converter for &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">from_d</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span><span class="si">}</span><span class="s2">. Did you forget to register &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot; a converter for </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">from_d</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span><span class="si">}</span><span class="s2">? &quot;</span>
+                <span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">converter</span><span class="p">,</span> <span class="n">AbsoluteUnitConverter</span><span class="p">):</span>
+                <span class="c1"># NOTE: provide a link to documentation for the error.</span>
+                <span class="k">raise</span> <span class="n">UnsupportedConverterError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;converter </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> is not supported since &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">from_d</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span><span class="si">}</span><span class="s2"> is not an absolute unit;&quot;</span>
+                    <span class="s2">&quot; conversion between composite relative units is invalid. &quot;</span>
+                <span class="p">)</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="p">(</span><span class="n">converter</span><span class="o">.</span><span class="n">get_factor</span><span class="p">(</span><span class="n">from_d</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span> <span class="n">to_d</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span> <span class="o">**</span> <span class="n">from_d</span><span class="o">.</span><span class="n">power</span>
+            <span class="n">denominator_factor</span> <span class="o">*=</span> <span class="n">factor</span>
+        <span class="k">return</span> <span class="n">denominator_factor</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="property_utils.units.converter_types.CompositeUnitConverter.convert" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">convert</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Convert a value from a composite unit to another composite unit.</p>
+<p>Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
+an instance of the generic that is registered with the converter or if 'value'
+is not a numeric.</p>
+<p>Raises 'ConverterDependenciesError' if a converter for an invdividual unit has
+not been defined/registered.</p>
+<p>Raises 'UnsupportedConverterError' if an individual unit is a relative unit.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>class LengthUnit(MeasurementUnit):
+...     CENTI_METER = "cm"
+...     INCH = "in"</p>
+<p>class TimeUnit(MeasurementUnit):
+...     SECOND = "s"
+...     MINUTE = "min"</p>
+<p>@register_converter(LengthUnit)
+... class LengthUnitConverter(AbsoluteUnitConverter):
+...     reference_unit = LengthUnit.INCH
+...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</p>
+<p>@register_converter(TimeUnit)
+... class TimeUnitConverter(AbsoluteUnitConverter):
+...     reference_unit = TimeUnit.MINUTE
+...     conversion_map = {TimeUnit.MINUTE: 1, TimeUnit.SECOND: 60}</p>
+<p>@register_converter(LengthUnit / TimeUnit)
+... class VelocityUnitConverter(CompositeUnitConverter): ...</p>
+<p>assert VelocityUnitConverter.convert(100, LengthUnit.INCH/TimeUnit.SECOND, LengthUnit.CENTI_METER/TimeUnit.SECOND) == 254</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+          <details class="quote">
+            <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">510</span>
+<span class="normal">511</span>
+<span class="normal">512</span>
+<span class="normal">513</span>
+<span class="normal">514</span>
+<span class="normal">515</span>
+<span class="normal">516</span>
+<span class="normal">517</span>
+<span class="normal">518</span>
+<span class="normal">519</span>
+<span class="normal">520</span>
+<span class="normal">521</span>
+<span class="normal">522</span>
+<span class="normal">523</span>
+<span class="normal">524</span>
+<span class="normal">525</span>
+<span class="normal">526</span>
+<span class="normal">527</span>
+<span class="normal">528</span>
+<span class="normal">529</span>
+<span class="normal">530</span>
+<span class="normal">531</span>
+<span class="normal">532</span>
+<span class="normal">533</span>
+<span class="normal">534</span>
+<span class="normal">535</span>
+<span class="normal">536</span>
+<span class="normal">537</span>
+<span class="normal">538</span>
+<span class="normal">539</span>
+<span class="normal">540</span>
+<span class="normal">541</span>
+<span class="normal">542</span>
+<span class="normal">543</span>
+<span class="normal">544</span>
+<span class="normal">545</span>
+<span class="normal">546</span>
+<span class="normal">547</span>
+<span class="normal">548</span>
+<span class="normal">549</span>
+<span class="normal">550</span>
+<span class="normal">551</span>
+<span class="normal">552</span>
+<span class="normal">553</span>
+<span class="normal">554</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span> <span class="nf">convert</span><span class="p">(</span>
+    <span class="bp">cls</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+    <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a value from a composite unit to another composite unit.</span>
+
+<span class="sd">    Raises &#39;UnitConversionError&#39; if &#39;from_descriptor&#39; or &#39;to_descriptor&#39; are not</span>
+<span class="sd">    an instance of the generic that is registered with the converter or if &#39;value&#39;</span>
+<span class="sd">    is not a numeric.</span>
+
+<span class="sd">    Raises &#39;ConverterDependenciesError&#39; if a converter for an invdividual unit has</span>
+<span class="sd">    not been defined/registered.</span>
+
+<span class="sd">    Raises &#39;UnsupportedConverterError&#39; if an individual unit is a relative unit.</span>
+
+<span class="sd">    &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">    ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">    ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; class TimeUnit(MeasurementUnit):</span>
+<span class="sd">    ...     SECOND = &quot;s&quot;</span>
+<span class="sd">    ...     MINUTE = &quot;min&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">    ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">    ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">    ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(TimeUnit)</span>
+<span class="sd">    ... class TimeUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">    ...     reference_unit = TimeUnit.MINUTE</span>
+<span class="sd">    ...     conversion_map = {TimeUnit.MINUTE: 1, TimeUnit.SECOND: 60}</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit / TimeUnit)</span>
+<span class="sd">    ... class VelocityUnitConverter(CompositeUnitConverter): ...</span>
+
+<span class="sd">    &gt;&gt;&gt; assert VelocityUnitConverter.convert(100, LengthUnit.INCH/TimeUnit.SECOND, LengthUnit.CENTI_METER/TimeUnit.SECOND) == 254</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid &#39;value&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">; expected numeric. &quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_factor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="property_utils.units.converter_types.CompositeUnitConverter.get_factor" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">get_factor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the multiplication factor for the conversion from 'from_descriptor' to
+'to_descriptor'.</p>
+<p>Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
+an instance of the generic that is registered with the converter.</p>
+<p>Raises 'ConverterDependenciesError' if a converter for an invdividual unit has
+not been defined/registered.</p>
+<p>Raises 'UnsupportedConverterError' if an individual unit is a relative unit.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>class LengthUnit(MeasurementUnit):
+...     CENTI_METER = "cm"
+...     INCH = "in"</p>
+<p>class TimeUnit(MeasurementUnit):
+...     SECOND = "s"
+...     MINUTE = "min"</p>
+<p>@register_converter(LengthUnit)
+... class LengthUnitConverter(AbsoluteUnitConverter):
+...     reference_unit = LengthUnit.INCH
+...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</p>
+<p>@register_converter(TimeUnit)
+... class TimeUnitConverter(AbsoluteUnitConverter):
+...     reference_unit = TimeUnit.MINUTE
+...     conversion_map = {TimeUnit.MINUTE: 1, TimeUnit.SECOND: 60}</p>
+<p>@register_converter(LengthUnit / TimeUnit)
+... class VelocityUnitConverter(CompositeUnitConverter): ...</p>
+<p>assert VelocityUnitConverter.get_factor(LengthUnit.INCH/TimeUnit.MINUTE, LengthUnit.CENTI_METER/TimeUnit.SECOND) == 2.54/60</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+          <details class="quote">
+            <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">556</span>
+<span class="normal">557</span>
+<span class="normal">558</span>
+<span class="normal">559</span>
+<span class="normal">560</span>
+<span class="normal">561</span>
+<span class="normal">562</span>
+<span class="normal">563</span>
+<span class="normal">564</span>
+<span class="normal">565</span>
+<span class="normal">566</span>
+<span class="normal">567</span>
+<span class="normal">568</span>
+<span class="normal">569</span>
+<span class="normal">570</span>
+<span class="normal">571</span>
+<span class="normal">572</span>
+<span class="normal">573</span>
+<span class="normal">574</span>
+<span class="normal">575</span>
+<span class="normal">576</span>
+<span class="normal">577</span>
+<span class="normal">578</span>
+<span class="normal">579</span>
+<span class="normal">580</span>
+<span class="normal">581</span>
+<span class="normal">582</span>
+<span class="normal">583</span>
+<span class="normal">584</span>
+<span class="normal">585</span>
+<span class="normal">586</span>
+<span class="normal">587</span>
+<span class="normal">588</span>
+<span class="normal">589</span>
+<span class="normal">590</span>
+<span class="normal">591</span>
+<span class="normal">592</span>
+<span class="normal">593</span>
+<span class="normal">594</span>
+<span class="normal">595</span>
+<span class="normal">596</span>
+<span class="normal">597</span>
+<span class="normal">598</span>
+<span class="normal">599</span>
+<span class="normal">600</span>
+<span class="normal">601</span>
+<span class="normal">602</span>
+<span class="normal">603</span>
+<span class="normal">604</span>
+<span class="normal">605</span>
+<span class="normal">606</span>
+<span class="normal">607</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span> <span class="nf">get_factor</span><span class="p">(</span>
+    <span class="bp">cls</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the multiplication factor for the conversion from &#39;from_descriptor&#39; to</span>
+<span class="sd">    &#39;to_descriptor&#39;.</span>
+
+<span class="sd">    Raises &#39;UnitConversionError&#39; if &#39;from_descriptor&#39; or &#39;to_descriptor&#39; are not</span>
+<span class="sd">    an instance of the generic that is registered with the converter.</span>
+
+<span class="sd">    Raises &#39;ConverterDependenciesError&#39; if a converter for an invdividual unit has</span>
+<span class="sd">    not been defined/registered.</span>
+
+<span class="sd">    Raises &#39;UnsupportedConverterError&#39; if an individual unit is a relative unit.</span>
+
+<span class="sd">    &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">    ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">    ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; class TimeUnit(MeasurementUnit):</span>
+<span class="sd">    ...     SECOND = &quot;s&quot;</span>
+<span class="sd">    ...     MINUTE = &quot;min&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">    ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">    ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">    ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(TimeUnit)</span>
+<span class="sd">    ... class TimeUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">    ...     reference_unit = TimeUnit.MINUTE</span>
+<span class="sd">    ...     conversion_map = {TimeUnit.MINUTE: 1, TimeUnit.SECOND: 60}</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit / TimeUnit)</span>
+<span class="sd">    ... class VelocityUnitConverter(CompositeUnitConverter): ...</span>
+
+<span class="sd">    &gt;&gt;&gt; assert VelocityUnitConverter.get_factor(LengthUnit.INCH/TimeUnit.MINUTE, LengthUnit.CENTI_METER/TimeUnit.SECOND) == 2.54/60</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">from_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;invalid &#39;from_descriptor; expected an instance of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="si">}</span><span class="s2">. &quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">to_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;invalid &#39;to_descriptor&#39;; expected an instance of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="si">}</span><span class="s2">. &quot;</span>
+        <span class="p">)</span>
+    <span class="n">from_dimension</span> <span class="o">=</span> <span class="n">CompositeDimension</span><span class="o">.</span><span class="n">from_descriptor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">)</span>
+    <span class="n">to_dimension</span> <span class="o">=</span> <span class="n">CompositeDimension</span><span class="o">.</span><span class="n">from_descriptor</span><span class="p">(</span><span class="n">to_descriptor</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_get_numerator_factor</span><span class="p">(</span>
+        <span class="n">from_dimension</span><span class="p">,</span> <span class="n">to_dimension</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_get_denominator_factor</span><span class="p">(</span><span class="n">from_dimension</span><span class="p">,</span> <span class="n">to_dimension</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converter_types.ExponentiatedUnitConverter" class="doc doc-heading">
+          <code>ExponentiatedUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Base converter for exponentiated absolute measurement units.</p>
+<p>Use the 'register_converter' decorator when subclassing. This converter requires
+the converter for the measurement unit that is exponentiated to be defined.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>class LengthUnit(MeasurementUnit):
+...     CENTI_METER = "cm"
+...     INCH = "in"</p>
+<p>@register_converter(LengthUnit)
+... class LengthUnitConverter(AbsoluteUnitConverter):
+...     reference_unit = LengthUnit.INCH
+...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</p>
+<p>@register_converter(LengthUnit**2)
+... class AreaUnitConverter(ExponentiatedUnitConverter): ...</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span>
+<span class="normal">394</span>
+<span class="normal">395</span>
+<span class="normal">396</span>
+<span class="normal">397</span>
+<span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span>
+<span class="normal">430</span>
+<span class="normal">431</span>
+<span class="normal">432</span>
+<span class="normal">433</span>
+<span class="normal">434</span>
+<span class="normal">435</span>
+<span class="normal">436</span>
+<span class="normal">437</span>
+<span class="normal">438</span>
+<span class="normal">439</span>
+<span class="normal">440</span>
+<span class="normal">441</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span>
+<span class="normal">453</span>
+<span class="normal">454</span>
+<span class="normal">455</span>
+<span class="normal">456</span>
+<span class="normal">457</span>
+<span class="normal">458</span>
+<span class="normal">459</span>
+<span class="normal">460</span>
+<span class="normal">461</span>
+<span class="normal">462</span>
+<span class="normal">463</span>
+<span class="normal">464</span>
+<span class="normal">465</span>
+<span class="normal">466</span>
+<span class="normal">467</span>
+<span class="normal">468</span>
+<span class="normal">469</span>
+<span class="normal">470</span>
+<span class="normal">471</span>
+<span class="normal">472</span>
+<span class="normal">473</span>
+<span class="normal">474</span>
+<span class="normal">475</span>
+<span class="normal">476</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ExponentiatedUnitConverter</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base converter for exponentiated absolute measurement units.</span>
+
+<span class="sd">    Use the &#39;register_converter&#39; decorator when subclassing. This converter requires</span>
+<span class="sd">    the converter for the measurement unit that is exponentiated to be defined.</span>
+
+<span class="sd">    &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">    ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">    ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">    ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">    ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">    ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit**2)</span>
+<span class="sd">    ... class AreaUnitConverter(ExponentiatedUnitConverter): ...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">generic_unit_descriptor</span><span class="p">:</span> <span class="n">GenericDimension</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+        <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert a value from an absolute exponentiated unit to another absolute</span>
+<span class="sd">        exponentiated unit. In order to use this converter a converter must exist for</span>
+<span class="sd">        the base unit.</span>
+
+<span class="sd">        Raises &#39;UnitConversionError&#39; if &#39;from_descriptor&#39; or &#39;to_descriptor&#39; are not</span>
+<span class="sd">        an instance of the generic that is registered with the converter or if &#39;value&#39;</span>
+<span class="sd">        is not a numeric.</span>
+
+<span class="sd">        Raises &#39;ConverterDependenciesError&#39; if a converter for the base unit has not</span>
+<span class="sd">        been defined/registered.</span>
+
+<span class="sd">        Raises &#39;UnsupportedConverterError&#39; if the base unit is a relative unit.</span>
+
+<span class="sd">        &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">        ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">        ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">        &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">        ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">        ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+
+<span class="sd">        &gt;&gt;&gt; @register_converter(LengthUnit**2)</span>
+<span class="sd">        ... class AreaUnitConverter(ExponentiatedUnitConverter): ...</span>
+
+<span class="sd">        &gt;&gt;&gt; assert AreaUnitConverter.convert(10, LengthUnit.INCH**2, LengthUnit.CENTI_METER**2) == 64.516</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid &#39;value&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">; expected numeric. &quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_factor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_factor</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the multiplication factor for the conversion from &#39;from_descriptor&#39; to</span>
+<span class="sd">        &#39;to_descriptor&#39;.</span>
+
+<span class="sd">        Raises &#39;UnitConversionError&#39; if &#39;from_descriptor&#39; or &#39;to_descriptor&#39; are not</span>
+<span class="sd">        an instance of the generic that is registered with the converter.</span>
+
+<span class="sd">        Raises &#39;ConverterDependenciesError&#39; if a converter for the base unit has not</span>
+<span class="sd">        been defined/registered.</span>
+
+<span class="sd">        Raises &#39;UnsupportedConverterError&#39; if the base unit is a relative unit.</span>
+
+<span class="sd">        &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">        ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">        ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">        &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">        ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">        ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+
+<span class="sd">        &gt;&gt;&gt; @register_converter(LengthUnit**2)</span>
+<span class="sd">        ... class AreaUnitConverter(ExponentiatedUnitConverter): ...</span>
+
+<span class="sd">        &gt;&gt;&gt; assert AreaUnitConverter.get_factor(LengthUnit.INCH**2, LengthUnit.CENTI_METER**2) == 6.4516</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">from_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;invalid &#39;from_descriptor; expected an instance of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">to_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;invalid &#39;to_descriptor&#39;; expected an instance of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="p">)</span>
+        <span class="n">from_dimension</span> <span class="o">=</span> <span class="n">Dimension</span><span class="o">.</span><span class="n">from_descriptor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">)</span>
+        <span class="n">to_dimension</span> <span class="o">=</span> <span class="n">Dimension</span><span class="o">.</span><span class="n">from_descriptor</span><span class="p">(</span><span class="n">to_descriptor</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">converter</span> <span class="o">=</span> <span class="n">get_converter</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="o">.</span><span class="n">unit_type</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">UndefinedConverterError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConverterDependenciesError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;converter </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> depends on a converter for &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="o">.</span><span class="n">unit_type</span><span class="si">}</span><span class="s2">. Did you forget to register &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot; a converter for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="o">.</span><span class="n">unit_type</span><span class="si">}</span><span class="s2">? &quot;</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">converter</span><span class="p">,</span> <span class="n">AbsoluteUnitConverter</span><span class="p">):</span>
+            <span class="c1"># NOTE: provide a link to documentation for the error.</span>
+            <span class="k">raise</span> <span class="n">UnsupportedConverterError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;converter </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> is not supported since &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="o">.</span><span class="n">unit_type</span><span class="si">}</span><span class="s2"> is not an absolute unit;&quot;</span>
+                <span class="s2">&quot; conversion between exponentiated relative units is invalid. &quot;</span>
+            <span class="p">)</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">get_factor</span><span class="p">(</span><span class="n">from_dimension</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span> <span class="n">to_dimension</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">factor</span><span class="o">**</span><span class="n">to_dimension</span><span class="o">.</span><span class="n">power</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="property_utils.units.converter_types.ExponentiatedUnitConverter.convert" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">convert</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Convert a value from an absolute exponentiated unit to another absolute
+exponentiated unit. In order to use this converter a converter must exist for
+the base unit.</p>
+<p>Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
+an instance of the generic that is registered with the converter or if 'value'
+is not a numeric.</p>
+<p>Raises 'ConverterDependenciesError' if a converter for the base unit has not
+been defined/registered.</p>
+<p>Raises 'UnsupportedConverterError' if the base unit is a relative unit.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>class LengthUnit(MeasurementUnit):
+...     CENTI_METER = "cm"
+...     INCH = "in"</p>
+<p>@register_converter(LengthUnit)
+... class LengthUnitConverter(AbsoluteUnitConverter):
+...     reference_unit = LengthUnit.INCH
+...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</p>
+<p>@register_converter(LengthUnit**2)
+... class AreaUnitConverter(ExponentiatedUnitConverter): ...</p>
+<p>assert AreaUnitConverter.convert(10, LengthUnit.INCH<strong>2, LengthUnit.CENTI_METER</strong>2) == 64.516</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+          <details class="quote">
+            <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span>
+<span class="normal">394</span>
+<span class="normal">395</span>
+<span class="normal">396</span>
+<span class="normal">397</span>
+<span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span> <span class="nf">convert</span><span class="p">(</span>
+    <span class="bp">cls</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+    <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a value from an absolute exponentiated unit to another absolute</span>
+<span class="sd">    exponentiated unit. In order to use this converter a converter must exist for</span>
+<span class="sd">    the base unit.</span>
+
+<span class="sd">    Raises &#39;UnitConversionError&#39; if &#39;from_descriptor&#39; or &#39;to_descriptor&#39; are not</span>
+<span class="sd">    an instance of the generic that is registered with the converter or if &#39;value&#39;</span>
+<span class="sd">    is not a numeric.</span>
+
+<span class="sd">    Raises &#39;ConverterDependenciesError&#39; if a converter for the base unit has not</span>
+<span class="sd">    been defined/registered.</span>
+
+<span class="sd">    Raises &#39;UnsupportedConverterError&#39; if the base unit is a relative unit.</span>
+
+<span class="sd">    &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">    ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">    ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">    ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">    ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">    ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit**2)</span>
+<span class="sd">    ... class AreaUnitConverter(ExponentiatedUnitConverter): ...</span>
+
+<span class="sd">    &gt;&gt;&gt; assert AreaUnitConverter.convert(10, LengthUnit.INCH**2, LengthUnit.CENTI_METER**2) == 64.516</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid &#39;value&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">; expected numeric. &quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value</span> <span class="o">*</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_factor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="property_utils.units.converter_types.ExponentiatedUnitConverter.get_factor" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">get_factor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the multiplication factor for the conversion from 'from_descriptor' to
+'to_descriptor'.</p>
+<p>Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
+an instance of the generic that is registered with the converter.</p>
+<p>Raises 'ConverterDependenciesError' if a converter for the base unit has not
+been defined/registered.</p>
+<p>Raises 'UnsupportedConverterError' if the base unit is a relative unit.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>class LengthUnit(MeasurementUnit):
+...     CENTI_METER = "cm"
+...     INCH = "in"</p>
+<p>@register_converter(LengthUnit)
+... class LengthUnitConverter(AbsoluteUnitConverter):
+...     reference_unit = LengthUnit.INCH
+...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</p>
+<p>@register_converter(LengthUnit**2)
+... class AreaUnitConverter(ExponentiatedUnitConverter): ...</p>
+<p>assert AreaUnitConverter.get_factor(LengthUnit.INCH<strong>2, LengthUnit.CENTI_METER</strong>2) == 6.4516</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+          <details class="quote">
+            <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span>
+<span class="normal">430</span>
+<span class="normal">431</span>
+<span class="normal">432</span>
+<span class="normal">433</span>
+<span class="normal">434</span>
+<span class="normal">435</span>
+<span class="normal">436</span>
+<span class="normal">437</span>
+<span class="normal">438</span>
+<span class="normal">439</span>
+<span class="normal">440</span>
+<span class="normal">441</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span>
+<span class="normal">453</span>
+<span class="normal">454</span>
+<span class="normal">455</span>
+<span class="normal">456</span>
+<span class="normal">457</span>
+<span class="normal">458</span>
+<span class="normal">459</span>
+<span class="normal">460</span>
+<span class="normal">461</span>
+<span class="normal">462</span>
+<span class="normal">463</span>
+<span class="normal">464</span>
+<span class="normal">465</span>
+<span class="normal">466</span>
+<span class="normal">467</span>
+<span class="normal">468</span>
+<span class="normal">469</span>
+<span class="normal">470</span>
+<span class="normal">471</span>
+<span class="normal">472</span>
+<span class="normal">473</span>
+<span class="normal">474</span>
+<span class="normal">475</span>
+<span class="normal">476</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span> <span class="nf">get_factor</span><span class="p">(</span>
+    <span class="bp">cls</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the multiplication factor for the conversion from &#39;from_descriptor&#39; to</span>
+<span class="sd">    &#39;to_descriptor&#39;.</span>
+
+<span class="sd">    Raises &#39;UnitConversionError&#39; if &#39;from_descriptor&#39; or &#39;to_descriptor&#39; are not</span>
+<span class="sd">    an instance of the generic that is registered with the converter.</span>
+
+<span class="sd">    Raises &#39;ConverterDependenciesError&#39; if a converter for the base unit has not</span>
+<span class="sd">    been defined/registered.</span>
+
+<span class="sd">    Raises &#39;UnsupportedConverterError&#39; if the base unit is a relative unit.</span>
+
+<span class="sd">    &gt;&gt;&gt; class LengthUnit(MeasurementUnit):</span>
+<span class="sd">    ...     CENTI_METER = &quot;cm&quot;</span>
+<span class="sd">    ...     INCH = &quot;in&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit)</span>
+<span class="sd">    ... class LengthUnitConverter(AbsoluteUnitConverter):</span>
+<span class="sd">    ...     reference_unit = LengthUnit.INCH</span>
+<span class="sd">    ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(LengthUnit**2)</span>
+<span class="sd">    ... class AreaUnitConverter(ExponentiatedUnitConverter): ...</span>
+
+<span class="sd">    &gt;&gt;&gt; assert AreaUnitConverter.get_factor(LengthUnit.INCH**2, LengthUnit.CENTI_METER**2) == 6.4516</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">from_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;invalid &#39;from_descriptor; expected an instance of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="si">}</span><span class="s2">. &quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">to_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;invalid &#39;to_descriptor&#39;; expected an instance of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="si">}</span><span class="s2">. &quot;</span>
+        <span class="p">)</span>
+    <span class="n">from_dimension</span> <span class="o">=</span> <span class="n">Dimension</span><span class="o">.</span><span class="n">from_descriptor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">)</span>
+    <span class="n">to_dimension</span> <span class="o">=</span> <span class="n">Dimension</span><span class="o">.</span><span class="n">from_descriptor</span><span class="p">(</span><span class="n">to_descriptor</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">converter</span> <span class="o">=</span> <span class="n">get_converter</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="o">.</span><span class="n">unit_type</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">UndefinedConverterError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ConverterDependenciesError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;converter </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> depends on a converter for &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="o">.</span><span class="n">unit_type</span><span class="si">}</span><span class="s2">. Did you forget to register &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot; a converter for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="o">.</span><span class="n">unit_type</span><span class="si">}</span><span class="s2">? &quot;</span>
+        <span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">converter</span><span class="p">,</span> <span class="n">AbsoluteUnitConverter</span><span class="p">):</span>
+        <span class="c1"># NOTE: provide a link to documentation for the error.</span>
+        <span class="k">raise</span> <span class="n">UnsupportedConverterError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;converter </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> is not supported since &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="o">.</span><span class="n">unit_type</span><span class="si">}</span><span class="s2"> is not an absolute unit;&quot;</span>
+            <span class="s2">&quot; conversion between exponentiated relative units is invalid. &quot;</span>
+        <span class="p">)</span>
+    <span class="n">factor</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">get_factor</span><span class="p">(</span><span class="n">from_dimension</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span> <span class="n">to_dimension</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">factor</span><span class="o">**</span><span class="n">to_dimension</span><span class="o">.</span><span class="n">power</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converter_types.RelativeUnitConverter" class="doc doc-heading">
+          <code>RelativeUnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Base converter class for measurement units that are relative.</p>
+<p>e.g. Temperature units are relative because conversion from one unit to another
+is not necessarily performed with multiplication with a single factor.</p>
+<p>Use the 'register_converter' decorator when subclassing and define the
+'reference_unit', 'conversion_map' and 'reference_conversion_map' attributes. It
+does not matter what unit you shall choose to be the reference; although you have to
+define the conversion map and reference conversion map accordingly. The conversion
+map is a dictionary that holds the conversion functions that convert other units to
+the reference unit. The reference conversion map is a dictionary that holds the
+conversion functions that convert the reference unit to other units.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>class TemperatureUnit(MeasurementUnit):
+...     CELCIUS = "°C"
+...     FAHRENHEIT = "°F"</p>
+<p>@register_converter(TemperatureUnit)
+... class TemperatureUnitConverter(RelativeUnitConverter):
+...     reference_unit = TemperatureUnit.CELCIUS
+...     conversion_map = {
+...             TemperatureUnit.CELCIUS: lambda t: t,
+...             TemperatureUnit.FAHRENHEIT: lambda t: (t - 32) / 1.8,
+...                 }
+...     reference_conversion_map = {
+...             TemperatureUnit.CELCIUS: lambda t: t,
+...             TemperatureUnit.FAHRENHEIT: lambda t: (t * 1.8) + 32,
+...                 }</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">RelativeUnitConverter</span><span class="p">(</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span>
+<span class="p">):</span>  <span class="c1"># pylint: disable=too-few-public-methods</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base converter class for measurement units that are relative.</span>
+
+<span class="sd">    e.g. Temperature units are relative because conversion from one unit to another</span>
+<span class="sd">    is not necessarily performed with multiplication with a single factor.</span>
+
+<span class="sd">    Use the &#39;register_converter&#39; decorator when subclassing and define the</span>
+<span class="sd">    &#39;reference_unit&#39;, &#39;conversion_map&#39; and &#39;reference_conversion_map&#39; attributes. It</span>
+<span class="sd">    does not matter what unit you shall choose to be the reference; although you have to</span>
+<span class="sd">    define the conversion map and reference conversion map accordingly. The conversion</span>
+<span class="sd">    map is a dictionary that holds the conversion functions that convert other units to</span>
+<span class="sd">    the reference unit. The reference conversion map is a dictionary that holds the</span>
+<span class="sd">    conversion functions that convert the reference unit to other units.</span>
+
+
+<span class="sd">    &gt;&gt;&gt; class TemperatureUnit(MeasurementUnit):</span>
+<span class="sd">    ...     CELCIUS = &quot;°C&quot;</span>
+<span class="sd">    ...     FAHRENHEIT = &quot;°F&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(TemperatureUnit)</span>
+<span class="sd">    ... class TemperatureUnitConverter(RelativeUnitConverter):</span>
+<span class="sd">    ...     reference_unit = TemperatureUnit.CELCIUS</span>
+<span class="sd">    ...     conversion_map = {</span>
+<span class="sd">    ...             TemperatureUnit.CELCIUS: lambda t: t,</span>
+<span class="sd">    ...             TemperatureUnit.FAHRENHEIT: lambda t: (t - 32) / 1.8,</span>
+<span class="sd">    ...                 }</span>
+<span class="sd">    ...     reference_conversion_map = {</span>
+<span class="sd">    ...             TemperatureUnit.CELCIUS: lambda t: t,</span>
+<span class="sd">    ...             TemperatureUnit.FAHRENHEIT: lambda t: (t * 1.8) + 32,</span>
+<span class="sd">    ...                 }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">generic_unit_descriptor</span><span class="p">:</span> <span class="n">MeasurementUnitType</span>
+    <span class="n">reference_unit</span><span class="p">:</span> <span class="n">MeasurementUnit</span>
+    <span class="n">reference_conversion_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">MeasurementUnit</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]]</span>
+    <span class="n">conversion_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">MeasurementUnit</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]]</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+        <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert a value from a relative unit to another relative unit.</span>
+
+<span class="sd">        Raises &#39;UnitConversionError&#39; if &#39;from_descriptor&#39; or &#39;to_descriptor&#39; are not</span>
+<span class="sd">        an instance of the generic that is registered with the converter or if &#39;value&#39;</span>
+<span class="sd">        is not a numeric.</span>
+
+<span class="sd">        Raises &#39;ConversionFunctionError&#39; if an error occurs when calling a function</span>
+<span class="sd">        provided in the conversion_map or reference_conversion_map.</span>
+
+<span class="sd">        &gt;&gt;&gt; class TemperatureUnit(MeasurementUnit):</span>
+<span class="sd">        ...     CELCIUS = &quot;°C&quot;</span>
+<span class="sd">        ...     FAHRENHEIT = &quot;°F&quot;</span>
+
+<span class="sd">        &gt;&gt;&gt; @register_converter(TemperatureUnit)</span>
+<span class="sd">        ... class TemperatureUnitConverter(RelativeUnitConverter):</span>
+<span class="sd">        ...     reference_unit = TemperatureUnit.CELCIUS</span>
+<span class="sd">        ...     conversion_map = {</span>
+<span class="sd">        ...             TemperatureUnit.CELCIUS: lambda t: t,</span>
+<span class="sd">        ...             TemperatureUnit.FAHRENHEIT: lambda t: (t - 32) / 1.8,</span>
+<span class="sd">        ...                 }</span>
+<span class="sd">        ...     reference_conversion_map = {</span>
+<span class="sd">        ...             TemperatureUnit.CELCIUS: lambda t: t,</span>
+<span class="sd">        ...             TemperatureUnit.FAHRENHEIT: lambda t: (t * 1.8) + 32,</span>
+<span class="sd">        ...                 }</span>
+
+<span class="sd">        &gt;&gt;&gt; assert TemperatureUnitConverter.convert(100, TemperatureUnit.CELCIUS, TemperatureUnit.FAHRENHEIT) == 212</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid &#39;value&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">; expected numeric. &quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_from_reference</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_to_reference</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">),</span> <span class="n">to_descriptor</span>
+        <span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_to_reference</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">from_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;invalid &#39;from_descriptor; expected an instance of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="p">)</span>
+        <span class="n">from_unit</span> <span class="o">=</span> <span class="n">MeasurementUnit</span><span class="o">.</span><span class="n">from_descriptor</span><span class="p">(</span><span class="n">from_descriptor</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">conversion_func</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">conversion_map</span><span class="p">[</span><span class="n">from_unit</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;cannot convert from </span><span class="si">{</span><span class="n">from_unit</span><span class="si">}</span><span class="s2">; unit is not in </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39;s conversion map. &quot;</span><span class="p">,</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">conversion_func</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConversionFunctionError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;an error occured in a conversion function of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">. &quot;</span><span class="p">,</span> <span class="n">exc</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="nn">exc</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_from_reference</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">to_descriptor</span><span class="o">.</span><span class="n">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;invalid &#39;to_descriptor&#39;; expected an instance of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="p">)</span>
+        <span class="n">to_unit</span> <span class="o">=</span> <span class="n">MeasurementUnit</span><span class="o">.</span><span class="n">from_descriptor</span><span class="p">(</span><span class="n">to_descriptor</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">conversion_func</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">reference_conversion_map</span><span class="p">[</span><span class="n">to_unit</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;cannot convert to </span><span class="si">{</span><span class="n">to_unit</span><span class="si">}</span><span class="s2">; unit is not registered in </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39;s reference conversion map. &quot;</span><span class="p">,</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">conversion_func</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConversionFunctionError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;an error occured in a conversion function of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">. &quot;</span><span class="p">,</span> <span class="n">exc</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="nn">exc</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="property_utils.units.converter_types.RelativeUnitConverter.convert" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">convert</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Convert a value from a relative unit to another relative unit.</p>
+<p>Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
+an instance of the generic that is registered with the converter or if 'value'
+is not a numeric.</p>
+<p>Raises 'ConversionFunctionError' if an error occurs when calling a function
+provided in the conversion_map or reference_conversion_map.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>class TemperatureUnit(MeasurementUnit):
+...     CELCIUS = "°C"
+...     FAHRENHEIT = "°F"</p>
+<p>@register_converter(TemperatureUnit)
+... class TemperatureUnitConverter(RelativeUnitConverter):
+...     reference_unit = TemperatureUnit.CELCIUS
+...     conversion_map = {
+...             TemperatureUnit.CELCIUS: lambda t: t,
+...             TemperatureUnit.FAHRENHEIT: lambda t: (t - 32) / 1.8,
+...                 }
+...     reference_conversion_map = {
+...             TemperatureUnit.CELCIUS: lambda t: t,
+...             TemperatureUnit.FAHRENHEIT: lambda t: (t * 1.8) + 32,
+...                 }</p>
+<p>assert TemperatureUnitConverter.convert(100, TemperatureUnit.CELCIUS, TemperatureUnit.FAHRENHEIT) == 212</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+          <details class="quote">
+            <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span> <span class="nf">convert</span><span class="p">(</span>
+    <span class="bp">cls</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+    <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a value from a relative unit to another relative unit.</span>
+
+<span class="sd">    Raises &#39;UnitConversionError&#39; if &#39;from_descriptor&#39; or &#39;to_descriptor&#39; are not</span>
+<span class="sd">    an instance of the generic that is registered with the converter or if &#39;value&#39;</span>
+<span class="sd">    is not a numeric.</span>
+
+<span class="sd">    Raises &#39;ConversionFunctionError&#39; if an error occurs when calling a function</span>
+<span class="sd">    provided in the conversion_map or reference_conversion_map.</span>
+
+<span class="sd">    &gt;&gt;&gt; class TemperatureUnit(MeasurementUnit):</span>
+<span class="sd">    ...     CELCIUS = &quot;°C&quot;</span>
+<span class="sd">    ...     FAHRENHEIT = &quot;°F&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; @register_converter(TemperatureUnit)</span>
+<span class="sd">    ... class TemperatureUnitConverter(RelativeUnitConverter):</span>
+<span class="sd">    ...     reference_unit = TemperatureUnit.CELCIUS</span>
+<span class="sd">    ...     conversion_map = {</span>
+<span class="sd">    ...             TemperatureUnit.CELCIUS: lambda t: t,</span>
+<span class="sd">    ...             TemperatureUnit.FAHRENHEIT: lambda t: (t - 32) / 1.8,</span>
+<span class="sd">    ...                 }</span>
+<span class="sd">    ...     reference_conversion_map = {</span>
+<span class="sd">    ...             TemperatureUnit.CELCIUS: lambda t: t,</span>
+<span class="sd">    ...             TemperatureUnit.FAHRENHEIT: lambda t: (t * 1.8) + 32,</span>
+<span class="sd">    ...                 }</span>
+
+<span class="sd">    &gt;&gt;&gt; assert TemperatureUnitConverter.convert(100, TemperatureUnit.CELCIUS, TemperatureUnit.FAHRENHEIT) == 212</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="n">UnitConversionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid &#39;value&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">; expected numeric. &quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_from_reference</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_to_reference</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">),</span> <span class="n">to_descriptor</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="property_utils.units.converter_types.UnitConverter" class="doc doc-heading">
+          <code>UnitConverter</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+  
+      <p>Protocol of classes that convert a value from one unit to another.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">UnitConverter</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-few-public-methods</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Protocol of classes that convert a value from one unit to another.&quot;&quot;&quot;</span>
+
+    <span class="n">generic_unit_descriptor</span><span class="p">:</span> <span class="n">GenericUnitDescriptor</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+        <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert a value from a unit descriptor to its&#39; corresponding value in a</span>
+<span class="sd">        different unit descriptor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="property_utils.units.converter_types.UnitConverter.convert" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">convert</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">from_descriptor</span><span class="p">,</span> <span class="n">to_descriptor</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Convert a value from a unit descriptor to its' corresponding value in a
+different unit descriptor.</p>
+
+          <details class="quote">
+            <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span> <span class="nf">convert</span><span class="p">(</span>
+    <span class="bp">cls</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">from_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+    <span class="n">to_descriptor</span><span class="p">:</span> <span class="n">UnitDescriptor</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a value from a unit descriptor to its&#39; corresponding value in a</span>
+<span class="sd">    different unit descriptor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="property_utils.units.converter_types.get_converter" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">get_converter</span><span class="p">(</span><span class="n">generic</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get converter for given generic descriptor.</p>
+<p>Raises 'PropertyUtilsTypeError' if argument is not a generic unit descriptor.</p>
+<p>Raises 'UndefinedConverterError' if a converter has not been defined for the given generic.</p>
+
+          <details class="quote">
+            <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_converter</span><span class="p">(</span><span class="n">generic</span><span class="p">:</span> <span class="n">GenericUnitDescriptor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConverterType</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get converter for given generic descriptor.</span>
+
+<span class="sd">    Raises &#39;PropertyUtilsTypeError&#39; if argument is not a generic unit descriptor.</span>
+
+<span class="sd">    Raises &#39;UndefinedConverterError&#39; if a converter has not been defined for the given generic.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
+        <span class="n">generic</span><span class="p">,</span> <span class="p">(</span><span class="n">MeasurementUnitType</span><span class="p">,</span> <span class="n">GenericDimension</span><span class="p">,</span> <span class="n">GenericCompositeDimension</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="n">PropertyUtilsTypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;cannot get converter; argument: </span><span class="si">{</span><span class="n">generic</span><span class="si">}</span><span class="s2"> is not a generic unit descriptor. &quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generic</span><span class="p">,</span> <span class="n">GenericDimension</span><span class="p">)</span> <span class="ow">and</span> <span class="n">generic</span><span class="o">.</span><span class="n">power</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">generic</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">unit_type</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generic</span><span class="p">,</span> <span class="n">GenericDimension</span><span class="p">)</span> <span class="ow">and</span> <span class="n">generic</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_converters</span><span class="p">:</span>
+        <span class="n">register_converter</span><span class="p">(</span><span class="n">generic</span><span class="p">)(</span>
+            <span class="nb">type</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">generic</span><span class="si">}</span><span class="s2">_Converter&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">ExponentiatedUnitConverter</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generic</span><span class="p">,</span> <span class="n">GenericCompositeDimension</span><span class="p">)</span> <span class="ow">and</span> <span class="n">generic</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_converters</span><span class="p">:</span>
+        <span class="n">register_converter</span><span class="p">(</span><span class="n">generic</span><span class="p">)(</span>
+            <span class="nb">type</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">generic</span><span class="si">}</span><span class="s2">_Converter&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">CompositeUnitConverter</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_converters</span><span class="p">[</span><span class="n">generic</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UndefinedConverterError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;a converter has not been defined for </span><span class="si">{</span><span class="n">generic</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="property_utils.units.converter_types.register_converter" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">register_converter</span><span class="p">(</span><span class="n">generic</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Decorate a converter class to register the generic descriptor of the units it
+operates on.
+This decorator also sets the 'generic_unit_descriptor' attribute of the decorated
+class.</p>
+<p>Raises 'PropertyUtilsTypeError' if argument is not a generic unit descriptor.</p>
+<p>Raises 'PropertyUtilsValueError' if generic has already a converter registered.</p>
+
+          <details class="quote">
+            <summary>Source code in <code>src/property_utils/units/converter_types.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">register_converter</span><span class="p">(</span><span class="n">generic</span><span class="p">:</span> <span class="n">GenericUnitDescriptor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decorate a converter class to register the generic descriptor of the units it</span>
+<span class="sd">    operates on.</span>
+<span class="sd">    This decorator also sets the &#39;generic_unit_descriptor&#39; attribute of the decorated</span>
+<span class="sd">    class.</span>
+
+<span class="sd">    Raises &#39;PropertyUtilsTypeError&#39; if argument is not a generic unit descriptor.</span>
+
+<span class="sd">    Raises &#39;PropertyUtilsValueError&#39; if generic has already a converter registered.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
+        <span class="n">generic</span><span class="p">,</span> <span class="p">(</span><span class="n">MeasurementUnitType</span><span class="p">,</span> <span class="n">GenericDimension</span><span class="p">,</span> <span class="n">GenericCompositeDimension</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="n">PropertyUtilsTypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;cannot get converter; argument: </span><span class="si">{</span><span class="n">generic</span><span class="si">}</span><span class="s2"> is not a generic unit descriptor. &quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">generic</span> <span class="ow">in</span> <span class="n">_converters</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">PropertyUtilsValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;cannot register converter twice; </span><span class="si">{</span><span class="n">generic</span><span class="si">}</span><span class="s2"> has already got a converter. &quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">ConverterType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConverterType</span><span class="p">:</span>
+        <span class="n">_converters</span><span class="p">[</span><span class="n">generic</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">generic_unit_descriptor</span> <span class="o">=</span> <span class="n">generic</span>
+        <span class="k">return</span> <span class="bp">cls</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.path"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.bd41221c.min.js"></script>
+      
+    
+  </body>
+</html>
