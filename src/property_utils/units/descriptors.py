@@ -136,13 +136,15 @@ class MeasurementUnitMeta(EnumMeta):
         """
         Create a MeasurementUnit with SI units.
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     CELCIUS = "C"
-        ...     KELVIN = "K"
-        ...     @classmethod
-        ...     def si(cls):
-        ...         return cls.KELVIN
-        >>> assert TemperatureUnit.to_si() == TemperatureUnit.KELVIN
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     CELCIUS = "C"
+            ...     KELVIN = "K"
+            ...     @classmethod
+            ...     def si(cls):
+            ...         return cls.KELVIN
+            >>> TemperatureUnit.to_si()
+            <TemperatureUnit: K>
         """
         if hasattr(cls, "si"):
             return cls.si()
@@ -152,9 +154,10 @@ class MeasurementUnitMeta(EnumMeta):
         """
         Create a generic composite with inverse units.
 
-        >>> class TemperatureUnit(MeasurementUnit): ...
-        >>> TemperatureUnit.inverse_generic()
-        <GenericCompositeDimension:  / TemperatureUnit>
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit): ...
+            >>> TemperatureUnit.inverse_generic()
+            <GenericCompositeDimension:  / TemperatureUnit>
         """
         return GenericCompositeDimension([], [GenericDimension(cls)])
 
@@ -219,9 +222,11 @@ class MeasurementUnitMeta(EnumMeta):
         Defines multiplication between MeasurementUnit types and other generic
         descriptors.
 
-        >>> class TemperatureUnit(MeasurementUnit): ...
-        >>> class TimeUnit(MeasurementUnit): ...
-        >>> assert type(TemperatureUnit * TimeUnit) == GenericCompositeDimension
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
+            >>> TemperatureUnit * TimeUnit
+            <GenericCompositeDimension: TemperatureUnit * TimeUnit>
         """
         if isinstance(other, GenericCompositeDimension):
             numerator = other.numerator.copy()
@@ -246,9 +251,11 @@ class MeasurementUnitMeta(EnumMeta):
         Defines division between MeasurementUnit types and other generic
         descriptors.
 
-        >>> class TemperatureUnit(MeasurementUnit): ...
-        >>> class TimeUnit(MeasurementUnit): ...
-        >>> assert type(TemperatureUnit / TimeUnit) == GenericCompositeDimension
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
+            >>> TemperatureUnit / TimeUnit
+            <GenericCompositeDimension: TemperatureUnit / TimeUnit>
         """
         if isinstance(other, GenericCompositeDimension):
             numerator = other.denominator.copy()
@@ -272,8 +279,10 @@ class MeasurementUnitMeta(EnumMeta):
         """
         Defines exponentiation of MeasurementUnit types.
 
-        >>> class TimeUnit(MeasurementUnit): ...
-        >>> assert type(TimeUnit**3) == GenericDimension
+        Examples:
+            >>> class TimeUnit(MeasurementUnit): ...
+            >>> TimeUnit**3
+            <GenericDimension: TimeUnit^3>
         """
         return GenericDimension(cls, power)
 
@@ -296,13 +305,12 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
     e.g. length is an acceptable quantity, but volume is not because its' units are
     produced from length units.
 
-    ```
-    class TemperatureUnit(MeasurementUnit):
-        CELCIUS = "C"
-        KELVIN = "K"
-        RANKINE = "R"
-        FAHRENHEIT = "F"
-    ```
+    Examples:
+        >>> class TemperatureUnit(MeasurementUnit):
+        ...     CELCIUS = "C"
+        ...     KELVIN = "K"
+        ...     RANKINE = "R"
+        ...     FAHRENHEIT = "F"
     """
 
     @classmethod
@@ -322,14 +330,16 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         is intended to be used to convert an unknown unit descriptor to a
         MeasurementUnit.
 
-        Raises UnitDescriptorTypeError if given descriptor cannot be translated
+        Raises `UnitDescriptorTypeError` if given descriptor cannot be translated
         to a MeasurementUnit instance.
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     CELCIUS = "C"
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     CELCIUS = "C"
 
-        >>> celcius = MeasurementUnit.from_descriptor(TemperatureUnit.CELCIUS**2)
-        >>> assert celcius == TemperatureUnit.CELCIUS
+            >>> celcius = MeasurementUnit.from_descriptor(TemperatureUnit.CELCIUS**2)
+            >>> celcius
+            <TemperatureUnit: C>
         """
         if isinstance(descriptor, Dimension):
             return descriptor.unit
@@ -344,17 +354,18 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         Returns True if the MeasurementUnit is an instance of the generic, False
         otherwise.
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     CELCIUS = "C"
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     CELCIUS = "C"
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     METER = "m"
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
 
-        >>> TemperatureUnit.CELCIUS.isinstance(TemperatureUnit)
-        True
+            >>> TemperatureUnit.CELCIUS.isinstance(TemperatureUnit)
+            True
 
-        >>> TemperatureUnit.CELCIUS.isinstance(LengthUnit)
-        False
+            >>> TemperatureUnit.CELCIUS.isinstance(LengthUnit)
+            False
         """
         return type(self) == generic  # pylint: disable=unidiomatic-typecheck
 
@@ -386,11 +397,12 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         """
         Create a generic descriptor from this MeasurementUnit.
 
-        >>> class AmountUnit(MeasurementUnit):
-        ...     MOL = "mol"
+        Examples:
+            >>> class AmountUnit(MeasurementUnit):
+            ...     MOL = "mol"
 
-        >>> AmountUnit.MOL.to_generic()
-        <MeasurementUnit: AmountUnit>
+            >>> AmountUnit.MOL.to_generic()
+            <MeasurementUnit: AmountUnit>
         """
         return self.__class__
 
@@ -398,10 +410,11 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         """
         Create a composite with inverse units.
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     KELVIN = "K"
-        >>> TemperatureUnit.KELVIN.inverse()
-        <CompositeDimension:  / K>
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     KELVIN = "K"
+            >>> TemperatureUnit.KELVIN.inverse()
+            <CompositeDimension:  / K>
         """
         return CompositeDimension([], [Dimension(self)])
 
@@ -409,11 +422,13 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         """
         Defines multiplication between MeasurementUnit objects and other unit descriptors.
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     FAHRENHEIT = "F"
-        >>> class TimeUnit(MeasurementUnit):
-        ...     HOUR = "hr"
-        >>> assert type(TemperatureUnit.FAHRENHEIT * TimeUnit.HOUR) == CompositeDimension
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     FAHRENHEIT = "F"
+            >>> class TimeUnit(MeasurementUnit):
+            ...     HOUR = "hr"
+            >>> TemperatureUnit.FAHRENHEIT * TimeUnit.HOUR
+            <CompositeDimension: F * hr>
         """
         if isinstance(descriptor, MeasurementUnit):
             return Dimension(self) * Dimension(descriptor)
@@ -427,11 +442,13 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         """
         Defines division between MeasurementUnit objects and other unit descriptors.
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     FAHRENHEIT = "F"
-        >>> class TimeUnit(MeasurementUnit):
-        ...     HOUR = "hr"
-        >>> assert type(TemperatureUnit.FAHRENHEIT / TimeUnit.HOUR) == CompositeDimension
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     FAHRENHEIT = "F"
+            >>> class TimeUnit(MeasurementUnit):
+            ...     HOUR = "hr"
+            >>> TemperatureUnit.FAHRENHEIT / TimeUnit.HOUR
+            <CompositeDimension: F / hr>
         """
         if isinstance(descriptor, MeasurementUnit):
             return Dimension(self) / Dimension(descriptor)
@@ -445,9 +462,11 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         """
         Defines exponentiation of MeasurementUnit objects.
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     FEET = "ft"
-        >>> assert type(LengthUnit.FEET**3) == Dimension
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     FEET = "ft"
+            >>> LengthUnit.FEET**3
+            <Dimension: ft^3>
         """
         return Dimension(self, power)
 
@@ -479,13 +498,12 @@ class AliasMeasurementUnit(MeasurementUnit):
     e.g. you can create an alias for pressure units, instead of using mass * length / (
         time^2) units.
 
-    ```
-    class PressureUnit(AliasMeasurementUnit):
-        BAR = "bar"
-        PASCAL = "Pa"
-        KILO_PASCAL = "kPa"
-        PSI = "psi"
-    ```
+    Examples:
+        >>> class PressureUnit(AliasMeasurementUnit):
+        ...     BAR = "bar"
+        ...     PASCAL = "Pa"
+        ...     KILO_PASCAL = "kPa"
+        ...     PSI = "psi"
     """
 
     @staticmethod
@@ -501,14 +519,16 @@ class AliasMeasurementUnit(MeasurementUnit):
         Subclasses should implement aliased_generic_descriptor and alias_mapping
         methods.
 
-        Raises UnitDescriptorTypeError if given descriptor cannot be translated
+        Raises `UnitDescriptorTypeError` if given descriptor cannot be translated
         to an AliasMeasurementUnit  instance.
 
-        >>> class PressureUnit(AliasMeasurementUnit):
-        ...     BAR = "bar"
+        Examples:
+            >>> class PressureUnit(AliasMeasurementUnit):
+            ...     BAR = "bar"
 
-        >>> bar = MeasurementUnit.from_descriptor(PressureUnit.BAR**(-1))
-        >>> assert bar == PressureUnit.BAR
+            >>> bar = MeasurementUnit.from_descriptor(PressureUnit.BAR**(-1))
+            >>> bar
+            <PressureUnit: bar>
         """
         if isinstance(descriptor, Dimension) and isinstance(
             descriptor.unit, AliasMeasurementUnit
@@ -526,11 +546,12 @@ class AliasMeasurementUnit(MeasurementUnit):
         Implement this method by returning the generic of the unit descriptor that this
         measurement unit aliases.
 
-        >>> class LengthUnit(MeasurementUnit): ...
-        >>> class AreaUnit(AliasMeasurementUnit):
-        ...     @classmethod
-        ...     def aliased_generic_descriptor(cls):
-        ...         return LengthUnit**2
+        Examples:
+            >>> class LengthUnit(MeasurementUnit): ...
+            >>> class AreaUnit(AliasMeasurementUnit):
+            ...     @classmethod
+            ...     def aliased_generic_descriptor(cls):
+            ...         return LengthUnit**2
         """
         raise NotImplementedError
 
@@ -543,8 +564,10 @@ class GenericDimension:
     e.g. a generic dimension can be a temperature dimension or a volume dimension
     (length dimension to the 3rd power).
 
-    >>> class MassUnit(MeasurementUnit): ...
-    >>> assert type(MassUnit**2) == GenericDimension
+    Examples:
+        >>> class MassUnit(MeasurementUnit): ...
+        >>> MassUnit**2
+        <GenericDimension: MassUnit^2>
     """
 
     unit_type: MeasurementUnitType
@@ -563,12 +586,14 @@ class GenericDimension:
         """
         Create a Dimension with SI units.
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     CELCIUS = "C"
-        ...     KELVIN = "K"
-        ...     @classmethod
-        ...     def si(cls): return cls.KELVIN
-        >>> assert type((TemperatureUnit**2).to_si()) == Dimension
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     CELCIUS = "C"
+            ...     KELVIN = "K"
+            ...     @classmethod
+            ...     def si(cls): return cls.KELVIN
+            >>> (TemperatureUnit**2).to_si()
+            <Dimension: K^2>
         """
         return Dimension(self.unit_type.to_si(), self.power)
 
@@ -576,9 +601,10 @@ class GenericDimension:
         """
         Create a generic composite with inverse units.
 
-        >>> class LengthUnit(MeasurementUnit): ...
-        >>> (LengthUnit**2).inverse_generic()
-        <GenericCompositeDimension:  / (LengthUnit^2)>
+        Examples:
+            >>> class LengthUnit(MeasurementUnit): ...
+            >>> (LengthUnit**2).inverse_generic()
+            <GenericCompositeDimension:  / (LengthUnit^2)>
         """
         return GenericCompositeDimension([], [replace(self)])
 
@@ -651,9 +677,11 @@ class GenericDimension:
         Defines multiplication between GenericDimension(s) and other generic
         descriptors.
 
-        >>> class TemperatureUnit(MeasurementUnit): ...
-        >>> class TimeUnit(MeasurementUnit): ...
-        >>> assert type((TemperatureUnit**2) * TimeUnit) == GenericCompositeDimension
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
+            >>> (TemperatureUnit**2) * TimeUnit
+            <GenericCompositeDimension: (TemperatureUnit^2) * TimeUnit>
         """
         if isinstance(generic, GenericCompositeDimension):
             numerator = generic.numerator.copy()
@@ -676,9 +704,11 @@ class GenericDimension:
         """
         Defines division between GenericDimension(s) and other generic descriptors.
 
-        >>> class TemperatureUnit(MeasurementUnit): ...
-        >>> class TimeUnit(MeasurementUnit): ...
-        >>> assert type(TemperatureUnit / (TimeUnit**2)) == GenericCompositeDimension
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
+            >>> TemperatureUnit / (TimeUnit**2)
+            <GenericCompositeDimension: TemperatureUnit / (TimeUnit^2)>
         """
         if isinstance(generic, GenericCompositeDimension):
             numerator = generic.denominator.copy()
@@ -699,8 +729,10 @@ class GenericDimension:
         """
         Defines exponentiation of GenericDimension.
 
-        >>> class TimeUnit(MeasurementUnit): ...
-        >>> assert type((TimeUnit**2)**3) == GenericDimension
+        Examples:
+            >>> class TimeUnit(MeasurementUnit): ...
+            >>> (TimeUnit**2)**3
+            <GenericDimension: TimeUnit^6>
         """
         if not isinstance(power, (float, int)):
             raise DescriptorExponentError(
@@ -714,8 +746,10 @@ class GenericDimension:
         """
         Defines equality for GenericDimension(s).
 
-        >>> class TemperatureUnit(MeasurementUnit): ...
-        >>> assert (TemperatureUnit**2) != TemperatureUnit
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit): ...
+            >>> (TemperatureUnit**2) != TemperatureUnit
+            True
         """
         if not isinstance(generic, GenericDimension):
             return False
@@ -744,10 +778,12 @@ class Dimension:
     Objects of this class can represent either a simple MeasurementUnit or a
     MeasurementUnit to some power.
 
-    >>> class TimeUnit(MeasurementUnit):
-    ...     SECOND = "s"
+    Examples:
+        >>> class TimeUnit(MeasurementUnit):
+        ...     SECOND = "s"
 
-    >>> assert type(TimeUnit.SECOND**2) == Dimension
+        >>> TimeUnit.SECOND**2
+        <Dimension: s^2>
     """
 
     unit: MeasurementUnit
@@ -771,7 +807,7 @@ class Dimension:
         This function does not serve as a constructor for Dimension, rather it
         is intended to be used to convert an unknown unit descriptor to a Dimension.
 
-        Raises UnitDescriptorTypeError if given descriptor cannot be translated
+        Raises `UnitDescriptorTypeError` if given descriptor cannot be translated
         to a Dimension instance.
         """
         if isinstance(descriptor, Dimension):
@@ -803,14 +839,15 @@ class Dimension:
         Returns True if the Dimension is an instance of the generic, False
         otherwise.
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     CELCIUS = "C"
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     CELCIUS = "C"
 
-        >>> Dimension(TemperatureUnit.CELCIUS).isinstance(TemperatureUnit)
-        True
+            >>> Dimension(TemperatureUnit.CELCIUS).isinstance(TemperatureUnit)
+            True
 
-        >>> Dimension(TemperatureUnit.CELCIUS).isinstance(TemperatureUnit**2)
-        False
+            >>> Dimension(TemperatureUnit.CELCIUS).isinstance(TemperatureUnit**2)
+            False
         """
         if isinstance(generic, MeasurementUnitType):
             generic = GenericDimension(generic)
@@ -848,11 +885,12 @@ class Dimension:
         """
         Create a generic descriptor from this Dimension.
 
-        >>> class AmountUnit(MeasurementUnit):
-        ...     MOL = "mol"
+        Examples:
+            >>> class AmountUnit(MeasurementUnit):
+            ...     MOL = "mol"
 
-        >>> (AmountUnit.MOL**3.56).to_generic()
-        <GenericDimension: AmountUnit^3.56>
+            >>> (AmountUnit.MOL**3.56).to_generic()
+            <GenericDimension: AmountUnit^3.56>
         """
         return GenericDimension(type(self.unit), self.power)
 
@@ -860,10 +898,11 @@ class Dimension:
         """
         Create a composite with inverse units.
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     METER = "m"
-        >>> (LengthUnit.METER**2).inverse()
-        <CompositeDimension:  / (m^2)>
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
+            >>> (LengthUnit.METER**2).inverse()
+            <CompositeDimension:  / (m^2)>
         """
         return CompositeDimension([], [replace(self)])
 
@@ -907,11 +946,13 @@ class Dimension:
         """
         Defines multiplication between Dimension(s) and other unit descriptors.
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     CELCIUS = "C"
-        >>> class TimeUnit(MeasurementUnit):
-        ...     MINUTE = "min"
-        >>> assert type((TemperatureUnit.CELCIUS**3) * TimeUnit.MINUTE) == CompositeDimension
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     CELCIUS = "C"
+            >>> class TimeUnit(MeasurementUnit):
+            ...     MINUTE = "min"
+            >>> (TemperatureUnit.CELCIUS**3) * TimeUnit.MINUTE
+            <CompositeDimension: (C^3) * min>
         """
         if isinstance(descriptor, CompositeDimension):
             numerator = descriptor.numerator.copy()
@@ -930,11 +971,13 @@ class Dimension:
         """
         Defines division between Dimension(s) and other unit descriptors.
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     CELCIUS = "C"
-        >>> class TimeUnit(MeasurementUnit):
-        ...     MINUTE = "min"
-        >>> assert type((TemperatureUnit.CELCIUS**3) / TimeUnit.MINUTE) == CompositeDimension
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     CELCIUS = "C"
+            >>> class TimeUnit(MeasurementUnit):
+            ...     MINUTE = "min"
+            >>> (TemperatureUnit.CELCIUS**3) / TimeUnit.MINUTE
+            <CompositeDimension: (C^3) / min>
         """
         if isinstance(descriptor, CompositeDimension):
             numerator = descriptor.denominator.copy()
@@ -955,9 +998,11 @@ class Dimension:
         """
         Defines exponentiation for Dimension(s).
 
-        >>> class TimeUnit(MeasurementUnit):
-        ...     SECOND = "s"
-        >>> assert type((TimeUnit.SECOND**2)**3) == Dimension
+        Examples:
+            >>> class TimeUnit(MeasurementUnit):
+            ...     SECOND = "s"
+            >>> (TimeUnit.SECOND**2)**3
+            <Dimension: s^6>
         """
         if not isinstance(power, (float, int)):
             raise DescriptorExponentError(
@@ -971,9 +1016,11 @@ class Dimension:
         """
         Defines equality for Dimension(s).
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     KELVIN = "K"
-        >>> assert (TemperatureUnit.KELVIN**2) != TemperatureUnit.KELVIN
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     KELVIN = "K"
+            >>> (TemperatureUnit.KELVIN**2) != TemperatureUnit.KELVIN
+            True
         """
         if not isinstance(dimension, Dimension):
             return False
@@ -1006,11 +1053,13 @@ class GenericCompositeDimension:
     Create objects by multiplying and diving GenericDimension or MeasurementUnitMeta
     class objects:
 
-    >>> class LengthUnit(MeasurementUnit): ...
-    >>> class AmountUnit(MeasurementUnit): ...
+    Examples:
+        >>> class LengthUnit(MeasurementUnit): ...
+        >>> class AmountUnit(MeasurementUnit): ...
 
-    >>> generic_molal_volume_dimension = (LengthUnit**3) / AmountUnit
-    >>> assert type(generic_molal_volume_dimension) == GenericCompositeDimension
+        >>> generic_molal_volume_dimension = (LengthUnit**3) / AmountUnit
+        >>> generic_molal_volume_dimension
+        <GenericCompositeDimension: (LengthUnit^3) / AmountUnit>
     """
 
     numerator: List[GenericDimension] = field(default_factory=list)
@@ -1019,19 +1068,22 @@ class GenericCompositeDimension:
     def to_si(self) -> "CompositeDimension":
         """
         Create a CompositeDimension with SI units.
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     KELVIN = "K"
-        ...     @classmethod
-        ...     def si(cls): return cls.KELVIN
-        >>> class TimeUnit(MeasurementUnit):
-        ...     SECOND = "s"
-        ...     @classmethod
-        ...     def si(cls): return cls.SECOND
-        >>> class LengthUnit(MeasurementUnit):
-        ...     METER = "m"
-        ...     @classmethod
-        ...     def si(cls): return cls.METER
-        >>> assert type((TemperatureUnit * LengthUnit / TimeUnit).to_si()) == CompositeDimension
+
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     KELVIN = "K"
+            ...     @classmethod
+            ...     def si(cls): return cls.KELVIN
+            >>> class TimeUnit(MeasurementUnit):
+            ...     SECOND = "s"
+            ...     @classmethod
+            ...     def si(cls): return cls.SECOND
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
+            ...     @classmethod
+            ...     def si(cls): return cls.METER
+            >>> (TemperatureUnit * LengthUnit / TimeUnit).to_si()
+            <CompositeDimension: K * m / s>
         """
         return CompositeDimension(
             [n.to_si() for n in self.numerator], [d.to_si() for d in self.denominator]
@@ -1041,27 +1093,28 @@ class GenericCompositeDimension:
         """
         Simplify the composite by merging common dimensions.
 
-        >>> class PressureUnit(AliasMeasurementUnit): ...
+        Examples:
+            >>> class PressureUnit(AliasMeasurementUnit): ...
 
-        >>> class TemperatureUnit(MeasurementUnit): ...
+            >>> class TemperatureUnit(MeasurementUnit): ...
 
-        >>> class LengthUnit(MeasurementUnit): ...
+            >>> class LengthUnit(MeasurementUnit): ...
 
-        >>> class TimeUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
 
-        >>> composite = (PressureUnit**(-2)) / (TemperatureUnit**(-1))
-        >>> composite
-        <GenericCompositeDimension: (PressureUnit^-2) / (TemperatureUnit^-1)>
-        >>> composite.simplify()
-        >>> composite
-        <GenericCompositeDimension: TemperatureUnit / (PressureUnit^2)>
+            >>> composite = (PressureUnit**(-2)) / (TemperatureUnit**(-1))
+            >>> composite
+            <GenericCompositeDimension: (PressureUnit^-2) / (TemperatureUnit^-1)>
+            >>> composite.simplify()
+            >>> composite
+            <GenericCompositeDimension: TemperatureUnit / (PressureUnit^2)>
 
-        >>> composite = PressureUnit * LengthUnit * PressureUnit / TimeUnit
-        >>> composite
-        <GenericCompositeDimension: LengthUnit * PressureUnit * PressureUnit / TimeUnit>
-        >>> composite.simplify()
-        >>> composite
-        <GenericCompositeDimension: (PressureUnit^2) * LengthUnit / TimeUnit>
+            >>> composite = PressureUnit * LengthUnit * PressureUnit / TimeUnit
+            >>> composite
+            <GenericCompositeDimension: LengthUnit * PressureUnit * PressureUnit / TimeUnit>
+            >>> composite.simplify()
+            >>> composite
+            <GenericCompositeDimension: (PressureUnit^2) * LengthUnit / TimeUnit>
         """
         exponents: Dict[MeasurementUnitType, float] = {}
         for n in self.numerator:
@@ -1091,25 +1144,26 @@ class GenericCompositeDimension:
         """
         Returns a simplified version of this composite generic as a new object.
 
-        >>> class PressureUnit(AliasMeasurementUnit): ...
+        Examples:
+            >>> class PressureUnit(AliasMeasurementUnit): ...
 
-        >>> class TemperatureUnit(MeasurementUnit): ...
+            >>> class TemperatureUnit(MeasurementUnit): ...
 
-        >>> class LengthUnit(MeasurementUnit): ...
+            >>> class LengthUnit(MeasurementUnit): ...
 
-        >>> class TimeUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
 
-        >>> composite = (PressureUnit**(-2)) / (TemperatureUnit**(-1))
-        >>> composite
-        <GenericCompositeDimension: (PressureUnit^-2) / (TemperatureUnit^-1)>
-        >>> composite.simplified()
-        <GenericCompositeDimension: TemperatureUnit / (PressureUnit^2)>
+            >>> composite = (PressureUnit**(-2)) / (TemperatureUnit**(-1))
+            >>> composite
+            <GenericCompositeDimension: (PressureUnit^-2) / (TemperatureUnit^-1)>
+            >>> composite.simplified()
+            <GenericCompositeDimension: TemperatureUnit / (PressureUnit^2)>
 
-        >>> composite = PressureUnit * LengthUnit * PressureUnit /TimeUnit
-        >>> composite
-        <GenericCompositeDimension: LengthUnit * PressureUnit * PressureUnit / TimeUnit>
-        >>> composite.simplified()
-        <GenericCompositeDimension: (PressureUnit^2) * LengthUnit / TimeUnit>
+            >>> composite = PressureUnit * LengthUnit * PressureUnit /TimeUnit
+            >>> composite
+            <GenericCompositeDimension: LengthUnit * PressureUnit * PressureUnit / TimeUnit>
+            >>> composite.simplified()
+            <GenericCompositeDimension: (PressureUnit^2) * LengthUnit / TimeUnit>
         """
         copy = replace(self)
         copy.simplify()
@@ -1188,11 +1242,12 @@ class GenericCompositeDimension:
         """
         Create a generic composite with inverse units.
 
-        >>> class LengthUnit(MeasurementUnit): ...
-        >>> class TimeUnit(MeasurementUnit): ...
+        Examples:
+            >>> class LengthUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
 
-        >>> (LengthUnit / TimeUnit).inverse_generic()
-        <GenericCompositeDimension: TimeUnit / LengthUnit>
+            >>> (LengthUnit / TimeUnit).inverse_generic()
+            <GenericCompositeDimension: TimeUnit / LengthUnit>
         """
         return GenericCompositeDimension(
             self._denominator_copy(), self._numerator_copy()
@@ -1270,10 +1325,12 @@ class GenericCompositeDimension:
         Defines multiplication between GenericCompositeDimension(s) and other generic
         descriptors.
 
-        >>> class TemperatureUnit(MeasurementUnit): ...
-        >>> class TimeUnit(MeasurementUnit): ...
-        >>> class LengthUnit(MeasurementUnit): ...
-        >>> assert type((TemperatureUnit / LengthUnit) * TimeUnit) == GenericCompositeDimension
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
+            >>> class LengthUnit(MeasurementUnit): ...
+            >>> (TemperatureUnit / LengthUnit) * TimeUnit
+            <GenericCompositeDimension: TemperatureUnit * TimeUnit / LengthUnit>
         """
         numerator = self.numerator.copy()
         denominator = self.denominator.copy()
@@ -1304,10 +1361,12 @@ class GenericCompositeDimension:
         Defines division between GenericCompositeDimension(s) and other generic
         descriptors.
 
-        >>> class TemperatureUnit(MeasurementUnit): ...
-        >>> class TimeUnit(MeasurementUnit): ...
-        >>> class LengthUnit(MeasurementUnit): ...
-        >>> assert type((TemperatureUnit * LengthUnit) / TimeUnit) == GenericCompositeDimension
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
+            >>> class LengthUnit(MeasurementUnit): ...
+            >>> (TemperatureUnit * LengthUnit) / TimeUnit
+            <GenericCompositeDimension: LengthUnit * TemperatureUnit / TimeUnit>
         """
         numerator = self.numerator.copy()
         denominator = self.denominator.copy()
@@ -1333,11 +1392,12 @@ class GenericCompositeDimension:
         """
         Defines exponentiation for GenericCompositeDimension(s).
 
-        >>> class TemperatureUnit(MeasurementUnit): ...
-        >>> class TimeUnit(MeasurementUnit): ...
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
 
-        >>> (TemperatureUnit / TimeUnit)**2
-        <GenericCompositeDimension: (TemperatureUnit^2) / (TimeUnit^2)>
+            >>> (TemperatureUnit / TimeUnit)**2
+            <GenericCompositeDimension: (TemperatureUnit^2) / (TimeUnit^2)>
         """
         if not isinstance(power, (float, int)):
             raise DescriptorExponentError(
@@ -1352,9 +1412,11 @@ class GenericCompositeDimension:
         """
         Defines equality for GenericCompositeDimension(s).
 
-        >>> class TemperatureUnit(MeasurementUnit): ...
-        >>> class TimeUnit(MeasurementUnit): ...
-        >>> assert (TemperatureUnit / TimeUnit) != (TimeUnit / TemperatureUnit)
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
+            >>> (TemperatureUnit / TimeUnit) != (TimeUnit / TemperatureUnit)
+            True
         """
         if not isinstance(generic, GenericCompositeDimension):
             return False
@@ -1389,15 +1451,18 @@ class CompositeDimension:
     Objects of this class can represent either multiplication or division between two
     Dimension objects.
 
-    Create objects by multiplying and diving Dimension or MeasurementUnit objects:
-    >>> class LengthUnit(MeasurementUnit):
-    ...     METER = "m"
+    Create objects by multiplying and diving Dimension or MeasurementUnit objects.
 
-    >>> class AmountUnit(MeasurementUnit):
-    ...     KILO_MOL = "kmol"
+    Examples:
+        >>> class LengthUnit(MeasurementUnit):
+        ...     METER = "m"
 
-    >>> molal_volume_dimension = (LengthUnit.METER**3) / AmountUnit.KILO_MOL
-    >>> assert type(molal_volume_dimension) == CompositeDimension
+        >>> class AmountUnit(MeasurementUnit):
+        ...     KILO_MOL = "kmol"
+
+        >>> molal_volume_dimension = (LengthUnit.METER**3) / AmountUnit.KILO_MOL
+        >>> molal_volume_dimension
+        <CompositeDimension: (m^3) / kmol>
     """
 
     Default = TypeVar("Default")  # default return type for `get` functions.
@@ -1415,7 +1480,7 @@ class CompositeDimension:
         is intended to be used to convert an unknown unit descriptor to a
         CompositeDimension.
 
-        Raises UnitDescriptorTypeError if given descriptor cannot be translated
+        Raises `UnitDescriptorTypeError` if given descriptor cannot be translated
         to a CompositeDimension instance.
         """
         if not isinstance(descriptor, CompositeDimension):
@@ -1453,17 +1518,18 @@ class CompositeDimension:
         Returns True if the CompositeDimension is an instance of the generic, False
         otherwise.
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     CELCIUS = "C"
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     CELCIUS = "C"
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     METER = "m"
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
 
-        >>> (TemperatureUnit.CELCIUS / LengthUnit.METER).isinstance(TemperatureUnit / LengthUnit)
-        True
+            >>> (TemperatureUnit.CELCIUS / LengthUnit.METER).isinstance(TemperatureUnit / LengthUnit)
+            True
 
-        >>> (TemperatureUnit.CELCIUS * LengthUnit.METER).isinstance(TemperatureUnit**2)
-        False
+            >>> (TemperatureUnit.CELCIUS * LengthUnit.METER).isinstance(TemperatureUnit**2)
+            False
         """
         if not isinstance(generic, GenericCompositeDimension):
             return False
@@ -1503,14 +1569,15 @@ class CompositeDimension:
         """
         Create a generic descriptor from this CompositeDimension.
 
-        >>> class AmountUnit(MeasurementUnit):
-        ...     MOL = "mol"
+        Examples:
+            >>> class AmountUnit(MeasurementUnit):
+            ...     MOL = "mol"
 
-        >>> class MassUnit(MeasurementUnit):
-        ...     KILO_GRAM = "kg"
+            >>> class MassUnit(MeasurementUnit):
+            ...     KILO_GRAM = "kg"
 
-        >>> (AmountUnit.MOL / MassUnit.KILO_GRAM).to_generic()
-        <GenericCompositeDimension: AmountUnit / MassUnit>
+            >>> (AmountUnit.MOL / MassUnit.KILO_GRAM).to_generic()
+            <GenericCompositeDimension: AmountUnit / MassUnit>
         """
         return GenericCompositeDimension(
             numerator=[n.to_generic() for n in self.numerator],
@@ -1526,17 +1593,18 @@ class CompositeDimension:
         Get a dimension from the numerator. If the dimension is not found it returns
         the default.
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     METER = "m"
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     KELVIN = "K"
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     KELVIN = "K"
 
-        >>> composite = TemperatureUnit.KELVIN / (LengthUnit.METER**3)
-        >>> composite.get_numerator(TemperatureUnit)
-        <Dimension: K>
-        >>> composite.get_numerator(LengthUnit, "default")
-        'default'
+            >>> composite = TemperatureUnit.KELVIN / (LengthUnit.METER**3)
+            >>> composite.get_numerator(TemperatureUnit)
+            <Dimension: K>
+            >>> composite.get_numerator(LengthUnit, "default")
+            'default'
         """
         for n in self.numerator:
             if n.isinstance(generic):
@@ -1552,17 +1620,18 @@ class CompositeDimension:
         Get a dimension from the denominator. If the dimension is not found it returns
         the default.
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     METER = "m"
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     KELVIN = "K"
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     KELVIN = "K"
 
-        >>> composite = TemperatureUnit.KELVIN / (LengthUnit.METER**3)
-        >>> composite.get_denominator(LengthUnit**3)
-        <Dimension: m^3>
-        >>> composite.get_denominator(LengthUnit, "default")
-        'default'
+            >>> composite = TemperatureUnit.KELVIN / (LengthUnit.METER**3)
+            >>> composite.get_denominator(LengthUnit**3)
+            <Dimension: m^3>
+            >>> composite.get_denominator(LengthUnit, "default")
+            'default'
         """
         for d in self.denominator:
             if d.isinstance(generic):
@@ -1573,32 +1642,33 @@ class CompositeDimension:
         """
         Simplify the composite by merging common dimensions.
 
-        >>> class PressureUnit(AliasMeasurementUnit):
-        ...     BAR = "bar"
-        ...     PASCAL = "Pa"
+        Examples:
+            >>> class PressureUnit(AliasMeasurementUnit):
+            ...     BAR = "bar"
+            ...     PASCAL = "Pa"
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     KELVIN = "K"
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     KELVIN = "K"
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     METER = "m"
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
 
-        >>> class TimeUnit(MeasurementUnit):
-        ...     SECOND = "s"
+            >>> class TimeUnit(MeasurementUnit):
+            ...     SECOND = "s"
 
-        >>> composite = (PressureUnit.BAR**(-2)) / (TemperatureUnit.KELVIN**(-1))
-        >>> composite
-        <CompositeDimension: (bar^-2) / (K^-1)>
-        >>> composite.simplify()
-        >>> composite
-        <CompositeDimension: K / (bar^2)>
+            >>> composite = (PressureUnit.BAR**(-2)) / (TemperatureUnit.KELVIN**(-1))
+            >>> composite
+            <CompositeDimension: (bar^-2) / (K^-1)>
+            >>> composite.simplify()
+            >>> composite
+            <CompositeDimension: K / (bar^2)>
 
-        >>> composite = PressureUnit.PASCAL * LengthUnit.METER * PressureUnit.PASCAL /TimeUnit.SECOND
-        >>> composite
-        <CompositeDimension: Pa * Pa * m / s>
-        >>> composite.simplify()
-        >>> composite
-        <CompositeDimension: (Pa^2) * m / s>
+            >>> composite = PressureUnit.PASCAL * LengthUnit.METER * PressureUnit.PASCAL /TimeUnit.SECOND
+            >>> composite
+            <CompositeDimension: Pa * Pa * m / s>
+            >>> composite.simplify()
+            >>> composite
+            <CompositeDimension: (Pa^2) * m / s>
         """
         exponents: Dict[MeasurementUnit, float] = {}
         for n in self.numerator:
@@ -1628,30 +1698,31 @@ class CompositeDimension:
         """
         Returns a simplified version of this composite dimension as a new object.
 
-        >>> class PressureUnit(AliasMeasurementUnit):
-        ...     BAR = "bar"
-        ...     PASCAL = "Pa"
+        Examples:
+            >>> class PressureUnit(AliasMeasurementUnit):
+            ...     BAR = "bar"
+            ...     PASCAL = "Pa"
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     KELVIN = "K"
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     KELVIN = "K"
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     METER = "m"
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
 
-        >>> class TimeUnit(MeasurementUnit):
-        ...     SECOND = "s"
+            >>> class TimeUnit(MeasurementUnit):
+            ...     SECOND = "s"
 
-        >>> composite = (PressureUnit.BAR**(-2)) / (TemperatureUnit.KELVIN**(-1))
-        >>> composite
-        <CompositeDimension: (bar^-2) / (K^-1)>
-        >>> composite.simplified()
-        <CompositeDimension: K / (bar^2)>
+            >>> composite = (PressureUnit.BAR**(-2)) / (TemperatureUnit.KELVIN**(-1))
+            >>> composite
+            <CompositeDimension: (bar^-2) / (K^-1)>
+            >>> composite.simplified()
+            <CompositeDimension: K / (bar^2)>
 
-        >>> composite = PressureUnit.PASCAL * LengthUnit.METER * PressureUnit.PASCAL /TimeUnit.SECOND
-        >>> composite
-        <CompositeDimension: Pa * Pa * m / s>
-        >>> composite.simplified()
-        <CompositeDimension: (Pa^2) * m / s>
+            >>> composite = PressureUnit.PASCAL * LengthUnit.METER * PressureUnit.PASCAL /TimeUnit.SECOND
+            >>> composite
+            <CompositeDimension: Pa * Pa * m / s>
+            >>> composite.simplified()
+            <CompositeDimension: (Pa^2) * m / s>
         """
         copy = replace(self)
         copy.simplify()
@@ -1661,13 +1732,14 @@ class CompositeDimension:
         """
         Create a composite with inverse units.
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     METER = "m"
-        >>> class TimeUnit(MeasurementUnit):
-        ...     SECOND = "s"
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
+            >>> class TimeUnit(MeasurementUnit):
+            ...     SECOND = "s"
 
-        >>> (LengthUnit.METER / TimeUnit.SECOND).inverse()
-        <CompositeDimension: s / m>
+            >>> (LengthUnit.METER / TimeUnit.SECOND).inverse()
+            <CompositeDimension: s / m>
         """
         return CompositeDimension(self._denominator_copy(), self._numerator_copy())
 
@@ -1681,13 +1753,15 @@ class CompositeDimension:
         """
         Defines multiplication between CompositeDimension(s) and other unit descriptors.
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     CELCIUS = "C"
-        >>> class TimeUnit(MeasurementUnit):
-        ...     SECOND = "s"
-        >>> class LengthUnit(MeasurementUnit):
-        ...     CENTI_METER = "cm"
-        >>> assert type((TemperatureUnit.CELCIUS / LengthUnit.CENTI_METER) * TimeUnit.SECOND) == CompositeDimension
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     CELCIUS = "C"
+            >>> class TimeUnit(MeasurementUnit):
+            ...     SECOND = "s"
+            >>> class LengthUnit(MeasurementUnit):
+            ...     CENTI_METER = "cm"
+            >>> (TemperatureUnit.CELCIUS / LengthUnit.CENTI_METER) * TimeUnit.SECOND
+            <CompositeDimension: C * s / cm>
         """
         numerator = self.numerator.copy()
         denominator = self.denominator.copy()
@@ -1709,13 +1783,15 @@ class CompositeDimension:
         """
         Defines multiplication between CompositeDimension(s) and other unit descriptors.
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     CELCIUS = "C"
-        >>> class TimeUnit(MeasurementUnit):
-        ...     SECOND = "s"
-        >>> class LengthUnit(MeasurementUnit):
-        ...     CENTI_METER = "cm"
-        >>> assert type((TemperatureUnit.CELCIUS * LengthUnit.CENTI_METER) / TimeUnit.SECOND) == CompositeDimension
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     CELCIUS = "C"
+            >>> class TimeUnit(MeasurementUnit):
+            ...     SECOND = "s"
+            >>> class LengthUnit(MeasurementUnit):
+            ...     CENTI_METER = "cm"
+            >>> (TemperatureUnit.CELCIUS * LengthUnit.CENTI_METER) / TimeUnit.SECOND
+            <CompositeDimension: C * cm / s>
         """
         numerator = self.numerator.copy()
         denominator = self.denominator.copy()
@@ -1737,13 +1813,14 @@ class CompositeDimension:
         """
         Defines exponentiation for CompositeDimension(s).
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     CELCIUS = "C"
-        >>> class TimeUnit(MeasurementUnit):
-        ...     HOUR = "hr"
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     CELCIUS = "C"
+            >>> class TimeUnit(MeasurementUnit):
+            ...     HOUR = "hr"
 
-        >>> (TemperatureUnit.CELCIUS / TimeUnit.HOUR)**2
-        <CompositeDimension: (C^2) / (hr^2)>
+            >>> (TemperatureUnit.CELCIUS / TimeUnit.HOUR)**2
+            <CompositeDimension: (C^2) / (hr^2)>
         """
         if not isinstance(power, (float, int)):
             raise DescriptorExponentError(
@@ -1758,11 +1835,13 @@ class CompositeDimension:
         """
         Defines equality for CompositeDimension(s).
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     CELCIUS = "C"
-        >>> class TimeUnit(MeasurementUnit):
-        ...     HOUR = "hr"
-        >>> assert (TemperatureUnit.CELCIUS / TimeUnit.HOUR) != (TimeUnit.HOUR / TemperatureUnit.CELCIUS)
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     CELCIUS = "C"
+            >>> class TimeUnit(MeasurementUnit):
+            ...     HOUR = "hr"
+            >>> (TemperatureUnit.CELCIUS / TimeUnit.HOUR) != (TimeUnit.HOUR / TemperatureUnit.CELCIUS)
+            True
         """
         if not isinstance(dimension, CompositeDimension):
             return False
