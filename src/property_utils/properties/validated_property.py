@@ -22,17 +22,18 @@ class ValidatedProperty(Property):
     `default_units` class variable is the default units with which properties will be
     created; if it is not defined the default it to use SI units.
 
-    >>> from property_utils.units.units import LengthUnit, AbsoluteTemperatureUnit
-    >>> class Distance(ValidatedProperty):
-    ...     generic_unit_descriptor = LengthUnit
+    Examples:
+        >>> from property_utils.units.units import LengthUnit, AbsoluteTemperatureUnit
+        >>> class Distance(ValidatedProperty):
+        ...     generic_unit_descriptor = LengthUnit
 
-    >>> class NauticalDistance(Distance):
-    ...     default_units = LengthUnit.NAUTICAL_MILE
+        >>> class NauticalDistance(Distance):
+        ...     default_units = LengthUnit.NAUTICAL_MILE
 
-    >>> Distance(5) # defaults to SI units
-    <Distance: 5 m>
-    >>> NauticalDistance(45.2)
-    <NauticalDistance: 45.2 NM>
+        >>> Distance(5) # defaults to SI units
+        <Distance: 5 m>
+        >>> NauticalDistance(45.2)
+        <NauticalDistance: 45.2 NM>
     """
 
     generic_unit_descriptor: ClassVar[GenericUnitDescriptor]
