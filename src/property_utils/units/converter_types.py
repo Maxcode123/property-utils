@@ -1,11 +1,11 @@
 """
-This module defines:
-* Functions to fetch and register unit converters
-* Unit converter protocol
-* Base abstract classes for different types of unit converters
+This module defines:  
+Functions to fetch and register unit converters  
+Unit converter protocol  
+Base abstract classes for different types of unit converters  
 
-Converters implement a 2-step process to convert 'from_unit' to 'to_unit'.
-1. Convert the 'from_unit' to a reference unit.
+Converters implement a 2-step process to convert 'from_unit' to 'to_unit'.  
+1. Convert the 'from_unit' to a reference unit.  
 2. Convert the reference unit to the 'to_unit'.
 """
 
@@ -49,9 +49,9 @@ def get_converter(generic: GenericUnitDescriptor) -> ConverterType:
     """
     Get converter for given generic descriptor.
 
-    Raises 'PropertyUtilsTypeError' if argument is not a generic unit descriptor.
+    Raises `PropertyUtilsTypeError` if argument is not a generic unit descriptor.
 
-    Raises 'UndefinedConverterError' if a converter has not been defined for the given generic.
+    Raises `UndefinedConverterError` if a converter has not been defined for the given generic.
     """
     if not isinstance(
         generic, (MeasurementUnitType, GenericDimension, GenericCompositeDimension)
@@ -84,9 +84,9 @@ def register_converter(generic: GenericUnitDescriptor) -> Callable:
     This decorator also sets the 'generic_unit_descriptor' attribute of the decorated
     class.
 
-    Raises 'PropertyUtilsTypeError' if argument is not a generic unit descriptor.
+    Raises `PropertyUtilsTypeError` if argument is not a generic unit descriptor.
 
-    Raises 'PropertyUtilsValueError' if generic has already a converter registered.
+    Raises `PropertyUtilsValueError` if generic has already a converter registered.
     """
     if not isinstance(
         generic, (MeasurementUnitType, GenericDimension, GenericCompositeDimension)
@@ -139,20 +139,21 @@ class AbsoluteUnitConverter(metaclass=ABCMeta):
     converting from a relative temperature to an absolute temperature (e.g. from Celcius
     to Kelvin, or Fahrenheit to Rankine).
 
-    Use the 'register_converter' decorator when subclassing and define the
-    'reference_unit' and 'conversion_map' attributes. It does not matter what unit you
+    Use the `register_converter` decorator when subclassing and define the
+    `reference_unit` and `conversion_map` attributes. It does not matter what unit you
     shall choose to be the reference; although you have to define the conversion map
     accordingly. The conversion map is a dictionary that holds the conversion factors
     from the reference unit to other units. e.g. in the below example: 1 in = 2.54 cm
 
-    >>> class LengthUnit(MeasurementUnit):
-    ...     CENTI_METER = "cm"
-    ...     INCH = "in"
+    Examples:
+        >>> class LengthUnit(MeasurementUnit):
+        ...     CENTI_METER = "cm"
+        ...     INCH = "in"
 
-    >>> @register_converter(LengthUnit)
-    ... class LengthUnitConverter(AbsoluteUnitConverter):
-    ...     reference_unit = LengthUnit.INCH
-    ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
+        >>> @register_converter(LengthUnit)
+        ... class LengthUnitConverter(AbsoluteUnitConverter):
+        ...     reference_unit = LengthUnit.INCH
+        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
     """
 
     generic_unit_descriptor: MeasurementUnitType
@@ -168,20 +169,22 @@ class AbsoluteUnitConverter(metaclass=ABCMeta):
     ) -> float:
         """
         Convert a value from an absolute unit to another absolute unit.
-        Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
-        an instance of the generic that is registered with the converter or if 'value'
+        Raises `UnitConversionError` if `from_descriptor` or `to_descriptor` are not
+        an instance of the generic that is registered with the converter or if `value`
         is not a numeric.
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     CENTI_METER = "cm"
-        ...     INCH = "in"
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     CENTI_METER = "cm"
+            ...     INCH = "in"
 
-        >>> @register_converter(LengthUnit)
-        ... class LengthUnitConverter(AbsoluteUnitConverter):
-        ...     reference_unit = LengthUnit.INCH
-        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
+            >>> @register_converter(LengthUnit)
+            ... class LengthUnitConverter(AbsoluteUnitConverter):
+            ...     reference_unit = LengthUnit.INCH
+            ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
 
-        >>> assert LengthUnitConverter.convert(2, LengthUnit.INCH, LengthUnit.CENTI_METER) == 5.08
+            >>> LengthUnitConverter.convert(2, LengthUnit.INCH, LengthUnit.CENTI_METER)
+            5.08
         """
         if not isinstance(value, (float, int)):
             raise UnitConversionError(f"invalid 'value': {value}; expected numeric. ")
@@ -192,21 +195,23 @@ class AbsoluteUnitConverter(metaclass=ABCMeta):
         cls, from_descriptor: UnitDescriptor, to_descriptor: UnitDescriptor
     ) -> float:
         """
-        Get the multiplication factor for the conversion from 'from_descriptor' to
-        'to_descriptor'.
-        Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
+        Get the multiplication factor for the conversion from `from_descriptor` to
+        `to_descriptor`.
+        Raises `UnitConversionError` if `from_descriptor` or `to_descriptor` are not
         an instance of the generic that is registered with the converter.
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     CENTI_METER = "cm"
-        ...     INCH = "in"
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     CENTI_METER = "cm"
+            ...     INCH = "in"
 
-        >>> @register_converter(LengthUnit)
-        ... class LengthUnitConverter(AbsoluteUnitConverter):
-        ...     reference_unit = LengthUnit.INCH
-        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
+            >>> @register_converter(LengthUnit)
+            ... class LengthUnitConverter(AbsoluteUnitConverter):
+            ...     reference_unit = LengthUnit.INCH
+            ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
 
-        >>> assert LengthUnitConverter.get_factor(LengthUnit.CENTI_METER, LengthUnit.INCH) == 1/2.54
+            >>> LengthUnitConverter.get_factor(LengthUnit.INCH, LengthUnit.CENTI_METER)
+            2.54
         """
         if not from_descriptor.isinstance_equivalent(cls.generic_unit_descriptor):
             raise UnitConversionError(
@@ -279,8 +284,8 @@ class RelativeUnitConverter(
     e.g. Temperature units are relative because conversion from one unit to another
     is not necessarily performed with multiplication with a single factor.
 
-    Use the 'register_converter' decorator when subclassing and define the
-    'reference_unit', 'conversion_map' and 'reference_conversion_map' attributes. It
+    Use the `register_converter` decorator when subclassing and define the
+    `reference_unit`, `conversion_map` and `reference_conversion_map` attributes. It
     does not matter what unit you shall choose to be the reference; although you have to
     define the conversion map and reference conversion map accordingly. The conversion
     map is a dictionary that holds the conversion functions that convert other units to
@@ -288,21 +293,22 @@ class RelativeUnitConverter(
     conversion functions that convert the reference unit to other units.
 
 
-    >>> class TemperatureUnit(MeasurementUnit):
-    ...     CELCIUS = "°C"
-    ...     FAHRENHEIT = "°F"
+    Examples:
+        >>> class TemperatureUnit(MeasurementUnit):
+        ...     CELCIUS = "°C"
+        ...     FAHRENHEIT = "°F"
 
-    >>> @register_converter(TemperatureUnit)
-    ... class TemperatureUnitConverter(RelativeUnitConverter):
-    ...     reference_unit = TemperatureUnit.CELCIUS
-    ...     conversion_map = {
-    ...             TemperatureUnit.CELCIUS: lambda t: t,
-    ...             TemperatureUnit.FAHRENHEIT: lambda t: (t - 32) / 1.8,
-    ...                 }
-    ...     reference_conversion_map = {
-    ...             TemperatureUnit.CELCIUS: lambda t: t,
-    ...             TemperatureUnit.FAHRENHEIT: lambda t: (t * 1.8) + 32,
-    ...                 }
+        >>> @register_converter(TemperatureUnit)
+        ... class TemperatureUnitConverter(RelativeUnitConverter):
+        ...     reference_unit = TemperatureUnit.CELCIUS
+        ...     conversion_map = {
+        ...             TemperatureUnit.CELCIUS: lambda t: t,
+        ...             TemperatureUnit.FAHRENHEIT: lambda t: (t - 32) / 1.8,
+        ...                 }
+        ...     reference_conversion_map = {
+        ...             TemperatureUnit.CELCIUS: lambda t: t,
+        ...             TemperatureUnit.FAHRENHEIT: lambda t: (t * 1.8) + 32,
+        ...                 }
     """
 
     generic_unit_descriptor: MeasurementUnitType
@@ -320,30 +326,32 @@ class RelativeUnitConverter(
         """
         Convert a value from a relative unit to another relative unit.
 
-        Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
-        an instance of the generic that is registered with the converter or if 'value'
+        Raises `UnitConversionError` if `from_descriptor` or `to_descriptor` are not
+        an instance of the generic that is registered with the converter or if `value`
         is not a numeric.
 
-        Raises 'ConversionFunctionError' if an error occurs when calling a function
+        Raises `ConversionFunctionError` if an error occurs when calling a function
         provided in the conversion_map or reference_conversion_map.
 
-        >>> class TemperatureUnit(MeasurementUnit):
-        ...     CELCIUS = "°C"
-        ...     FAHRENHEIT = "°F"
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     CELCIUS = "°C"
+            ...     FAHRENHEIT = "°F"
 
-        >>> @register_converter(TemperatureUnit)
-        ... class TemperatureUnitConverter(RelativeUnitConverter):
-        ...     reference_unit = TemperatureUnit.CELCIUS
-        ...     conversion_map = {
-        ...             TemperatureUnit.CELCIUS: lambda t: t,
-        ...             TemperatureUnit.FAHRENHEIT: lambda t: (t - 32) / 1.8,
-        ...                 }
-        ...     reference_conversion_map = {
-        ...             TemperatureUnit.CELCIUS: lambda t: t,
-        ...             TemperatureUnit.FAHRENHEIT: lambda t: (t * 1.8) + 32,
-        ...                 }
+            >>> @register_converter(TemperatureUnit)
+            ... class TemperatureUnitConverter(RelativeUnitConverter):
+            ...     reference_unit = TemperatureUnit.CELCIUS
+            ...     conversion_map = {
+            ...             TemperatureUnit.CELCIUS: lambda t: t,
+            ...             TemperatureUnit.FAHRENHEIT: lambda t: (t - 32) / 1.8,
+            ...                 }
+            ...     reference_conversion_map = {
+            ...             TemperatureUnit.CELCIUS: lambda t: t,
+            ...             TemperatureUnit.FAHRENHEIT: lambda t: (t * 1.8) + 32,
+            ...                 }
 
-        >>> assert TemperatureUnitConverter.convert(100, TemperatureUnit.CELCIUS, TemperatureUnit.FAHRENHEIT) == 212
+            >>> TemperatureUnitConverter.convert(100, TemperatureUnit.CELCIUS, TemperatureUnit.FAHRENHEIT)
+            212.0
         """
         if not isinstance(value, (float, int)):
             raise UnitConversionError(f"invalid 'value': {value}; expected numeric. ")
@@ -396,20 +404,21 @@ class ExponentiatedUnitConverter(metaclass=ABCMeta):
     """
     Base converter for exponentiated absolute measurement units.
 
-    Use the 'register_converter' decorator when subclassing. This converter requires
+    Use the `register_converter` decorator when subclassing. This converter requires
     the converter for the measurement unit that is exponentiated to be defined.
 
-    >>> class LengthUnit(MeasurementUnit):
-    ...     CENTI_METER = "cm"
-    ...     INCH = "in"
+    Examples:
+        >>> class LengthUnit(MeasurementUnit):
+        ...     CENTI_METER = "cm"
+        ...     INCH = "in"
 
-    >>> @register_converter(LengthUnit)
-    ... class LengthUnitConverter(AbsoluteUnitConverter):
-    ...     reference_unit = LengthUnit.INCH
-    ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
+        >>> @register_converter(LengthUnit)
+        ... class LengthUnitConverter(AbsoluteUnitConverter):
+        ...     reference_unit = LengthUnit.INCH
+        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
 
-    >>> @register_converter(LengthUnit**2)
-    ... class AreaUnitConverter(ExponentiatedUnitConverter): ...
+        >>> @register_converter(LengthUnit**2)
+        ... class AreaUnitConverter(ExponentiatedUnitConverter): ...
     """
 
     generic_unit_descriptor: GenericDimension
@@ -426,28 +435,30 @@ class ExponentiatedUnitConverter(metaclass=ABCMeta):
         exponentiated unit. In order to use this converter a converter must exist for
         the base unit.
 
-        Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
-        an instance of the generic that is registered with the converter or if 'value'
+        Raises `UnitConversionError` if `from_descriptor` or `to_descriptor` are not
+        an instance of the generic that is registered with the converter or if `value`
         is not a numeric.
 
-        Raises 'ConverterDependenciesError' if a converter for the base unit has not
+        Raises `ConverterDependenciesError` if a converter for the base unit has not
         been defined/registered.
 
-        Raises 'UnsupportedConverterError' if the base unit is a relative unit.
+        Raises `UnsupportedConverterError` if the base unit is a relative unit.
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     CENTI_METER = "cm"
-        ...     INCH = "in"
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     CENTI_METER = "cm"
+            ...     INCH = "in"
 
-        >>> @register_converter(LengthUnit)
-        ... class LengthUnitConverter(AbsoluteUnitConverter):
-        ...     reference_unit = LengthUnit.INCH
-        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
+            >>> @register_converter(LengthUnit)
+            ... class LengthUnitConverter(AbsoluteUnitConverter):
+            ...     reference_unit = LengthUnit.INCH
+            ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
 
-        >>> @register_converter(LengthUnit**2)
-        ... class AreaUnitConverter(ExponentiatedUnitConverter): ...
+            >>> @register_converter(LengthUnit**2)
+            ... class AreaUnitConverter(ExponentiatedUnitConverter): ...
 
-        >>> assert AreaUnitConverter.convert(10, LengthUnit.INCH**2, LengthUnit.CENTI_METER**2) == 64.516
+            >>> AreaUnitConverter.convert(10, LengthUnit.INCH**2, LengthUnit.CENTI_METER**2)
+            64.516
         """
         if not isinstance(value, (float, int)):
             raise UnitConversionError(f"invalid 'value': {value}; expected numeric. ")
@@ -458,30 +469,32 @@ class ExponentiatedUnitConverter(metaclass=ABCMeta):
         cls, from_descriptor: UnitDescriptor, to_descriptor: UnitDescriptor
     ) -> float:
         """
-        Get the multiplication factor for the conversion from 'from_descriptor' to
-        'to_descriptor'.
+        Get the multiplication factor for the conversion from `from_descriptor` to
+        `to_descriptor`.
 
-        Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
+        Raises `UnitConversionError` if `from_descriptor` or `to_descriptor` are not
         an instance of the generic that is registered with the converter.
 
-        Raises 'ConverterDependenciesError' if a converter for the base unit has not
+        Raises `ConverterDependenciesError` if a converter for the base unit has not
         been defined/registered.
 
-        Raises 'UnsupportedConverterError' if the base unit is a relative unit.
+        Raises `UnsupportedConverterError` if the base unit is a relative unit.
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     CENTI_METER = "cm"
-        ...     INCH = "in"
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     CENTI_METER = "cm"
+            ...     INCH = "in"
 
-        >>> @register_converter(LengthUnit)
-        ... class LengthUnitConverter(AbsoluteUnitConverter):
-        ...     reference_unit = LengthUnit.INCH
-        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
+            >>> @register_converter(LengthUnit)
+            ... class LengthUnitConverter(AbsoluteUnitConverter):
+            ...     reference_unit = LengthUnit.INCH
+            ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
 
-        >>> @register_converter(LengthUnit**2)
-        ... class AreaUnitConverter(ExponentiatedUnitConverter): ...
+            >>> @register_converter(LengthUnit**2)
+            ... class AreaUnitConverter(ExponentiatedUnitConverter): ...
 
-        >>> assert AreaUnitConverter.get_factor(LengthUnit.INCH**2, LengthUnit.CENTI_METER**2) == 6.4516
+            >>> AreaUnitConverter.get_factor(LengthUnit.INCH**2, LengthUnit.CENTI_METER**2)
+            6.4516
         """
         if not from_descriptor.isinstance_equivalent(cls.generic_unit_descriptor):
             raise UnitConversionError(
@@ -551,29 +564,30 @@ class CompositeUnitConverter(metaclass=ABCMeta):
     """
     Base converter for composite units.
 
-    Use the 'register_converter' decorator when subclassing. This converter requires
-    the converters for the individul measurement units to be defined.
+    Use the `register_converter` decorator when subclassing. This converter requires
+    the converters for the individual measurement units to be defined.
 
-    >>> class LengthUnit(MeasurementUnit):
-    ...     CENTI_METER = "cm"
-    ...     INCH = "in"
+    Examples:
+        >>> class LengthUnit(MeasurementUnit):
+        ...     CENTI_METER = "cm"
+        ...     INCH = "in"
 
-    >>> class TimeUnit(MeasurementUnit):
-    ...     SECOND = "s"
-    ...     MINUTE = "min"
+        >>> class TimeUnit(MeasurementUnit):
+        ...     SECOND = "s"
+        ...     MINUTE = "min"
 
-    >>> @register_converter(LengthUnit)
-    ... class LengthUnitConverter(AbsoluteUnitConverter):
-    ...     reference_unit = LengthUnit.INCH
-    ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
+        >>> @register_converter(LengthUnit)
+        ... class LengthUnitConverter(AbsoluteUnitConverter):
+        ...     reference_unit = LengthUnit.INCH
+        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
 
-    >>> @register_converter(TimeUnit)
-    ... class TimeUnitConverter(AbsoluteUnitConverter):
-    ...     reference_unit = TimeUnit.MINUTE
-    ...     conversion_map = {TimeUnit.MINUTE: 1, TimeUnit.SECOND: 60}
+        >>> @register_converter(TimeUnit)
+        ... class TimeUnitConverter(AbsoluteUnitConverter):
+        ...     reference_unit = TimeUnit.MINUTE
+        ...     conversion_map = {TimeUnit.MINUTE: 1, TimeUnit.SECOND: 60}
 
-    >>> @register_converter(LengthUnit / TimeUnit)
-    ... class VelocityUnitConverter(CompositeUnitConverter): ...
+        >>> @register_converter(LengthUnit / TimeUnit)
+        ... class VelocityUnitConverter(CompositeUnitConverter): ...
     """
 
     generic_unit_descriptor: GenericUnitDescriptor
@@ -588,37 +602,39 @@ class CompositeUnitConverter(metaclass=ABCMeta):
         """
         Convert a value from a composite unit to another composite unit.
 
-        Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
-        an instance of the generic that is registered with the converter or if 'value'
+        Raises `UnitConversionError` if `from_descriptor` or `to_descriptor` are not
+        an instance of the generic that is registered with the converter or if `value`
         is not a numeric.
 
-        Raises 'ConverterDependenciesError' if a converter for an invdividual unit has
+        Raises `ConverterDependenciesError` if a converter for an invdividual unit has
         not been defined/registered.
 
-        Raises 'UnsupportedConverterError' if an individual unit is a relative unit.
+        Raises `UnsupportedConverterError` if an individual unit is a relative unit.
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     CENTI_METER = "cm"
-        ...     INCH = "in"
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     CENTI_METER = "cm"
+            ...     INCH = "in"
 
-        >>> class TimeUnit(MeasurementUnit):
-        ...     SECOND = "s"
-        ...     MINUTE = "min"
+            >>> class TimeUnit(MeasurementUnit):
+            ...     SECOND = "s"
+            ...     MINUTE = "min"
 
-        >>> @register_converter(LengthUnit)
-        ... class LengthUnitConverter(AbsoluteUnitConverter):
-        ...     reference_unit = LengthUnit.INCH
-        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
+            >>> @register_converter(LengthUnit)
+            ... class LengthUnitConverter(AbsoluteUnitConverter):
+            ...     reference_unit = LengthUnit.INCH
+            ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
 
-        >>> @register_converter(TimeUnit)
-        ... class TimeUnitConverter(AbsoluteUnitConverter):
-        ...     reference_unit = TimeUnit.MINUTE
-        ...     conversion_map = {TimeUnit.MINUTE: 1, TimeUnit.SECOND: 60}
+            >>> @register_converter(TimeUnit)
+            ... class TimeUnitConverter(AbsoluteUnitConverter):
+            ...     reference_unit = TimeUnit.MINUTE
+            ...     conversion_map = {TimeUnit.MINUTE: 1, TimeUnit.SECOND: 60}
 
-        >>> @register_converter(LengthUnit / TimeUnit)
-        ... class VelocityUnitConverter(CompositeUnitConverter): ...
+            >>> @register_converter(LengthUnit / TimeUnit)
+            ... class VelocityUnitConverter(CompositeUnitConverter): ...
 
-        >>> assert VelocityUnitConverter.convert(100, LengthUnit.INCH/TimeUnit.SECOND, LengthUnit.CENTI_METER/TimeUnit.SECOND) == 254
+            >>> VelocityUnitConverter.convert(100, LengthUnit.INCH/TimeUnit.SECOND, LengthUnit.CENTI_METER/TimeUnit.SECOND)
+            254.0
         """
         if not isinstance(value, (float, int)):
             raise UnitConversionError(f"invalid 'value': {value}; expected numeric. ")
@@ -629,39 +645,41 @@ class CompositeUnitConverter(metaclass=ABCMeta):
         cls, from_descriptor: UnitDescriptor, to_descriptor: UnitDescriptor
     ) -> float:
         """
-        Get the multiplication factor for the conversion from 'from_descriptor' to
-        'to_descriptor'.
+        Get the multiplication factor for the conversion from `from_descriptor` to
+        `to_descriptor`.
 
-        Raises 'UnitConversionError' if 'from_descriptor' or 'to_descriptor' are not
+        Raises `UnitConversionError` if `from_descriptor` or `to_descriptor` are not
         an instance of the generic that is registered with the converter.
 
-        Raises 'ConverterDependenciesError' if a converter for an invdividual unit has
+        Raises `ConverterDependenciesError` if a converter for an invdividual unit has
         not been defined/registered.
 
-        Raises 'UnsupportedConverterError' if an individual unit is a relative unit.
+        Raises `UnsupportedConverterError` if an individual unit is a relative unit.
 
-        >>> class LengthUnit(MeasurementUnit):
-        ...     CENTI_METER = "cm"
-        ...     INCH = "in"
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     CENTI_METER = "cm"
+            ...     INCH = "in"
 
-        >>> class TimeUnit(MeasurementUnit):
-        ...     SECOND = "s"
-        ...     MINUTE = "min"
+            >>> class TimeUnit(MeasurementUnit):
+            ...     SECOND = "s"
+            ...     MINUTE = "min"
 
-        >>> @register_converter(LengthUnit)
-        ... class LengthUnitConverter(AbsoluteUnitConverter):
-        ...     reference_unit = LengthUnit.INCH
-        ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
+            >>> @register_converter(LengthUnit)
+            ... class LengthUnitConverter(AbsoluteUnitConverter):
+            ...     reference_unit = LengthUnit.INCH
+            ...     conversion_map = {LengthUnit.INCH: 1, LengthUnit.CENTI_METER: 2.54}
 
-        >>> @register_converter(TimeUnit)
-        ... class TimeUnitConverter(AbsoluteUnitConverter):
-        ...     reference_unit = TimeUnit.MINUTE
-        ...     conversion_map = {TimeUnit.MINUTE: 1, TimeUnit.SECOND: 60}
+            >>> @register_converter(TimeUnit)
+            ... class TimeUnitConverter(AbsoluteUnitConverter):
+            ...     reference_unit = TimeUnit.MINUTE
+            ...     conversion_map = {TimeUnit.MINUTE: 1, TimeUnit.SECOND: 60}
 
-        >>> @register_converter(LengthUnit / TimeUnit)
-        ... class VelocityUnitConverter(CompositeUnitConverter): ...
+            >>> @register_converter(LengthUnit / TimeUnit)
+            ... class VelocityUnitConverter(CompositeUnitConverter): ...
 
-        >>> assert VelocityUnitConverter.get_factor(LengthUnit.INCH/TimeUnit.MINUTE, LengthUnit.CENTI_METER/TimeUnit.SECOND) == 2.54/60
+            >>> VelocityUnitConverter.get_factor(LengthUnit.INCH/TimeUnit.SECOND, LengthUnit.INCH/TimeUnit.MINUTE)
+            60.0
         """
         if not from_descriptor.isinstance_equivalent(cls.generic_unit_descriptor):
             raise UnitConversionError(
