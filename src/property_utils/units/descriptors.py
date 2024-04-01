@@ -411,6 +411,21 @@ class AliasMeasurementUnit(MeasurementUnit):
             f"cannot create AliasMeasurementUnit from descriptor {descriptor}"
         )
 
+    def isinstance(self, generic: GenericUnitDescriptor) -> bool:
+        """
+        Returns True if the AliasMeasurementUnit is an instance of the generic or if
+        its generic descriptor equals the generic, False otherwise.
+
+        Examples:
+            >>> class PowerUnit(AliasMeasurementUnit):
+            ...     NEWTON = "N"
+            ...     def aliased_generic_descriptor(cls) -> GenericCompositeDimension:
+            ...         return EnergyUnit
+        """
+        return super().isinstance(generic) or (
+            self.aliased_generic_descriptor() == generic
+        )
+
     @classmethod
     def aliased_generic_descriptor(cls) -> GenericUnitDescriptor:
         """
@@ -623,12 +638,17 @@ class Dimension:
         >>> Dimension(TemperatureUnit.CELCIUS).isinstance(TemperatureUnit**2)
         False
         """
+        if self._isinstance_aliased(generic) or self._isinstance_alias(generic):
+            return True
+
         if isinstance(generic, MeasurementUnitType):
             generic = GenericDimension(generic)
         if not isinstance(generic, GenericDimension):
             return False
+
         if isinstance(self.unit, generic.unit_type) and self.power == generic.power:
             return True
+
         return False
 
     def to_generic(self) -> GenericDimension:
@@ -653,6 +673,42 @@ class Dimension:
         <CompositeDimension:  / (m^2)>
         """
         return CompositeDimension([], [replace(self)])
+
+    def _isinstance_aliased(self, generic: GenericUnitDescriptor) -> bool:
+        """
+        Returns True if the generic is the aliased unit descriptor of this Dimension,
+        False otherwise.
+
+        Only applicable if this Dimension's unit is of type AliasMeasurementUnit.
+        """
+        return (
+            isinstance(self.unit, AliasMeasurementUnit)
+            and (self.unit.aliased_generic_descriptor() ** self.power) == generic
+        )
+
+    def _isinstance_alias(self, generic: GenericUnitDescriptor) -> bool:
+        """
+        Returns True if this Dimension's unit is an instance of the aliased unit
+        descriptor of the generic, False otherwise.
+
+        Only applicable if generic is an AliasMeasurementUnit.
+        """
+        if isinstance(generic, MeasurementUnitType):
+            generic = GenericDimension(generic)
+
+        if not isinstance(generic, GenericDimension):
+            return False
+
+        if not issubclass(generic.unit_type, AliasMeasurementUnit):
+            return False
+
+        if (
+            generic.unit_type.aliased_generic_descriptor() ** generic.power
+            == self.to_generic()
+        ):
+            return True
+
+        return False
 
     def __mul__(self, descriptor: "UnitDescriptor") -> "CompositeDimension":
         """
@@ -1131,9 +1187,17 @@ class CompositeDimension:
         >>> (TemperatureUnit.CELCIUS * LengthUnit.METER).isinstance(TemperatureUnit**2)
         False
         """
+        if self._isinstance_alias(generic):
+            return True
+
         if not isinstance(generic, GenericCompositeDimension):
             return False
-        return self.to_generic() == generic
+
+        return (
+            self.to_generic() == generic
+            or self.to_generic().analysed().simplified()
+            == generic.analysed().simplified()
+        )
 
     def to_generic(self) -> GenericCompositeDimension:
         """
@@ -1306,6 +1370,27 @@ class CompositeDimension:
         <CompositeDimension: s / m>
         """
         return CompositeDimension(self._denominator_copy(), self._numerator_copy())
+
+    def _isinstance_alias(self, generic: GenericUnitDescriptor) -> bool:
+        """
+        Returns True if the generic is an alias for this CompositeDimension's generic
+        descriptor, False otherwise.
+
+        Only applicable if generic is an AliasMeasurementUnit.
+        """
+        if isinstance(generic, MeasurementUnitType):
+            generic = GenericDimension(generic)
+
+        if not isinstance(generic, GenericDimension):
+            return False
+
+        if not issubclass(generic.unit_type, AliasMeasurementUnit):
+            return False
+
+        return (
+            self.to_generic().analysed().simplified()
+            == generic.unit_type.aliased_generic_descriptor() ** generic.power
+        )
 
     def _numerator_copy(self) -> List[Dimension]:
         return [replace(n) for n in self.numerator]
