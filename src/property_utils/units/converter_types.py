@@ -19,6 +19,7 @@ except ImportError:
 
 from property_utils.units.descriptors import (
     MeasurementUnit,
+    AliasMeasurementUnit,
     MeasurementUnitType,
     GenericDimension,
     GenericCompositeDimension,
@@ -216,6 +217,12 @@ class AbsoluteUnitConverter(metaclass=ABCMeta):
                 f"invalid 'to_descriptor'; expected an instance of {cls.generic_unit_descriptor}. "
             )
         from_unit = MeasurementUnit.from_descriptor(from_descriptor)
+
+        if isinstance(from_unit, AliasMeasurementUnit) and not isinstance(
+            to_descriptor, AliasMeasurementUnit
+        ):
+            return cls._get_aliased_factor(from_unit, to_descriptor)
+
         to_unit = MeasurementUnit.from_descriptor(to_descriptor)
         try:
             return cls._to_reference(from_unit) * cls.conversion_map[to_unit]
@@ -232,6 +239,35 @@ class AbsoluteUnitConverter(metaclass=ABCMeta):
             raise UnitConversionError(
                 f"cannot convert from {from_unit}; unit is not registered in {cls.__name__}'s conversion map. ",
             ) from None
+
+    @classmethod
+    def _get_aliased_factor(
+        cls, from_unit: AliasMeasurementUnit, to_descriptor: UnitDescriptor
+    ) -> float:
+        """
+        Returns the conversion factor from an alias unit to its aliased.
+
+        The conversion happens in four steps:
+
+        1. Convert from the alias unit to the SI unit.
+        2. Convert from the SI unit to the aliased SI units (this step is not
+        implemented in code, because the conversion factor is 1)
+        3. Convert from the SI units to the target units.
+
+        e.g. if you want to convert from bar to kN/m^2:
+        1. bar -> Pa
+        2. Pa -> N/m^2 (conversion factor 1)
+        3. N/m^2 -> kN/m^2
+        """
+        step_1_factor = cls.get_factor(from_unit, from_unit.si())
+
+        converter = get_converter(to_descriptor.to_generic())
+
+        step_3_factor = converter.convert(
+            1, to_descriptor.to_generic().to_si(), to_descriptor
+        )
+
+        return step_1_factor * step_3_factor
 
 
 class RelativeUnitConverter(
@@ -474,6 +510,35 @@ class ExponentiatedUnitConverter(metaclass=ABCMeta):
             )
         factor = converter.get_factor(from_dimension.unit, to_dimension.unit)
         return factor**to_dimension.power
+
+    @classmethod
+    def _get_aliased_factor(
+        cls, from_dimension: Dimension, to_descriptor: AliasMeasurementUnit
+    ) -> float:
+        """
+        Returns the conversion factor from an alias unit to its aliased.
+
+        The conversion happens in three steps:
+
+        1. Convert from the alias unit to the SI unit.
+        2. Convert from the SI unit to the aliased SI units (this step is not
+        implemented in code, because the conversion factor is 1)
+        3. Convert from the aliased SI units to the target units.
+
+        e.g. if you want to convert from cm^3 to L:
+        1. cm^3 -> m^3
+        2. m^3 -> kL (conversion factor 1)
+        3. kL -> L
+        """
+        step_1_factor = cls.get_factor(from_dimension, from_dimension.si())
+
+        converter = get_converter(to_descriptor.to_generic())
+
+        step_3_factor = converter.convert(
+            1, to_descriptor.to_generic().to_si(), to_descriptor
+        )
+
+        return step_1_factor * step_3_factor
 
 
 class CompositeUnitConverter(metaclass=ABCMeta):

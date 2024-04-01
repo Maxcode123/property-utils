@@ -464,6 +464,28 @@ class TestAliasForceUnitConverterConvertFromReference(TestCase):
     def test_to_dyne(self):
         self.assertResult(2_800_000)
 
+    @args(
+        {
+            "value": 20,
+            "to_descriptor": MassUnit.KILO_GRAM
+            * LengthUnit.METER
+            / (TimeUnit.SECOND**2),
+        }
+    )
+    def test_to_aliased_si_units(self):
+        self.assertResult(20)
+
+    @args(
+        {
+            "value": 200,
+            "to_descriptor": MassUnit.KILO_GRAM
+            * LengthUnit.KILO_METER
+            / (TimeUnit.SECOND**2),
+        }
+    )
+    def test_to_aliased_units(self):
+        self.assertResult(0.2)
+
 
 @add_to(AliasPressureUnitConverter_test_suite)
 class TestAliasPressureUnitConverterConvertToReference(TestCase):
@@ -514,7 +536,7 @@ class TestAliasPressureUnitConverterConvertFromReference(TestCase):
 
     @args({"value": 3.56, "to_descriptor": PressureUnit.PASCAL})
     def test_to_pascal(self):
-        self.assertResult(356000)
+        self.assertResult(356_000)
 
     @args({"value": 0.55, "to_descriptor": PressureUnit.KILO_PASCAL})
     def test_to_kilo_pascal(self):
@@ -523,6 +545,34 @@ class TestAliasPressureUnitConverterConvertFromReference(TestCase):
     @args({"value": 2.7, "to_descriptor": PressureUnit.MEGA_PASCAL})
     def test_to_mega_pascal(self):
         self.assertResult(0.27)
+
+    @args(
+        {
+            "value": 1.5,
+            "to_descriptor": MassUnit.KILO_GRAM
+            / LengthUnit.METER
+            / (TimeUnit.SECOND**2),
+        }
+    )
+    def test_to_aliased_si_units(self):
+        self.assertResult(150_000)
+
+    @args(
+        {
+            "value": 1.5,
+            "to_descriptor": MassUnit.GRAM / LengthUnit.METER / (TimeUnit.SECOND**2),
+        }
+    )
+    def test_to_aliased_units(self):
+        self.assertResult(150_000_000)
+
+    @args({"value": 10, "to_descriptor": ForceUnit.NEWTON / LengthUnit.METER**2})
+    def test_to_composite_si_units(self):
+        self.assertResult(1_000_000)
+
+    @args({"value": 10, "to_descriptor": ForceUnit.DYNE / LengthUnit.METER**2})
+    def test_to_composite_units(self):
+        self.assertResult(100_000_000_000)
 
 
 @add_to(AliasEnergyUnitConverter_test_suite)
@@ -618,6 +668,36 @@ class TestAliasEnergyUnitConverterConvertFromReference(TestCase):
     def test_to_kilo_watthour(self):
         self.assertResultAlmost(100_000 / 3600 / 1000)
 
+    @args(
+        {
+            "value": 20.1,
+            "to_descriptor": MassUnit.KILO_GRAM
+            * (LengthUnit.METER**2)
+            / (TimeUnit.SECOND**2),
+        }
+    )
+    def test_to_aliased_si_units(self):
+        self.assertResult(20.1)
+
+    @args(
+        {
+            "value": 7,
+            "to_descriptor": MassUnit.GRAM
+            * (LengthUnit.METER**2)
+            / (TimeUnit.SECOND**2),
+        }
+    )
+    def test_to_aliased_units(self):
+        self.assertResult(7_000)
+
+    @args({"value": 8, "to_descriptor": ForceUnit.NEWTON * LengthUnit.METER})
+    def test_to_composite_si_units(self):
+        self.assertResult(8)
+
+    @args({"value": 2, "to_descriptor": ForceUnit.NEWTON * LengthUnit.CENTI_METER})
+    def test_to_composite_units(self):
+        self.assertResult(200)
+
 
 @add_to(AliasPowerUnitConverter_test_suite)
 class TestAliasPowerUnitConverterConvertToReference(TestCase):
@@ -661,6 +741,36 @@ class TestAliasPowerUnitConverterConvertFromReference(TestCase):
     @args({"value": 5, "to_descriptor": PowerUnit.GIGA_WATT})
     def test_to_giga_watt(self):
         self.assertResult(5e-9)
+
+    @args(
+        {
+            "value": 9,
+            "to_descriptor": MassUnit.KILO_GRAM
+            * (LengthUnit.METER**2)
+            / (TimeUnit.SECOND**3),
+        }
+    )
+    def test_to_aliased_si_units(self):
+        self.assertResult(9)
+
+    @args(
+        {
+            "value": 9,
+            "to_descriptor": MassUnit.GRAM
+            * (LengthUnit.METER**2)
+            / (TimeUnit.SECOND**3),
+        }
+    )
+    def test_to_aliased_units(self):
+        self.assertResult(9_000)
+
+    @args({"value": 6, "to_descriptor": EnergyUnit.JOULE / TimeUnit.SECOND})
+    def test_to_composite_si_units(self):
+        self.assertResult(6)
+
+    @args({"value": 9, "to_descriptor": EnergyUnit.WATTHOUR / TimeUnit.HOUR})
+    def test_to_composite_units(self):
+        self.assertResult(9)
 
 
 if __name__ == "__main__":

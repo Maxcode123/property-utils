@@ -1,3 +1,4 @@
+from typing import Any
 from unittest import TestSuite, TextTestRunner
 
 from unittest_extensions import TestCase, args
@@ -24,6 +25,7 @@ from property_utils.tests.data import (
     Unit2,
     Unit3,
     Unit4,
+    Unit5,
     Unit1Converter,
     UnregisteredConverter,
     Unit1_314Converter,
@@ -35,6 +37,7 @@ from property_utils.tests.data import (
     Unit1Unit2Converter,
     Unit1Unit4FractionConverter,
     Unit1_2Unit4_3Converter,
+    Unit5Converter,
 )
 
 
@@ -156,6 +159,62 @@ class TestAbsoluteUnitConverterConvert(TestCase):
     @args({"value": 200, "from_descriptor": Unit1.a, "to_descriptor": Unit1.A})
     def test_valid_conversion_from_a_to_A(self):
         self.assertResult(20)
+
+
+@add_to(AbsoluteUnitConverter_test_suite)
+class TestAbsoluteUnitConverterAliasMeasurementUnitConvert(TestCase):
+    def subject(self, value, from_descriptor, to_descriptor) -> Any:
+        return Unit5Converter.convert(value, from_descriptor, to_descriptor)
+
+    @args(
+        {
+            "value": 5,
+            "from_descriptor": Unit5.e,
+            "to_descriptor": Unit1.a / (Unit4.d**2),
+        }
+    )
+    def test_with_si_aliased_units(self):
+        self.assertResult(5)
+
+    @args(
+        {
+            "value": 5,
+            "from_descriptor": Unit5.E,
+            "to_descriptor": Unit1.A / (Unit4.D**2),
+        }
+    )
+    def test_with_aliased_unit(self):
+        self.assertResultAlmost(5 * 15 * 25 / 10, places=1)
+
+    @args({"value": 10, "from_descriptor": Unit5.E, "to_descriptor": Unit5.e})
+    def test_with_normal_units(self):
+        self.assertResult(150)
+
+    @args({"value": 10, "from_descriptor": Unit5.E, "to_descriptor": Unit5.E})
+    def test_with_same_units(self):
+        self.assertResult(10)
+
+
+@add_to(AbsoluteUnitConverter_test_suite)
+class TestAbsoluteUnitConverterAliasMeasurementUnitGetFactor(TestCase):
+    def subject(self, from_descriptor, to_descriptor) -> Any:
+        return Unit5Converter.get_factor(from_descriptor, to_descriptor)
+
+    @args({"from_descriptor": Unit5.e, "to_descriptor": Unit1.a / (Unit4.d**2)})
+    def test_with_si_aliased_units(self):
+        self.assertResult(1)
+
+    @args({"from_descriptor": Unit5.E, "to_descriptor": Unit1.A / (Unit4.D**2)})
+    def test_with_aliased_unit(self):
+        self.assertResultAlmost(15 * 25 / 10, places=1)
+
+    @args({"from_descriptor": Unit5.E, "to_descriptor": Unit5.e})
+    def test_with_normal_units(self):
+        self.assertResult(15)
+
+    @args({"from_descriptor": Unit5.E, "to_descriptor": Unit5.E})
+    def test_with_same_units(self):
+        self.assertResult(1)
 
 
 @add_to(AbsoluteUnitConverter_test_suite)
