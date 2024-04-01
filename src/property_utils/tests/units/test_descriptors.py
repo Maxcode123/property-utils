@@ -1122,6 +1122,59 @@ class TestGenericCompositeDimensionSimplified(TestGenericCompositeDimensionSimpl
 
 
 @add_to(GenericCompositeDimension_test_suite)
+class TestGenericCompositeDimensionAnalyse(TestDescriptor):
+    produced_type = GenericCompositeDimension
+
+    def subject(self, generic):
+        generic.analyse()
+        return generic
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_1()], [generic_dimension_2()]
+            )
+        }
+    )
+    def test_already_analysed_composite(self):
+        self.assert_result("Unit1 / Unit2")
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_5()], [generic_dimension_2()]
+            )
+        }
+    )
+    def test_with_simple_alias_generic_dimension(self):
+        self.assert_result("Unit1 / (Unit4^2) / Unit2")
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_5()], [generic_dimension_3()]
+            )
+        }
+    )
+    def test_with_multiple_alias_generic_dimensions(self):
+        self.assert_result("Unit1 / (Unit1^3) / (Unit4^2)")
+
+
+@add_to(GenericCompositeDimension_test_suite)
+class TestGenericCompositeDimensionAnalysed(TestGenericCompositeDimensionAnalyse):
+    """
+    Run all tests in TestGenericCompositeDimensionAnalyse but with a different subject.
+    """
+
+    def subject(self, generic):
+        return generic.analysed()
+
+    def assert_result(self, result_str):
+        self.assertResultIsNot(self._subjectKwargs["generic"])
+        self.assertSequenceEqual(str(self.cachedResult()), result_str, str)
+
+
+@add_to(GenericCompositeDimension_test_suite)
 class TestGenericCompositeDimensionInverseGeneric(TestDescriptor):
     def test_inverse_generic(self):
         self.assertSequenceEqual(

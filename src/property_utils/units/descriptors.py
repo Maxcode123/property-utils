@@ -866,6 +866,75 @@ class GenericCompositeDimension:
         copy.simplify()
         return copy
 
+    def analyse(self) -> None:
+        """
+        Analyse this composite by replacing its alias units with their aliased units.
+
+        Examples:
+            >>> class MassUnit(MeasurementUnit): ...
+            >>> class LengthUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
+
+            >>> class PressureUnit(AliasMeasurementUnit):
+            ...     @classmethod
+            ...     def aliased_generic_descriptor(cls) -> GenericCompositeDimension:
+            ...         return MassUnit / LengthUnit / (TimeUnit**2)
+
+            >>> composite = PressureUnit / LengthUnit
+            >>> composite
+            <GenericCompositeDimension: PressureUnit / LengthUnit>
+
+            >>> composite.analyse()
+            >>> composite
+            <GenericCompositeDimension: MassUnit / (TimeUnit^2) / LengthUnit / LengthUnit>
+        """
+        for n in self.numerator:
+            if issubclass(n.unit_type, AliasMeasurementUnit):
+                aliased = n.unit_type.aliased_generic_descriptor() ** n.power
+                if isinstance(aliased, GenericDimension):
+                    self.numerator.append(aliased)
+                elif isinstance(aliased, GenericCompositeDimension):
+                    self.numerator.extend(aliased.numerator)
+                    self.denominator.extend(aliased.denominator)
+
+                self.numerator.remove(n)
+
+        for d in self.denominator:
+            if issubclass(d.unit_type, AliasMeasurementUnit):
+                aliased = d.unit_type.aliased_generic_descriptor() ** d.power
+                if isinstance(aliased, GenericDimension):
+                    self.denominator.append(aliased)
+                elif isinstance(aliased, GenericCompositeDimension):
+                    self.denominator.extend(aliased.numerator)
+                    self.numerator.extend(aliased.denominator)
+
+                self.denominator.remove(d)
+
+    def analysed(self) -> "GenericCompositeDimension":
+        """
+        Returns an analysed version of this composite generic as a new object.
+
+        Examples:
+            >>> class MassUnit(MeasurementUnit): ...
+            >>> class LengthUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
+
+            >>> class PressureUnit(AliasMeasurementUnit):
+            ...     @classmethod
+            ...     def aliased_generic_descriptor(cls) -> GenericCompositeDimension:
+            ...         return MassUnit / LengthUnit / (TimeUnit**2)
+
+            >>> composite = PressureUnit / LengthUnit
+            >>> composite
+            <GenericCompositeDimension: PressureUnit / LengthUnit>
+
+            >>> composite.analysed()
+            <GenericCompositeDimension: MassUnit / (TimeUnit^2) / LengthUnit / LengthUnit>
+        """
+        copy = replace(self)
+        copy.analyse()
+        return copy
+
     def inverse_generic(self):
         """
         Create a generic composite with inverse units.
