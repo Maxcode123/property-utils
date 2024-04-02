@@ -66,6 +66,11 @@ class UnitDescriptor(Protocol):
     Descriptor for a property unit that has a specific unit, e.g. cm^2 or ft^2.
     """
 
+    def si(self) -> "UnitDescriptor":
+        """
+        Returns this descriptor with SI units.
+        """
+
     def isinstance(self, generic: GenericUnitDescriptor) -> bool:
         """
         Returns True if the UnitDescriptor is an instance of the generic, False
@@ -624,6 +629,22 @@ class Dimension:
             f"cannot create Dimension from descriptor: {descriptor}"
         )
 
+    def si(self) -> "Dimension":
+        """
+        Returns this dimension in SI units.
+
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
+            ...     FOOT = "ft"
+            ...     @classmethod
+            ...     def si(cls): return cls.METER
+
+            >>> (LengthUnit.FOOT**2).si()
+            <Dimension: m^2>
+        """
+        return Dimension(self.unit.si(), self.power)
+
     def isinstance(self, generic: GenericUnitDescriptor) -> bool:
         """
         Returns True if the Dimension is an instance of the generic, False
@@ -1169,6 +1190,30 @@ class CompositeDimension:
                 f"cannot create CompositeDimension from descriptor {descriptor}"
             )
         return descriptor
+
+    def si(self) -> "CompositeDimension":
+        """
+        Returns this composite dimension in SI units.
+
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     KELVIN = "K"
+            ...     RANKINE = "R"
+            ...     @classmethod
+            ...     def si(cls): return cls.KELVIN
+
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
+            ...     FOOT = "ft"
+            ...     @classmethod
+            ...     def si(cls): return cls.METER
+
+            >>> (TemperatureUnit.RANKINE / LengthUnit.FOOT**2).si()
+            <CompositeDimension: K / (m^2)>
+        """
+        return CompositeDimension(
+            [n.si() for n in self.numerator], [d.si() for d in self.denominator]
+        )
 
     def isinstance(self, generic: GenericUnitDescriptor) -> bool:
         """

@@ -878,6 +878,30 @@ class TestDimensionFromDescriptor(TestDescriptor):
 
 
 @add_to(Dimension_test_suite)
+class TestDimensionSi(TestDescriptor):
+    produced_type = Dimension
+
+    def subject(self, dimension) -> Any:
+        return dimension.si()
+
+    @args({"dimension": dimension_1(3)})
+    def test_with_exponentiated_dimension(self):
+        self.assert_result("(a^3)")
+
+    @args({"dimension": dimension_1()})
+    def test_with_simple_dimension(self):
+        self.assert_result("a")
+
+    @args({"dimension": Dimension(Unit1.a, 2)})
+    def test_with_exponentiated_si_dimension(self):
+        self.assert_result("(a^2)")
+
+    @args({"dimension": Dimension(Unit1.a)})
+    def test_with_si_dimension(self):
+        self.assert_result("a")
+
+
+@add_to(Dimension_test_suite)
 class TestDimensionIsInstance(TestDescriptor):
     def subject(self, generic):
         return dimension_1().isinstance(generic)
@@ -1615,6 +1639,30 @@ class TestCompositeDimensionFromDescriptor(TestDescriptor):
     @args({"descriptor": generic_composite_dimension()})
     def test_with_generic_composite_dimension(self):
         self.assertResultRaises(UnitDescriptorTypeError)
+
+
+@add_to(CompositeDimension_test_suite)
+class TestCompositeDimensionSi(TestDescriptor):
+    produced_type = CompositeDimension
+
+    def subject(self, composite):
+        return composite.si()
+
+    @args({"composite": CompositeDimension([dimension_1()], [dimension_2()])})
+    def test_with_simple_composite(self):
+        self.assert_result("a / b")
+
+    @args({"composite": CompositeDimension([dimension_3(2)], [dimension_2(3)])})
+    def test_with_composite(self):
+        self.assert_result("(c^2) / (b^3)")
+
+    @args({"composite": CompositeDimension([Dimension(Unit1.a)], [Dimension(Unit2.b)])})
+    def test_with_si_composite(self):
+        self.assert_result("a / b")
+
+    @args({"composite": CompositeDimension([Dimension(Unit1.a)], [dimension_2()])})
+    def test_with_partial_si_composite(self):
+        self.assert_result("a / b")
 
 
 @add_to(CompositeDimension_test_suite)
