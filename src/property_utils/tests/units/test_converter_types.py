@@ -26,8 +26,12 @@ from property_utils.tests.data import (
     Unit3,
     Unit4,
     Unit5,
+    Unit6,
+    Unit7,
+    Unit8,
     Unit1Converter,
     UnregisteredConverter,
+    Unit1_2Converter,
     Unit1_314Converter,
     Unit2_4Converter,
     Unit3_2Converter,
@@ -38,6 +42,8 @@ from property_utils.tests.data import (
     Unit1Unit4FractionConverter,
     Unit1_2Unit4_3Converter,
     Unit5Converter,
+    Unit1Unit4_2Converter,
+    Unit6Unit4_2Converter,
 )
 
 
@@ -378,6 +384,28 @@ class TestUnsupportedExponentiatedUnitConverterConvert(TestCase):
 
 
 @add_to(ExponentiatedUnitConverter_test_suite)
+class TestAliasExponentiatedUnitConverterConvert(TestCase):
+    def subject(self, value, from_descriptor, to_descriptor):
+        return Unit1_2Converter.convert(value, from_descriptor, to_descriptor)
+
+    @args({"value": 2, "from_descriptor": Unit1.A**2, "to_descriptor": Unit1.A**2})
+    def test_with_same_unit(self):
+        self.assertResult(2)
+
+    @args({"value": 5, "from_descriptor": Unit1.A**2, "to_descriptor": Unit1.a**2})
+    def test_with_same_unit_type(self):
+        self.assertResult(500)
+
+    @args({"value": 5, "from_descriptor": Unit1.A**2, "to_descriptor": Unit6.F})
+    def test_with_alias_units(self):
+        self.assertResult(250)
+
+    @args({"value": 10, "from_descriptor": Unit1.a**2, "to_descriptor": Unit6.f})
+    def test_with_alias_si_units(self):
+        self.assertResult(10)
+
+
+@add_to(ExponentiatedUnitConverter_test_suite)
 class TestExponentiatedUnitConverterGetFactor(TestCase):
     def subject(self, from_descriptor, to_descriptor):
         return Unit1_314Converter.get_factor(from_descriptor, to_descriptor)
@@ -683,6 +711,118 @@ class TestComplexCompositeConverterConvert(TestCase):
     )
     def test_valid_conversion_from_A2D3_to_A2d3(self):
         self.assertResult(10 / 125)
+
+
+@add_to(CompositeUnitConverter_test_suite)
+class TestAliasCompositeUnitConverterConvert(TestCase):
+    def subject(self, value, from_descriptor, to_descriptor):
+        return Unit1Unit4_2Converter.convert(value, from_descriptor, to_descriptor)
+
+    @args(
+        {
+            "value": 2,
+            "from_descriptor": Unit1.A / (Unit4.D**2),
+            "to_descriptor": Unit1.A / (Unit4.D**2),
+        }
+    )
+    def test_with_same_units(self):
+        self.assertResult(2)
+
+    @args(
+        {
+            "value": 2,
+            "from_descriptor": Unit1.A / (Unit4.D**2),
+            "to_descriptor": Unit1.a / (Unit4.d**2),
+        }
+    )
+    def test_with_si_units(self):
+        self.assertResult(0.8)
+
+    @args(
+        {
+            "value": 3,
+            "from_descriptor": Unit1.A / (Unit4.D**2),
+            "to_descriptor": Unit5.E,
+        }
+    )
+    def test_with_alias_unit(self):
+        self.assertResult(3 * 10 / 15 / 25)
+
+    @args(
+        {
+            "value": 7,
+            "from_descriptor": Unit1.a / (Unit4.d**2),
+            "to_descriptor": Unit5.e,
+        }
+    )
+    def test_with_alias_si_unit(self):
+        self.assertResult(7)
+
+
+@add_to(CompositeUnitConverter_test_suite)
+class TestTwiceAliasCompositeUnitConverterConvert(TestCase):
+    def subject(self, value, from_descriptor, to_descriptor):
+        return Unit6Unit4_2Converter.convert(value, from_descriptor, to_descriptor)
+
+    @args(
+        {
+            "value": 2,
+            "from_descriptor": Unit6.F / (Unit4.D**2),
+            "to_descriptor": Unit6.F / (Unit4.D**2),
+        }
+    )
+    def test_with_same_units(self):
+        self.assertResult(2)
+
+    @args(
+        {
+            "value": 2,
+            "from_descriptor": Unit6.F / (Unit4.D**2),
+            "to_descriptor": Unit6.f / (Unit4.d**2),
+        }
+    )
+    def test_with_si_units(self):
+        self.assertResult(2 * 2 / 25)
+
+    @args(
+        {
+            "value": 3,
+            "from_descriptor": Unit6.F / (Unit4.D**2),
+            "to_descriptor": Unit8.H,
+        }
+    )
+    def test_with_alias_unit(self):
+        self.assertResult(0.06)
+
+    @args(
+        {
+            "value": 7,
+            "from_descriptor": Unit6.f / (Unit4.d**2),
+            "to_descriptor": Unit8.h,
+        }
+    )
+    def test_with_alias_si_unit(self):
+        self.assertResult(7)
+
+    @args(
+        {
+            "value": 3,
+            "from_descriptor": Unit6.F / (Unit4.D**2),
+            "to_descriptor": Unit1.A**2 / (Unit4.D**2),
+        }
+    )
+    def test_with_aliased_units(self):
+        self.assertResult(0.06)
+
+    @args(
+        {
+            "value": 3,
+            "from_descriptor": Unit6.f / (Unit4.d**2),
+            "to_descriptor": Unit1.a**2 / (Unit4.d**2),
+        }
+    )
+    def test_with_aliased_si_units(self):
+        self.assertResult(3)
 
 
 @add_to(CompositeUnitConverter_test_suite)
