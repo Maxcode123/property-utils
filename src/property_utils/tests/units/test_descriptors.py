@@ -34,6 +34,8 @@ from property_utils.tests.data import (
     dimension_3,
     dimension_4,
     dimension_5,
+    dimension_6,
+    dimension_7,
     generic_dimension_1,
     generic_dimension_2,
     generic_dimension_3,
@@ -298,6 +300,47 @@ class TestMeasurementUnitIsInstance(TestDescriptor):
 
 
 @add_to(MeasurementUnit_test_suite)
+class TestMeasurementUnitIsInstanceEquivalent(TestDescriptor):
+
+    def subject(self, descriptor):
+        return Unit3.C.isinstance_equivalent(descriptor)
+
+    @args({"descriptor": generic_dimension_1(3)})
+    def test_with_aliased_unit(self):
+        self.assertResultTrue()
+
+    @args({"descriptor": Unit3})
+    def test_with_measurement_unit_type(self):
+        self.assertResultTrue()
+
+    @args({"descriptor": generic_dimension_3()})
+    def test_with_generic_dimension(self):
+        self.assertResultTrue()
+
+    @args({"descriptor": generic_dimension_3(2)})
+    def test_with_exponentiated_generic_dimension(self):
+        self.assertResultFalse()
+
+    @args({"descriptor": GenericCompositeDimension([generic_dimension_3()])})
+    def test_with_generic_composite_dimension(self):
+        self.assertResultTrue()
+
+    @args({"descriptor": GenericCompositeDimension([generic_dimension_1(3)])})
+    def test_with_alias_generic_composite_dimension(self):
+        self.assertResultTrue()
+
+    @args(
+        {
+            "descriptor": GenericCompositeDimension(
+                [generic_dimension_3()], [generic_dimension_1()]
+            )
+        }
+    )
+    def test_with_generic_composite_dimension_same_numerator(self):
+        self.assertResultFalse()
+
+
+@add_to(MeasurementUnit_test_suite)
 class TestMeasurementUnitToGeneric(TestDescriptor):
     def test_to_generic(self):
         self.assertEqual(Unit1.A.to_generic(), Unit1)
@@ -504,7 +547,7 @@ class TestAliasMeasurementUnitIsInstance(TestDescriptor):
         }
     )
     def test_with_aliased_measurement_unit_type(self):
-        self.assertResultTrue()
+        self.assertResultFalse()
 
     @args({"generic": generic_dimension_1()})
     def test_with_generic_dimension(self):
@@ -1094,7 +1137,7 @@ class TestAliasDimensionIsInstance(TestDescriptor):
         }
     )
     def test_with_aliased_composite_dimension(self):
-        self.assertResultTrue()
+        self.assertResultFalse()
 
     @args(
         {
@@ -1128,7 +1171,7 @@ class TestExponentiatedAliasDimensionIsInstance(TestDescriptor):
         }
     )
     def test_with_aliased_composite_dimension(self):
-        self.assertResultTrue()
+        self.assertResultFalse()
 
     @args(
         {
@@ -1152,11 +1195,11 @@ class TestAliasedDimensionIsInstance(TestDescriptor):
 
     @args({"generic": generic_dimension_6()})
     def test_with_alias_dimension(self):
-        self.assertResultTrue()
+        self.assertResultFalse()
 
     @args({"generic": Unit6})
     def test_with_alias_measurement_unit_type(self):
-        self.assertResultTrue()
+        self.assertResultFalse()
 
 
 @add_to(Dimension_test_suite)
@@ -1170,6 +1213,113 @@ class TestExponentiatedAliasedDimensionIsInstance(TestDescriptor):
 
     @args({"generic": generic_dimension_6(2)})
     def test_with_alias_dimension(self):
+        self.assertResultFalse()
+
+
+@add_to(Dimension_test_suite)
+class TestDimensionIsInstanceEquivalent(TestDescriptor):
+    def subject(self, generic):
+        return dimension_1().isinstance_equivalent(generic)
+
+    @args({"generic": Unit1.A})
+    def test_with_measurement_unit(self):
+        self.assertResultFalse()
+
+    @args({"generic": dimension_1()})
+    def test_with_dimension(self):
+        self.assertResultFalse()
+
+    @args({"generic": composite_dimension()})
+    def test_with_composite_dimension(self):
+        self.assertResultFalse()
+
+    @args({"generic": Unit1})
+    def test_with_measurement_unit_type(self):
+        self.assertResultTrue()
+
+    @args({"generic": generic_dimension_1()})
+    def test_with_generic_dimension(self):
+        self.assertResultTrue()
+
+    @args({"generic": generic_dimension_1(2)})
+    def test_with_same_exponentiated_generic_dimension(self):
+        self.assertResultFalse()
+
+    @args({"generic": GenericCompositeDimension([generic_dimension_1()])})
+    def test_with_numerator_generic_composite_dimension(self):
+        self.assertResultTrue()
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_1()], [generic_dimension_2()]
+            )
+        }
+    )
+    def test_with_generic_composite_dimension_same_numerator(self):
+        self.assertResultFalse()
+
+
+@add_to(Dimension_test_suite)
+class TestExponentiatedDimensionIsInstanceEquivalent(TestDescriptor):
+    def subject(self, generic):
+        return dimension_1(3).isinstance_equivalent(generic)
+
+    @args({"generic": generic_dimension_1(3)})
+    def test_with_same_generic(self):
+        return self.assertResultTrue()
+
+    @args({"generic": Unit3})
+    def test_with_alias_measurement_unit_type(self):
+        self.assertResultTrue()
+
+    @args({"generic": generic_dimension_3()})
+    def test_with_alias_generic_dimension(self):
+        self.assertResultTrue()
+
+    @args({"generic": generic_dimension_3(2)})
+    def test_with_exponentiated_alias_dimension(self):
+        self.assertResultFalse()
+
+
+@add_to(Dimension_test_suite)
+class TestAliasDimensionIsInstanceEquivalent(TestDescriptor):
+    def subject(self, generic, power=1):
+        return dimension_3(power).isinstance_equivalent(generic)
+
+    @args({"generic": generic_dimension_1(3)})
+    def test_with_aliased_generic_dimension(self):
+        self.assertResultTrue()
+
+    @args({"generic": generic_dimension_6(3), "power": 2})
+    def test_with_other_alias_generic_dimension(self):
+        self.assertResultTrue()
+
+
+@add_to(Dimension_test_suite)
+class TestComplexAliasDimensionIsInstanceEquivalent(TestDescriptor):
+    def subject(self, generic, power=1):
+        return dimension_5(power).isinstance_equivalent(generic)
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_1()], [generic_dimension_4(2)]
+            )
+        }
+    )
+    def test_with_aliased_composite_dimension(self):
+        self.assertResultTrue()
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_1(2)], [generic_dimension_4(4)]
+            ),
+            "power": 2,
+        }
+    )
+    def test_with_exponentiated_aliased_composite_dimension(self):
         self.assertResultTrue()
 
 
@@ -1760,6 +1910,7 @@ class TestDenominatorGenericCompositeDimensionEquality(TestDescriptor):
     def test_denominator_dimension(self):
         self.assertResultFalse()
 
+
 @add_to(GenericCompositeDimension_test_suite)
 class TestAliasedGenericCompositeDimensionIsEquivalent(TestDescriptor):
     def subject(self, generic):
@@ -1798,7 +1949,6 @@ class TestSingleNumeratorGenericCompositeDimensionIsEquivalent(TestDescriptor):
     @args({"generic": generic_dimension_3()})
     def test_with_generic_dimension(self):
         self.assertResultTrue()
-
 
 
 @add_to(GenericCompositeDimension_test_suite)
@@ -1855,8 +2005,6 @@ class TestComplexAliasGenericCompositeDimensionIsEquivalent(TestDescriptor):
     )  # 1 / Unit4^2 / Unit2 / Unit1
     def test_with_fully_aliased_composite_dimension(self):
         self.assertResultTrue()
-
-
 
 
 @add_to(CompositeDimension_test_suite)
@@ -1997,7 +2145,7 @@ class TestAliasedCompositeDimensionIsInstance(TestDescriptor):
 
     @args({"generic": generic_dimension_5()})
     def test_with_alias_dimension(self):
-        self.assertResultTrue()
+        self.assertResultFalse()
 
 
 @add_to(CompositeDimension_test_suite)
@@ -2010,11 +2158,11 @@ class TestTwiceAliasedCompositeDimensionIsInstance(TestDescriptor):
 
     @args({"generic": Unit7})
     def test_with_alias_unit(self):
-        self.assertResultTrue()
+        self.assertResultFalse()
 
     @args({"generic": generic_dimension_7()})
     def test_with_alias_dimension(self):
-        self.assertResultTrue()
+        self.assertResultFalse()
 
     @args(
         {
@@ -2058,7 +2206,7 @@ class TestNumeratorAliasCompositeDimensionIsInstance(TestDescriptor):
         }
     )
     def test_with_aliased_generic_composite_dimension(self):
-        self.assertResultTrue()
+        self.assertResultFalse()
 
 
 @add_to(CompositeDimension_test_suite)
@@ -2088,6 +2236,98 @@ class TestDenominatorAliasCompositeDimensionIsInstance(TestDescriptor):
         }
     )
     def test_with_aliased_generic_composite_dimension(self):
+        self.assertResultFalse()
+
+
+@add_to(CompositeDimension_test_suite)
+class TestAliasedCompositeDimensionIsInstanceEquivalent(TestDescriptor):
+    def subject(self, generic):
+        return self.build_descriptor().isinstance_equivalent(generic)
+
+    def build_descriptor(self):
+        return CompositeDimension([dimension_1()], [dimension_4(2)])
+
+    @args({"generic": Unit5})
+    def test_with_alias_measurement_unit_type(self):
+        self.assertResultTrue()
+
+    @args({"generic": generic_dimension_5()})
+    def test_with_alias_generic_dimension(self):
+        self.assertResultTrue()
+
+    @args({"generic": generic_dimension_5(2)})
+    def test_with_other_generic_dimension(self):
+        self.assertResultFalse()
+
+
+@add_to(CompositeDimension_test_suite)
+class TestSingleNumeratorCompositeDimensionIsInstanceEquivalent(TestDescriptor):
+    def subject(self, generic):
+        return self.build_descriptor().isinstance_equivalent(generic)
+
+    def build_descriptor(self):
+        return CompositeDimension([dimension_3()])
+
+    @args({"generic": Unit3})
+    def test_with_measurement_unit_type(self):
+        self.assertResultTrue()
+
+    @args({"generic": generic_dimension_3()})
+    def test_with_generic_dimension(self):
+        self.assertResultTrue()
+
+
+@add_to(CompositeDimension_test_suite)
+class TestComplexAliasCompositeDimensionIsInstanceEquivalent(TestDescriptor):
+    def subject(self, generic):
+        return self.build_descriptor().isinstance_equivalent(generic)
+
+    def build_descriptor(self):
+        """
+        G / F
+        """
+        return CompositeDimension([dimension_7()], [dimension_6()])
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_5()], [generic_dimension_6(), generic_dimension_2()]
+            )
+        }
+    )  # Unit5 / Unit6 / Unit2
+    def test_with_other_alias_composite_dimension(self):
+        self.assertResultTrue()
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_1()],
+                [generic_dimension_4(2), generic_dimension_2(), generic_dimension_6()],
+            )
+        }
+    )  # Unit1/ Unit4^2 / Unit2 / Unit6
+    def test_with_aliased_numerator_composite_dimension(self):
+        self.assertResultTrue()
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [generic_dimension_7()], [generic_dimension_1(2)]
+            )
+        }
+    )  # Unit7 / Unit1^2
+    def test_with_aliased_denominator_composite_dimension(self):
+        self.assertResultTrue()
+
+    @args(
+        {
+            "generic": GenericCompositeDimension(
+                [],
+                [generic_dimension_4(2), generic_dimension_2(), generic_dimension_1()],
+            )
+        }
+    )  # 1 / Unit4^2 / Unit2 / Unit1
+    def test_with_fully_aliased_composite_dimension(self):
         self.assertResultTrue()
 
 
