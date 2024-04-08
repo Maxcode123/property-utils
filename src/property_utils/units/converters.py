@@ -59,9 +59,12 @@ class UnitPrefix(float, Enum):
     """
     Enumeration of unit prefixes.
     Handy when converting to and fro prefixed units.
-    >>> centimeters = 225
-    >>> meters = centimeters * UnitPrefix.CENTI
-    >>> assert meters == 2.25
+
+    Examples:
+        >>> centimeters = 225
+        >>> meters = centimeters * UnitPrefix.CENTI
+        >>> meters
+        2.25
     """
 
     PICO = 1e-12
@@ -80,9 +83,12 @@ class UnitPrefix(float, Enum):
     def inverse(self) -> float:
         """
         Return the inverse of the unit prefix. Use when prefixing a unit.
-        >>> meters = 50.26
-        >>> centimeters = meters * UnitPrefix.CENTI.inverse()
-        >>> assert centimeters == 5026
+
+        Examples:
+            >>> meters = 50.26
+            >>> centimeters = meters * UnitPrefix.CENTI.inverse()
+            >>> centimeters
+            5026.0
         """
         return 1 / self.value
 
@@ -94,8 +100,9 @@ class RelativeTemperatureUnitConverter(
     """
     Convert temperature units with this converter.
 
-    >>> RelativeTemperatureUnitConverter.convert(100, RelativeTemperatureUnit.CELCIUS, RelativeTemperatureUnit.FAHRENHEIT)
-    212.0
+    Examples:
+        >>> RelativeTemperatureUnitConverter.convert(100, RelativeTemperatureUnit.CELCIUS, RelativeTemperatureUnit.FAHRENHEIT)
+        212.0
     """
 
     reference_unit = RelativeTemperatureUnit.CELCIUS
@@ -118,8 +125,9 @@ class AbsoluteTemperatureUnitConverter(AbsoluteUnitConverter):
     """
     Convert absolute temperature with this converter.
 
-    >>> AbsoluteTemperatureUnitConverter.convert(10, AbsoluteTemperatureUnit.KELVIN, AbsoluteTemperatureUnit.RANKINE)
-    18.0
+    Examples:
+        >>> AbsoluteTemperatureUnitConverter.convert(10, AbsoluteTemperatureUnit.KELVIN, AbsoluteTemperatureUnit.RANKINE)
+        18.0
     """
 
     reference_unit = AbsoluteTemperatureUnit.KELVIN
@@ -152,8 +160,9 @@ class LengthUnitConverter(AbsoluteUnitConverter):
     """
     Convert length units with this converter.
 
-    >>> LengthUnitConverter.convert(2000, LengthUnit.MILLI_METER, LengthUnit.METER)
-    2.0
+    Examples:
+        >>> LengthUnitConverter.convert(2000, LengthUnit.MILLI_METER, LengthUnit.METER)
+        2.0
     """
 
     reference_unit = LengthUnit.METER
@@ -175,8 +184,9 @@ class MassUnitConverter(AbsoluteUnitConverter):
     """
     Convert mass units with this converter.
 
-    >>> MassUnitConverter.convert(10, MassUnit.KILO_GRAM, MassUnit.GRAM)
-    10000.0
+    Examples:
+        >>> MassUnitConverter.convert(10, MassUnit.KILO_GRAM, MassUnit.GRAM)
+        10000.0
     """
 
     reference_unit = MassUnit.KILO_GRAM
@@ -194,8 +204,9 @@ class AmountUnitConverter(AbsoluteUnitConverter):
     """
     Convert amount units with this converter.
 
-    >>> AmountUnitConverter.convert(2000, AmountUnit.MOL, AmountUnit.KILO_MOL)
-    2.0
+    Examples:
+        >>> AmountUnitConverter.convert(2000, AmountUnit.MOL, AmountUnit.KILO_MOL)
+        2.0
     """
 
     reference_unit = AmountUnit.MOL
@@ -207,8 +218,9 @@ class TimeUnitConverter(AbsoluteUnitConverter):
     """
     Convert time units with this converter.
 
-    >>> TimeUnitConverter.convert(1, TimeUnit.HOUR, TimeUnit.SECOND)
-    3600.0
+    Examples:
+        >>> TimeUnitConverter.convert(1, TimeUnit.HOUR, TimeUnit.SECOND)
+        3600.0
     """
 
     reference_unit = TimeUnit.SECOND
@@ -229,8 +241,9 @@ class ElectricCurrentUnitConverter(AbsoluteUnitConverter):
     """
     Convert electric current units with this converter.
 
-    >>> ElectricCurrentUnitConverter.convert(1000, ElectricCurrentUnit.MILLI_AMPERE, ElectricCurrentUnit.AMPERE)
-    1.0
+    Examples:
+        >>> ElectricCurrentUnitConverter.convert(1000, ElectricCurrentUnit.MILLI_AMPERE, ElectricCurrentUnit.AMPERE)
+        1.0
     """
 
     reference_unit = ElectricCurrentUnit.AMPERE
@@ -246,8 +259,9 @@ class AliasForceUnitConverter(AbsoluteUnitConverter):
     """
     Convert force units with this converter.
 
-    >>> AliasForceUnitConverter.convert(2, ForceUnit.NEWTON, ForceUnit.DYNE)
-    200000.0
+    Examples:
+        >>> AliasForceUnitConverter.convert(2, ForceUnit.NEWTON, ForceUnit.DYNE)
+        200000.0
     """
 
     reference_unit = ForceUnit.NEWTON
@@ -259,8 +273,9 @@ class AliasPressureUnitConverter(AbsoluteUnitConverter):
     """
     Convert pressure units with this converter.
 
-    >>> AliasPressureUnitConverter.convert(2, PressureUnit.BAR, PressureUnit.KILO_PASCAL)
-    200.0
+    Examples:
+        >>> AliasPressureUnitConverter.convert(2, PressureUnit.BAR, PressureUnit.KILO_PASCAL)
+        200.0
     """
 
     reference_unit = PressureUnit.BAR
@@ -279,8 +294,9 @@ class AliasEnergyUnitConverter(AbsoluteUnitConverter):
     """
     Convert energy units with this converter.
 
-    >>> AliasEnergyUnitConverter.convert(2500, EnergyUnit.JOULE, EnergyUnit.KILO_JOULE)
-    2.5
+    Examples:
+        >>> AliasEnergyUnitConverter.convert(2500, EnergyUnit.JOULE, EnergyUnit.KILO_JOULE)
+        2.5
     """
 
     reference_unit = EnergyUnit.JOULE
@@ -303,8 +319,9 @@ class AliasPowerUnitConverter(AbsoluteUnitConverter):
     """
     Convert power units with this converter.
 
-    >>> AliasPowerUnitConverter.convert(5, PowerUnit.KILO_WATT, PowerUnit.WATT)
-    5000.0
+    Examples:
+        >>> AliasPowerUnitConverter.convert(5, PowerUnit.KILO_WATT, PowerUnit.WATT)
+        5000.0
     """
 
     reference_unit = PowerUnit.WATT
@@ -321,8 +338,9 @@ class AreaUnitConverter(ExponentiatedUnitConverter):
     """
     Convert area units with this converter.
 
-    >>> AreaUnitConverter.convert(1, LengthUnit.METER**2, LengthUnit.CENTI_METER**2)
-    10000.0
+    Examples:
+        >>> AreaUnitConverter.convert(1, LengthUnit.METER**2, LengthUnit.CENTI_METER**2)
+        10000.0
     """
 
 
@@ -331,8 +349,9 @@ class VolumeUnitConverter(ExponentiatedUnitConverter):
     """
     Convert volume units with this converter.
 
-    >>> VolumeUnitConverter.convert(1, LengthUnit.METER**3, LengthUnit.CENTI_METER**3)
-    1000000.0
+    Examples:
+        >>> VolumeUnitConverter.convert(1, LengthUnit.METER**3, LengthUnit.CENTI_METER**3)
+        1000000.0
     """
 
 
@@ -341,10 +360,11 @@ class ForceUnitConverter(CompositeUnitConverter):
     """
     Convert force units (mass * length / time^2) with this converter.
 
-    >>> from_unit = MassUnit.KILO_GRAM * LengthUnit.CENTI_METER / (TimeUnit.SECOND**2)
-    >>> to_unit = MassUnit.GRAM * LengthUnit.METER / (TimeUnit.SECOND**2)
-    >>> ForceUnitConverter.convert(100, from_unit, to_unit)
-    1000.0
+    Examples:
+        >>> from_unit = MassUnit.KILO_GRAM * LengthUnit.CENTI_METER / (TimeUnit.SECOND**2)
+        >>> to_unit = MassUnit.GRAM * LengthUnit.METER / (TimeUnit.SECOND**2)
+        >>> ForceUnitConverter.convert(100, from_unit, to_unit)
+        1000.0
     """
 
 
@@ -353,10 +373,11 @@ class PressureUnitConverter(CompositeUnitConverter):
     """
     Convert pressure units (mass / length / time^2) with this converter.
 
-    >>> from_unit = MassUnit.GRAM / LengthUnit.CENTI_METER / (TimeUnit.HOUR**2)
-    >>> to_unit = MassUnit.KILO_GRAM / LengthUnit.METER / (TimeUnit.HOUR**2)
-    >>> PressureUnitConverter.convert(50, from_unit, to_unit)
-    5.0
+    Examples:
+        >>> from_unit = MassUnit.GRAM / LengthUnit.CENTI_METER / (TimeUnit.HOUR**2)
+        >>> to_unit = MassUnit.KILO_GRAM / LengthUnit.METER / (TimeUnit.HOUR**2)
+        >>> PressureUnitConverter.convert(50, from_unit, to_unit)
+        5.0
     """
 
 
@@ -365,10 +386,11 @@ class EnergyUnitConverter(CompositeUnitConverter):
     """
     Convert energy units (mass * length^2 / time^2) with this converter.
 
-    >>> from_unit = MassUnit.KILO_GRAM * (LengthUnit.METER**2) / (TimeUnit.MINUTE**2)
-    >>> to_unit = MassUnit.METRIC_TONNE * (LengthUnit.CENTI_METER**2) / (TimeUnit.MINUTE**2)
-    >>> EnergyUnitConverter.convert(25, from_unit, to_unit)
-    250.0
+    Examples:
+        >>> from_unit = MassUnit.KILO_GRAM * (LengthUnit.METER**2) / (TimeUnit.MINUTE**2)
+        >>> to_unit = MassUnit.METRIC_TONNE * (LengthUnit.CENTI_METER**2) / (TimeUnit.MINUTE**2)
+        >>> EnergyUnitConverter.convert(25, from_unit, to_unit)
+        250.0
     """
 
 
@@ -377,8 +399,9 @@ class PowerUnitConverter(CompositeUnitConverter):
     """
     Convert power units (mass * length^2 / time^3) with this converter.
 
-    >>> from_unit = MassUnit.KILO_GRAM * (LengthUnit.METER**2) / (TimeUnit.MINUTE**3)
-    >>> to_unit = MassUnit.METRIC_TONNE * (LengthUnit.CENTI_METER**2) / (TimeUnit.MINUTE**3)
-    >>> PowerUnitConverter.convert(15, from_unit, to_unit)
-    150.0
+    Examples:
+        >>> from_unit = MassUnit.KILO_GRAM * (LengthUnit.METER**2) / (TimeUnit.MINUTE**3)
+        >>> to_unit = MassUnit.METRIC_TONNE * (LengthUnit.CENTI_METER**2) / (TimeUnit.MINUTE**3)
+        >>> PowerUnitConverter.convert(15, from_unit, to_unit)
+        150.0
     """

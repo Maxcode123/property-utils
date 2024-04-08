@@ -40,12 +40,13 @@ def p(
     Create a property with a value and a unit.
     Default unit is non-dimensional, i.e. no unit.
 
-    >>> from property_utils.units import KELVIN
-    >>> p(350, KELVIN)
-    <Property: 350 K>
+    Examples:
+        >>> from property_utils.units import KELVIN
+        >>> p(350, KELVIN)
+        <Property: 350 K>
 
-    >>> p(20.23)
-    <Property: 20.23 >
+        >>> p(20.23)
+        <Property: 20.23 >
     """
     return Property(value, unit)
 
@@ -92,15 +93,16 @@ class Property:
         Raises `PropertyBinaryOperationError` if an error occurs during conversion
         of other's units.
 
-        >>> from property_utils.units.units import AbsoluteTemperatureUnit, LengthUnit
-        >>> T1 = Property(33.333333, AbsoluteTemperatureUnit.KELVIN)
-        >>> T2 = Property(100/3, AbsoluteTemperatureUnit.KELVIN)
-        >>> T1 == T2
-        False
-        >>> T1.eq(T2)
-        False
-        >>> T1.eq(T2, rel_tol=0.1)
-        True
+        Examples:
+            >>> from property_utils.units.units import AbsoluteTemperatureUnit, LengthUnit
+            >>> T1 = Property(33.333333, AbsoluteTemperatureUnit.KELVIN)
+            >>> T2 = Property(100/3, AbsoluteTemperatureUnit.KELVIN)
+            >>> T1 == T2
+            False
+            >>> T1.eq(T2)
+            False
+            >>> T1.eq(T2, rel_tol=0.1)
+            True
         """
         if not isinstance(other, Property):
             return False
@@ -124,10 +126,11 @@ class Property:
 
         Raises `InvalidUnitConversion` if any error occurs in the unit conversion.
 
-        >>> from property_utils.units.units import RelativeTemperatureUnit
-        >>> T = Property(100, RelativeTemperatureUnit.CELCIUS)
-        >>> T.to_si()
-        <Property: 373.15 K>
+        Examples:
+            >>> from property_utils.units.units import RelativeTemperatureUnit
+            >>> T = Property(100, RelativeTemperatureUnit.CELCIUS)
+            >>> T.to_si()
+            <Property: 373.15 K>
         """
         if isinstance(self.unit, MeasurementUnit):
             return self.to_unit(self.unit.si())
@@ -150,10 +153,11 @@ class Property:
 
         Raises `UnitConversionError` if any error occurs in the unit conversion.
 
-        >>> from property_utils.units.units import RelativeTemperatureUnit
-        >>> T = Property(100, RelativeTemperatureUnit.CELCIUS)
-        >>> T.to_unit(RelativeTemperatureUnit.FAHRENHEIT)
-        <Property: 212.0 °F>
+        Examples:
+            >>> from property_utils.units.units import RelativeTemperatureUnit
+            >>> T = Property(100, RelativeTemperatureUnit.CELCIUS)
+            >>> T.to_unit(RelativeTemperatureUnit.FAHRENHEIT)
+            <Property: 212.0 °F>
         """
         if not unit.isinstance_equivalent(self.unit.to_generic()):
             raise PropertyUnitConversionError(
@@ -178,10 +182,11 @@ class Property:
         """
         Defines negation of properties.
 
-        >>> from property_utils.units.units import RelativeTemperatureUnit
-        >>> T = Property(3, RelativeTemperatureUnit.CELCIUS)
-        >>> -T
-        <Property: -3 °C>
+        Examples:
+            >>> from property_utils.units.units import RelativeTemperatureUnit
+            >>> T = Property(3, RelativeTemperatureUnit.CELCIUS)
+            >>> -T
+            <Property: -3 °C>
         """
         return self.__class__(-self.value, self.unit)
 
@@ -189,13 +194,14 @@ class Property:
         """
         Defines multiplication between properties and numerics.
 
-        >>> from property_utils.units.units import AbsoluteTemperatureUnit, LengthUnit
-        >>> T = Property(300, AbsoluteTemperatureUnit.KELVIN)
-        >>> 2*T
-        <Property: 600 K>
-        >>> A = Property(10, LengthUnit.METER**2)
-        >>> T * A
-        <Property: 3000 (m^2) * K>
+        Examples:
+            >>> from property_utils.units.units import AbsoluteTemperatureUnit, LengthUnit
+            >>> T = Property(300, AbsoluteTemperatureUnit.KELVIN)
+            >>> 2*T
+            <Property: 600 K>
+            >>> A = Property(10, LengthUnit.METER**2)
+            >>> T * A
+            <Property: 3000 (m^2) * K>
         """
         if isinstance(other, (float, int)):
             return Property(self.value * other, self.unit)
@@ -212,13 +218,14 @@ class Property:
         """
         Defines multiplication between properties and numerics.
 
-        >>> from property_utils.units.units import AbsoluteTemperatureUnit, LengthUnit
-        >>> T = Property(300, AbsoluteTemperatureUnit.KELVIN)
-        >>> 2*T
-        <Property: 600 K>
-        >>> A = Property(10, LengthUnit.METER**2)
-        >>> T * A
-        <Property: 3000 (m^2) * K>
+        Examples:
+            >>> from property_utils.units.units import AbsoluteTemperatureUnit, LengthUnit
+            >>> T = Property(300, AbsoluteTemperatureUnit.KELVIN)
+            >>> 2*T
+            <Property: 600 K>
+            >>> A = Property(10, LengthUnit.METER**2)
+            >>> T * A
+            <Property: 3000 (m^2) * K>
         """
         return self.__mul__(other)
 
@@ -226,13 +233,14 @@ class Property:
         """
         Defines division between properties and numerics.
 
-        >>> from property_utils.units.units import AbsoluteTemperatureUnit, LengthUnit
-        >>> T = Property(500, AbsoluteTemperatureUnit.KELVIN)
-        >>> T/2
-        <Property: 250.0 K>
-        >>> A = Property(10, LengthUnit.METER**2)
-        >>> T / A
-        <Property: 50.0 K / (m^2)>
+        Examples:
+            >>> from property_utils.units.units import AbsoluteTemperatureUnit, LengthUnit
+            >>> T = Property(500, AbsoluteTemperatureUnit.KELVIN)
+            >>> T/2
+            <Property: 250.0 K>
+            >>> A = Property(10, LengthUnit.METER**2)
+            >>> T / A
+            <Property: 50.0 K / (m^2)>
         """
         if isinstance(other, (float, int)):
             try:
@@ -259,10 +267,11 @@ class Property:
         """
         Defines right division between properties and numerics.
 
-        >>> from property_utils.units.units import AbsoluteTemperatureUnit
-        >>> T = Property(500, AbsoluteTemperatureUnit.KELVIN)
-        >>> 100/T
-        <Property: 0.2  / K>
+        Examples:
+            >>> from property_utils.units.units import AbsoluteTemperatureUnit
+            >>> T = Property(500, AbsoluteTemperatureUnit.KELVIN)
+            >>> 100/T
+            <Property: 0.2  / K>
         """
         if isinstance(other, (float, int)):
             try:
@@ -289,11 +298,12 @@ class Property:
         """
         Defines addition between properties.
 
-        >>> from property_utils.units.units import LengthUnit
-        >>> x1 = Property(15, LengthUnit.METER)
-        >>> x2 = Property(5, LengthUnit.METER)
-        >>> x1 + x2
-        <Property: 20 m>
+        Examples:
+            >>> from property_utils.units.units import LengthUnit
+            >>> x1 = Property(15, LengthUnit.METER)
+            >>> x2 = Property(5, LengthUnit.METER)
+            >>> x1 + x2
+            <Property: 20 m>
         """
         if not isinstance(other, self.__class__):
             raise PropertyBinaryOperationError(
@@ -323,11 +333,12 @@ class Property:
         """
         Defines right addition between properties.
 
-        >>> from property_utils.units.units import LengthUnit
-        >>> x1 = Property(15, LengthUnit.METER)
-        >>> x2 = Property(5, LengthUnit.METER)
-        >>> x1 + x2
-        <Property: 20 m>
+        Examples:
+            >>> from property_utils.units.units import LengthUnit
+            >>> x1 = Property(15, LengthUnit.METER)
+            >>> x2 = Property(5, LengthUnit.METER)
+            >>> x1 + x2
+            <Property: 20 m>
         """
         return self.__add__(other)
 
@@ -335,11 +346,12 @@ class Property:
         """
         Defines subtraction between properties.
 
-        >>> from property_utils.units.units import TimeUnit
-        >>> t1 = Property(2, TimeUnit.MINUTE)
-        >>> t2 = Property(60, TimeUnit.SECOND)
-        >>> t1 - t2
-        <Property: 1.0 min>
+        Examples:
+            >>> from property_utils.units.units import TimeUnit
+            >>> t1 = Property(2, TimeUnit.MINUTE)
+            >>> t2 = Property(60, TimeUnit.SECOND)
+            >>> t1 - t2
+            <Property: 1.0 min>
         """
         if not isinstance(other, self.__class__):
             raise PropertyBinaryOperationError(
@@ -370,11 +382,12 @@ class Property:
         """
         Defines right subtraction between properties.
 
-        >>> from property_utils.units.units import TimeUnit
-        >>> t1 = Property(2, TimeUnit.MINUTE)
-        >>> t2 = Property(60, TimeUnit.SECOND)
-        >>> t1 - t2
-        <Property: 1.0 min>
+        Examples:
+            >>> from property_utils.units.units import TimeUnit
+            >>> t1 = Property(2, TimeUnit.MINUTE)
+            >>> t2 = Property(60, TimeUnit.SECOND)
+            >>> t1 - t2
+            <Property: 1.0 min>
         """
         if not isinstance(other, self.__class__):
             raise PropertyBinaryOperationError(
@@ -393,10 +406,11 @@ class Property:
         """
         Defines exponentiation for properties.
 
-        >>> from property_utils.units.units import LengthUnit
-        >>> L = Property(5, LengthUnit.METER)
-        >>> L**3
-        <Property: 125 (m^3)>
+        Examples:
+            >>> from property_utils.units.units import LengthUnit
+            >>> L = Property(5, LengthUnit.METER)
+            >>> L**3
+            <Property: 125 (m^3)>
         """
         if not isinstance(power, (float, int)):
             raise PropertyExponentError(
@@ -410,15 +424,16 @@ class Property:
         Prefer Property.eq instead.The equality operator returns False even for very
         small differences between floating point values.
 
-        >>> from property_utils.units.units import LengthUnit
-        >>> L1 = Property(500, LengthUnit.CENTI_METER)
-        >>> L2 = Property(5, LengthUnit.METER)
-        >>> L1 == L2
-        True
+        Examples:
+            >>> from property_utils.units.units import LengthUnit
+            >>> L1 = Property(500, LengthUnit.CENTI_METER)
+            >>> L2 = Property(5, LengthUnit.METER)
+            >>> L1 == L2
+            True
 
-        >>> L3 = Property(6, LengthUnit.METER)
-        >>> L2 == L3
-        False
+            >>> L3 = Property(6, LengthUnit.METER)
+            >>> L2 == L3
+            False
         """
         if not isinstance(other, Property):
             return False
@@ -439,15 +454,16 @@ class Property:
         Prefer Property.eq instead.The inequality operator returns True even for very
         small differences between floating point values.
 
-        >>> from property_utils.units.units import LengthUnit
-        >>> L1 = Property(500, LengthUnit.CENTI_METER)
-        >>> L2 = Property(5, LengthUnit.METER)
-        >>> L1 != L2
-        False
+        Examples:
+            >>> from property_utils.units.units import LengthUnit
+            >>> L1 = Property(500, LengthUnit.CENTI_METER)
+            >>> L2 = Property(5, LengthUnit.METER)
+            >>> L1 != L2
+            False
 
-        >>> L3 = Property(6, LengthUnit.METER)
-        >>> L2 != L3
-        True
+            >>> L3 = Property(6, LengthUnit.METER)
+            >>> L2 != L3
+            True
         """
         return not self.__eq__(other)
 
@@ -455,11 +471,12 @@ class Property:
         """
         Defines comparison between properties.
 
-        >>> from property_utils.units.units import RelativeTemperatureUnit
-        >>> T1 = Property(100, RelativeTemperatureUnit.CELCIUS)
-        >>> T2 = Property(213, RelativeTemperatureUnit.FAHRENHEIT)
-        >>> T1 > T2
-        False
+        Examples:
+            >>> from property_utils.units.units import RelativeTemperatureUnit
+            >>> T1 = Property(100, RelativeTemperatureUnit.CELCIUS)
+            >>> T2 = Property(213, RelativeTemperatureUnit.FAHRENHEIT)
+            >>> T1 > T2
+            False
         """
         self._validate_comparison_input(other)
         try:
@@ -480,11 +497,12 @@ class Property:
         """
         Defines comparison between properties.
 
-        >>> from property_utils.units.units import RelativeTemperatureUnit
-        >>> T1 = Property(100, RelativeTemperatureUnit.CELCIUS)
-        >>> T2 = Property(212, RelativeTemperatureUnit.FAHRENHEIT)
-        >>> T1 >= T2
-        True
+        Examples:
+            >>> from property_utils.units.units import RelativeTemperatureUnit
+            >>> T1 = Property(100, RelativeTemperatureUnit.CELCIUS)
+            >>> T2 = Property(212, RelativeTemperatureUnit.FAHRENHEIT)
+            >>> T1 >= T2
+            True
         """
         self._validate_comparison_input(other)
         try:
@@ -505,11 +523,12 @@ class Property:
         """
         Defines comparison between properties.
 
-        >>> from property_utils.units.units import RelativeTemperatureUnit
-        >>> T1 = Property(100, RelativeTemperatureUnit.CELCIUS)
-        >>> T2 = Property(213, RelativeTemperatureUnit.FAHRENHEIT)
-        >>> T1 < T2
-        True
+        Examples:
+            >>> from property_utils.units.units import RelativeTemperatureUnit
+            >>> T1 = Property(100, RelativeTemperatureUnit.CELCIUS)
+            >>> T2 = Property(213, RelativeTemperatureUnit.FAHRENHEIT)
+            >>> T1 < T2
+            True
         """
         self._validate_comparison_input(other)
         try:
@@ -530,11 +549,12 @@ class Property:
         """
         Defines comparison between properties.
 
-        >>> from property_utils.units.units import RelativeTemperatureUnit
-        >>> T1 = Property(100, RelativeTemperatureUnit.CELCIUS)
-        >>> T2 = Property(213, RelativeTemperatureUnit.FAHRENHEIT)
-        >>> T1 <= T2
-        True
+        Examples:
+            >>> from property_utils.units.units import RelativeTemperatureUnit
+            >>> T1 = Property(100, RelativeTemperatureUnit.CELCIUS)
+            >>> T2 = Property(213, RelativeTemperatureUnit.FAHRENHEIT)
+            >>> T1 <= T2
+            True
         """
         self._validate_comparison_input(other)
         try:

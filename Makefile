@@ -1,6 +1,15 @@
 CONFIG=./pyproject.toml
 PY_FILES:=$(shell find src/property_utils -not -path '*/tests/*' -not -name '__init__.py' -name '*.py')
 
+install-documentation-builder:
+	$(PIP) install mkdocs mkdocs-material 'mkdocstrings[python]'
+
+start-documentation-server:
+	$(INTERPRETER) -m mkdocs serve
+
+deploy-documentation:
+	$(INTERPRETER) -m mkdocs gh-deploy --config-file mkdocs.yml
+
 install-package-linter:
 	$(PIP) install pylint
 

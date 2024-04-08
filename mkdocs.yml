@@ -1,0 +1,50 @@
+site_name: property-utils
+site_url: https://maxcode123.github.io/property-utils/
+nav:
+  - Get started:
+    - What is property-utils?: index.md
+    - Installation: installation.md
+    - Terminology: terminology.md
+    - Usage: usage.md
+
+  - API Documentation:
+    - properties:
+      - property: property.md
+      - validated property: validated_property.md
+    - units:
+      - descriptors: descriptors.md
+      - converters: converters.md
+      - converter types: converter_types.md
+    
+  - Feedback: feedback.md
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.path
+    - content.code.copy
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+- mkdocstrings
+- search
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
