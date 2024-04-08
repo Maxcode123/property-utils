@@ -44,6 +44,14 @@ class GenericUnitDescriptor(Protocol):
         Create a generic composite with inverse units.
         """
 
+    def is_equivalent(self, other: "GenericUnitDescriptor") -> bool:
+        """
+        Returns True if this generic is equivalent to the given one, False otherwise.
+
+        A generic can be equivalent with another generic if the latter or the former
+        is an alias.
+        """
+
     def __mul__(
         self, generic: "GenericUnitDescriptor"
     ) -> "GenericCompositeDimension": ...
@@ -66,10 +74,31 @@ class UnitDescriptor(Protocol):
     Descriptor for a property unit that has a specific unit, e.g. cm^2 or ft^2.
     """
 
+    def si(self) -> "UnitDescriptor":
+        """
+        Returns this descriptor with SI units.
+        """
+
     def isinstance(self, generic: GenericUnitDescriptor) -> bool:
         """
         Returns True if the UnitDescriptor is an instance of the generic, False
         otherwise.
+
+        A unit descriptor is an instance of a generic if the generic of the unit
+        descriptor is equal to the generic.
+
+        Equality between generics is checked with the `==` operator.
+        """
+
+    def isinstance_equivalent(self, generic: GenericUnitDescriptor) -> bool:
+        """
+        Returns True if the UnitDescriptor is an instance-equivalent of the generic,
+        False otherwise.
+
+        A unit descriptor is an instance-equivalent of a generic if the generic of the
+        unit descriptor is equivalent to the generic.
+
+        Equivalence between generics is checked with the `is_equivalent` method.
         """
 
     def to_generic(self) -> GenericUnitDescriptor:
@@ -128,6 +157,62 @@ class MeasurementUnitMeta(EnumMeta):
         <GenericCompositeDimension:  / TemperatureUnit>
         """
         return GenericCompositeDimension([], [GenericDimension(cls)])
+
+    # pylint: disable=too-many-return-statements
+    def is_equivalent(cls, other: GenericUnitDescriptor) -> bool:
+        """
+        Returns True if this generic is equivalent to the given one, False otherwise.
+
+        A generic can be equivalent with another generic if the latter or the former
+        is an alias.
+
+        Examples:
+            >>> class LengthUnit(MeasurementUnit): ...
+            >>> class MassUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
+            >>> class ForceUnit(AliasMeasurementUnit):
+            ...     @classmethod
+            ...     def aliased_generic_descriptor(cls):
+            ...         return MassUnit * LengthUnit / (TimeUnit**2)
+
+            >>> ForceUnit.is_equivalent(MassUnit * LengthUnit / (TimeUnit**2))
+            True
+
+            >>> class EnergyUnit(AliasMeasurementUnit):
+            ...     @classmethod
+            ...     def aliased_generic_descriptor(cls):
+            ...         return ForceUnit * LengthUnit
+
+            >>> EnergyUnit.is_equivalent(MassUnit * (LengthUnit**2) / (TimeUnit**2))
+            True
+        """
+        if isinstance(other, MeasurementUnitType):
+            return cls == other
+
+        if isinstance(other, GenericDimension):
+            if cls == other.unit_type and other.power == 1:
+                return True
+
+            if issubclass(other.unit_type, AliasMeasurementUnit):
+                return (
+                    other.unit_type.aliased_generic_descriptor() ** other.power
+                ).is_equivalent(cls)
+
+            if issubclass(cls, AliasMeasurementUnit):
+                return cls.aliased_generic_descriptor().is_equivalent(other)
+
+        elif isinstance(other, GenericCompositeDimension):
+            if (
+                other.denominator == []
+                and len(other.numerator) == 1
+                and other.numerator[0].is_equivalent(cls)
+            ):
+                return True
+
+            if issubclass(cls, AliasMeasurementUnit):
+                return cls.aliased_generic_descriptor().is_equivalent(other)
+
+        return False
 
     def __mul__(cls, other: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
@@ -272,6 +357,30 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         False
         """
         return type(self) == generic  # pylint: disable=unidiomatic-typecheck
+
+    def isinstance_equivalent(self, generic: GenericUnitDescriptor) -> bool:
+        """
+        Returns True if the UnitDescriptor is an instance-equivalent of the generic,
+        False otherwise.
+
+        A unit descriptor is an instance-equivalent of a generic if the generic of the
+        unit descriptor is equivalent to the generic.
+
+        Equivalence between generics is checked with the `is_equivalent` method.
+
+        Examples:
+            >>> class LengthUnit(MeasurementUnit): ...
+            >>> class AreaUnit(AliasMeasurementUnit):
+            ...     HECTARE = "ha"
+            ...     @classmethod
+            ...     def aliased_generic_descriptor(cls): return LengthUnit**2
+
+            >>> AreaUnit.HECTARE.isinstance_equivalent(AreaUnit)
+            True
+            >>> AreaUnit.HECTARE.isinstance_equivalent(LengthUnit**2)
+            True
+        """
+        return self.to_generic().is_equivalent(generic)
 
     def to_generic(self) -> GenericUnitDescriptor:
         """
@@ -473,6 +582,70 @@ class GenericDimension:
         """
         return GenericCompositeDimension([], [replace(self)])
 
+    # pylint: disable=too-many-return-statements
+    def is_equivalent(self, other: GenericUnitDescriptor) -> bool:
+        """
+        Returns True if this generic is equivalent to the given one, False otherwise.
+
+        A generic can be equivalent with another generic if the latter or the former
+        is an alias.
+
+        Examples:
+            >>> class LengthUnit(MeasurementUnit): ...
+            >>> class MassUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
+            >>> class ForceUnit(AliasMeasurementUnit):
+            ...     @classmethod
+            ...     def aliased_generic_descriptor(cls):
+            ...         return MassUnit * LengthUnit / (TimeUnit**2)
+
+            >>> ForceUnit.is_equivalent(MassUnit * LengthUnit / (TimeUnit**2))
+            True
+
+            >>> class EnergyUnit(AliasMeasurementUnit):
+            ...     @classmethod
+            ...     def aliased_generic_descriptor(cls):
+            ...         return ForceUnit * LengthUnit
+
+            >>> EnergyUnit.is_equivalent(MassUnit * (LengthUnit**2) / (TimeUnit**2))
+            True
+        """
+        if isinstance(other, MeasurementUnitType):
+            if self.unit_type == other and self.power == 1:
+                return True
+
+            if issubclass(other, AliasMeasurementUnit):
+                return other.aliased_generic_descriptor().is_equivalent(self)  # type: ignore[attr-defined]
+
+        elif isinstance(other, GenericDimension):
+            if self.unit_type == other.unit_type and self.power == other.power:
+                return True
+
+            if issubclass(other.unit_type, AliasMeasurementUnit):
+                return (
+                    other.unit_type.aliased_generic_descriptor() ** other.power
+                ).is_equivalent(self)
+
+            if issubclass(self.unit_type, AliasMeasurementUnit):
+                return (
+                    self.unit_type.aliased_generic_descriptor() ** self.power
+                ).is_equivalent(other)
+
+        elif isinstance(other, GenericCompositeDimension):
+            if (
+                other.denominator == []
+                and len(other.numerator) == 1
+                and other.numerator[0].is_equivalent(self)
+            ):
+                return True
+
+            if issubclass(self.unit_type, AliasMeasurementUnit):
+                return (
+                    self.unit_type.aliased_generic_descriptor() ** self.power
+                ).is_equivalent(other)
+
+        return False
+
     def __mul__(self, generic: GenericUnitDescriptor) -> "GenericCompositeDimension":
         """
         Defines multiplication between GenericDimension(s) and other generic
@@ -609,6 +782,22 @@ class Dimension:
             f"cannot create Dimension from descriptor: {descriptor}"
         )
 
+    def si(self) -> "Dimension":
+        """
+        Returns this dimension in SI units.
+
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
+            ...     FOOT = "ft"
+            ...     @classmethod
+            ...     def si(cls): return cls.METER
+
+            >>> (LengthUnit.FOOT**2).si()
+            <Dimension: m^2>
+        """
+        return Dimension(self.unit.si(), self.power)
+
     def isinstance(self, generic: GenericUnitDescriptor) -> bool:
         """
         Returns True if the Dimension is an instance of the generic, False
@@ -627,9 +816,33 @@ class Dimension:
             generic = GenericDimension(generic)
         if not isinstance(generic, GenericDimension):
             return False
+
         if isinstance(self.unit, generic.unit_type) and self.power == generic.power:
             return True
+
         return False
+
+    def isinstance_equivalent(self, generic: GenericUnitDescriptor) -> bool:
+        """
+        Returns True if the UnitDescriptor is an instance-equivalent of the generic,
+        False otherwise.
+
+        A unit descriptor is an instance-equivalent of a generic if the generic of the
+        unit descriptor is equivalent to the generic.
+
+        Equivalence between generics is checked with the `is_equivalent` method.
+
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
+            >>> class VolumeUnit(AliasMeasurementUnit):
+            ...     @classmethod
+            ...     def aliased_generic_descriptor(cls): return LengthUnit**3
+
+            >>> (LengthUnit.METER**3).isinstance_equivalent(VolumeUnit)
+            True
+        """
+        return self.to_generic().is_equivalent(generic)
 
     def to_generic(self) -> GenericDimension:
         """
@@ -653,6 +866,42 @@ class Dimension:
         <CompositeDimension:  / (m^2)>
         """
         return CompositeDimension([], [replace(self)])
+
+    def _isinstance_aliased(self, generic: GenericUnitDescriptor) -> bool:
+        """
+        Returns True if the generic is the aliased unit descriptor of this Dimension,
+        False otherwise.
+
+        Only applicable if this Dimension's unit is of type AliasMeasurementUnit.
+        """
+        return (
+            isinstance(self.unit, AliasMeasurementUnit)
+            and (self.unit.aliased_generic_descriptor() ** self.power) == generic
+        )
+
+    def _isinstance_alias(self, generic: GenericUnitDescriptor) -> bool:
+        """
+        Returns True if this Dimension's unit is an instance of the aliased unit
+        descriptor of the generic, False otherwise.
+
+        Only applicable if generic is an AliasMeasurementUnit.
+        """
+        if isinstance(generic, MeasurementUnitType):
+            generic = GenericDimension(generic)
+
+        if not isinstance(generic, GenericDimension):
+            return False
+
+        if not issubclass(generic.unit_type, AliasMeasurementUnit):
+            return False
+
+        if (
+            generic.unit_type.aliased_generic_descriptor() ** generic.power
+            == self.to_generic()
+        ):
+            return True
+
+        return False
 
     def __mul__(self, descriptor: "UnitDescriptor") -> "CompositeDimension":
         """
@@ -866,6 +1115,75 @@ class GenericCompositeDimension:
         copy.simplify()
         return copy
 
+    def analyse(self) -> None:
+        """
+        Analyse this composite by replacing its alias units with their aliased units.
+
+        Examples:
+            >>> class MassUnit(MeasurementUnit): ...
+            >>> class LengthUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
+
+            >>> class PressureUnit(AliasMeasurementUnit):
+            ...     @classmethod
+            ...     def aliased_generic_descriptor(cls) -> GenericCompositeDimension:
+            ...         return MassUnit / LengthUnit / (TimeUnit**2)
+
+            >>> composite = PressureUnit / LengthUnit
+            >>> composite
+            <GenericCompositeDimension: PressureUnit / LengthUnit>
+
+            >>> composite.analyse()
+            >>> composite
+            <GenericCompositeDimension: MassUnit / (TimeUnit^2) / LengthUnit / LengthUnit>
+        """
+        for n in self.numerator:
+            if issubclass(n.unit_type, AliasMeasurementUnit):
+                aliased = n.unit_type.aliased_generic_descriptor() ** n.power
+                if isinstance(aliased, GenericDimension):
+                    self.numerator.append(aliased)
+                elif isinstance(aliased, GenericCompositeDimension):
+                    self.numerator.extend(aliased.numerator)
+                    self.denominator.extend(aliased.denominator)
+
+                self.numerator.remove(n)
+
+        for d in self.denominator:
+            if issubclass(d.unit_type, AliasMeasurementUnit):
+                aliased = d.unit_type.aliased_generic_descriptor() ** d.power
+                if isinstance(aliased, GenericDimension):
+                    self.denominator.append(aliased)
+                elif isinstance(aliased, GenericCompositeDimension):
+                    self.denominator.extend(aliased.numerator)
+                    self.numerator.extend(aliased.denominator)
+
+                self.denominator.remove(d)
+
+    def analysed(self) -> "GenericCompositeDimension":
+        """
+        Returns an analysed version of this composite generic as a new object.
+
+        Examples:
+            >>> class MassUnit(MeasurementUnit): ...
+            >>> class LengthUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
+
+            >>> class PressureUnit(AliasMeasurementUnit):
+            ...     @classmethod
+            ...     def aliased_generic_descriptor(cls) -> GenericCompositeDimension:
+            ...         return MassUnit / LengthUnit / (TimeUnit**2)
+
+            >>> composite = PressureUnit / LengthUnit
+            >>> composite
+            <GenericCompositeDimension: PressureUnit / LengthUnit>
+
+            >>> composite.analysed()
+            <GenericCompositeDimension: MassUnit / (TimeUnit^2) / LengthUnit / LengthUnit>
+        """
+        copy = replace(self)
+        copy.analyse()
+        return copy
+
     def inverse_generic(self):
         """
         Create a generic composite with inverse units.
@@ -879,6 +1197,67 @@ class GenericCompositeDimension:
         return GenericCompositeDimension(
             self._denominator_copy(), self._numerator_copy()
         )
+
+    def is_equivalent(self, other: GenericUnitDescriptor) -> bool:
+        """
+        Returns True if this generic is equivalent to the given one, False otherwise.
+
+        A generic can be equivalent with another generic if the latter or the former
+        is an alias.
+
+        Examples:
+            >>> class LengthUnit(MeasurementUnit): ...
+            >>> class MassUnit(MeasurementUnit): ...
+            >>> class TimeUnit(MeasurementUnit): ...
+            >>> class ForceUnit(AliasMeasurementUnit):
+            ...     @classmethod
+            ...     def aliased_generic_descriptor(cls):
+            ...         return MassUnit * LengthUnit / (TimeUnit**2)
+
+            >>> ForceUnit.is_equivalent(MassUnit * LengthUnit / (TimeUnit**2))
+            True
+
+            >>> class EnergyUnit(AliasMeasurementUnit):
+            ...     @classmethod
+            ...     def aliased_generic_descriptor(cls):
+            ...         return ForceUnit * LengthUnit
+
+            >>> EnergyUnit.is_equivalent(MassUnit * (LengthUnit**2) / (TimeUnit**2))
+            True
+        """
+        if isinstance(other, MeasurementUnitType):
+            if (
+                self.denominator == []
+                and len(self.numerator) == 1
+                and self.numerator[0].is_equivalent(other)
+            ):
+                return True
+
+            if issubclass(other, AliasMeasurementUnit):
+                return other.aliased_generic_descriptor().is_equivalent(self)  # type: ignore[attr-defined]
+
+        elif isinstance(other, GenericDimension):
+            if (
+                self.denominator == []
+                and len(self.numerator) == 1
+                and self.numerator[0].is_equivalent(other)
+            ):
+                return True
+
+            if issubclass(other.unit_type, AliasMeasurementUnit):
+                return (
+                    other.unit_type.aliased_generic_descriptor() ** other.power
+                ).is_equivalent(self)
+
+        elif isinstance(other, GenericCompositeDimension):
+            _generic = other.analysed().simplified()
+            _self = self.analysed().simplified()
+
+            return Counter(_self.numerator) == Counter(_generic.numerator) and (
+                Counter(_self.denominator) == Counter(_generic.denominator)
+            )
+
+        return False
 
     def _numerator_copy(self) -> List[GenericDimension]:
         return [replace(n) for n in self.numerator]
@@ -1045,6 +1424,30 @@ class CompositeDimension:
             )
         return descriptor
 
+    def si(self) -> "CompositeDimension":
+        """
+        Returns this composite dimension in SI units.
+
+        Examples:
+            >>> class TemperatureUnit(MeasurementUnit):
+            ...     KELVIN = "K"
+            ...     RANKINE = "R"
+            ...     @classmethod
+            ...     def si(cls): return cls.KELVIN
+
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
+            ...     FOOT = "ft"
+            ...     @classmethod
+            ...     def si(cls): return cls.METER
+
+            >>> (TemperatureUnit.RANKINE / LengthUnit.FOOT**2).si()
+            <CompositeDimension: K / (m^2)>
+        """
+        return CompositeDimension(
+            [n.si() for n in self.numerator], [d.si() for d in self.denominator]
+        )
+
     def isinstance(self, generic: GenericUnitDescriptor) -> bool:
         """
         Returns True if the CompositeDimension is an instance of the generic, False
@@ -1064,7 +1467,37 @@ class CompositeDimension:
         """
         if not isinstance(generic, GenericCompositeDimension):
             return False
+
         return self.to_generic() == generic
+
+    def isinstance_equivalent(self, generic: GenericUnitDescriptor) -> bool:
+        """
+        Returns True if the UnitDescriptor is an instance-equivalent of the generic,
+        False otherwise.
+
+        A unit descriptor is an instance-equivalent of a generic if the generic of the
+        unit descriptor is equivalent to the generic.
+
+        Equivalence between generics is checked with the `is_equivalent` method.
+
+        Examples:
+            >>> class MassUnit(MeasurementUnit):
+            ...     KILO_GRAM = "kg"
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
+            >>> class TimeUnit(MeasurementUnit):
+            ...     SECOND = "s"
+
+            >>> class ForceUnit(AliasMeasurementUnit):
+            ...     NEWTON = "N"
+            ...     @classmethod
+            ...     def aliased_generic_descriptor(cls):
+            ...         return MassUnit * LengthUnit / (TimeUnit**2)
+
+            >>> (MassUnit.KILO_GRAM * LengthUnit.METER / (TimeUnit.SECOND**2)).isinstance_equivalent(ForceUnit)
+            True
+        """
+        return self.to_generic().is_equivalent(generic)
 
     def to_generic(self) -> GenericCompositeDimension:
         """

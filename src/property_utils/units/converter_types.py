@@ -19,6 +19,7 @@ except ImportError:
 
 from property_utils.units.descriptors import (
     MeasurementUnit,
+    AliasMeasurementUnit,
     MeasurementUnitType,
     GenericDimension,
     GenericCompositeDimension,
@@ -207,15 +208,21 @@ class AbsoluteUnitConverter(metaclass=ABCMeta):
 
         >>> assert LengthUnitConverter.get_factor(LengthUnit.CENTI_METER, LengthUnit.INCH) == 1/2.54
         """
-        if not from_descriptor.isinstance(cls.generic_unit_descriptor):
+        if not from_descriptor.isinstance_equivalent(cls.generic_unit_descriptor):
             raise UnitConversionError(
-                f"invalid 'from_descriptor; expected an instance of {cls.generic_unit_descriptor}. "
+                f"invalid 'from_descriptor; expected an instance-equivalent of {cls.generic_unit_descriptor}. "
             )
-        if not to_descriptor.isinstance(cls.generic_unit_descriptor):
+        if not to_descriptor.isinstance_equivalent(cls.generic_unit_descriptor):
             raise UnitConversionError(
-                f"invalid 'to_descriptor'; expected an instance of {cls.generic_unit_descriptor}. "
+                f"invalid 'to_descriptor'; expected an instance-equivalent of {cls.generic_unit_descriptor}. "
             )
         from_unit = MeasurementUnit.from_descriptor(from_descriptor)
+
+        if isinstance(from_unit, AliasMeasurementUnit) and not isinstance(
+            to_descriptor, AliasMeasurementUnit
+        ):
+            return cls._get_aliased_factor(from_unit, to_descriptor)
+
         to_unit = MeasurementUnit.from_descriptor(to_descriptor)
         try:
             return cls._to_reference(from_unit) * cls.conversion_map[to_unit]
@@ -232,6 +239,35 @@ class AbsoluteUnitConverter(metaclass=ABCMeta):
             raise UnitConversionError(
                 f"cannot convert from {from_unit}; unit is not registered in {cls.__name__}'s conversion map. ",
             ) from None
+
+    @classmethod
+    def _get_aliased_factor(
+        cls, from_unit: AliasMeasurementUnit, to_descriptor: UnitDescriptor
+    ) -> float:
+        """
+        Returns the conversion factor from an alias unit to its aliased.
+
+        The conversion happens in four steps:
+
+        1. Convert from the alias unit to the SI unit.
+        2. Convert from the SI unit to the aliased SI units (this step is not
+        implemented in code, because the conversion factor is 1)
+        3. Convert from the SI units to the target units.
+
+        e.g. if you want to convert from bar to kN/m^2:
+        1. bar -> Pa
+        2. Pa -> N/m^2 (conversion factor 1)
+        3. N/m^2 -> kN/m^2
+        """
+        step_1_factor = cls.get_factor(from_unit, from_unit.si())
+
+        converter = get_converter(to_descriptor.to_generic())
+
+        step_3_factor = converter.convert(
+            1, to_descriptor.to_generic().to_si(), to_descriptor
+        )
+
+        return step_1_factor * step_3_factor
 
 
 class RelativeUnitConverter(
@@ -447,16 +483,22 @@ class ExponentiatedUnitConverter(metaclass=ABCMeta):
 
         >>> assert AreaUnitConverter.get_factor(LengthUnit.INCH**2, LengthUnit.CENTI_METER**2) == 6.4516
         """
-        if not from_descriptor.isinstance(cls.generic_unit_descriptor):
+        if not from_descriptor.isinstance_equivalent(cls.generic_unit_descriptor):
             raise UnitConversionError(
-                f"invalid 'from_descriptor; expected an instance of {cls.generic_unit_descriptor}. "
+                f"invalid 'from_descriptor; expected an instance-equivalent of {cls.generic_unit_descriptor}. "
             )
-        if not to_descriptor.isinstance(cls.generic_unit_descriptor):
+        if not to_descriptor.isinstance_equivalent(cls.generic_unit_descriptor):
             raise UnitConversionError(
-                f"invalid 'to_descriptor'; expected an instance of {cls.generic_unit_descriptor}. "
+                f"invalid 'to_descriptor'; expected an instance-equivalent of {cls.generic_unit_descriptor}. "
             )
         from_dimension = Dimension.from_descriptor(from_descriptor)
+
+        if not to_descriptor.isinstance(from_descriptor.to_generic()):
+            if isinstance(to_descriptor, AliasMeasurementUnit):
+                return cls._get_aliased_factor(from_dimension, to_descriptor)
+
         to_dimension = Dimension.from_descriptor(to_descriptor)
+
         try:
             converter = get_converter(cls.generic_unit_descriptor.unit_type)
         except UndefinedConverterError:
@@ -474,6 +516,35 @@ class ExponentiatedUnitConverter(metaclass=ABCMeta):
             )
         factor = converter.get_factor(from_dimension.unit, to_dimension.unit)
         return factor**to_dimension.power
+
+    @classmethod
+    def _get_aliased_factor(
+        cls, from_dimension: Dimension, to_descriptor: AliasMeasurementUnit
+    ) -> float:
+        """
+        Returns the conversion factor from an alias unit to its aliased.
+
+        The conversion happens in three steps:
+
+        1. Convert from the alias unit to the SI unit.
+        2. Convert from the SI unit to the aliased SI units (this step is not
+        implemented in code, because the conversion factor is 1)
+        3. Convert from the aliased SI units to the target units.
+
+        e.g. if you want to convert from cm^3 to L:
+        1. cm^3 -> m^3
+        2. m^3 -> kL (conversion factor 1)
+        3. kL -> L
+        """
+        step_1_factor = cls.get_factor(from_dimension, from_dimension.si())
+
+        converter = get_converter(to_descriptor.to_generic())
+
+        step_3_factor = converter.convert(
+            1, to_descriptor.to_generic().to_si(), to_descriptor
+        )
+
+        return step_1_factor * step_3_factor
 
 
 class CompositeUnitConverter(metaclass=ABCMeta):
@@ -592,15 +663,24 @@ class CompositeUnitConverter(metaclass=ABCMeta):
 
         >>> assert VelocityUnitConverter.get_factor(LengthUnit.INCH/TimeUnit.MINUTE, LengthUnit.CENTI_METER/TimeUnit.SECOND) == 2.54/60
         """
-        if not from_descriptor.isinstance(cls.generic_unit_descriptor):
+        if not from_descriptor.isinstance_equivalent(cls.generic_unit_descriptor):
             raise UnitConversionError(
-                f"invalid 'from_descriptor; expected an instance of {cls.generic_unit_descriptor}. "
+                f"invalid 'from_descriptor; expected an instance-equivalent of {cls.generic_unit_descriptor}. "
             )
-        if not to_descriptor.isinstance(cls.generic_unit_descriptor):
+        if not to_descriptor.isinstance_equivalent(cls.generic_unit_descriptor):
             raise UnitConversionError(
-                f"invalid 'to_descriptor'; expected an instance of {cls.generic_unit_descriptor}. "
+                f"invalid 'to_descriptor'; expected an instance-equivalent of {cls.generic_unit_descriptor}. "
             )
+
         from_dimension = CompositeDimension.from_descriptor(from_descriptor)
+
+        if not to_descriptor.isinstance(from_descriptor.to_generic()):
+
+            if cls._is_alias(from_dimension, to_descriptor) or (
+                cls._is_aliased(from_dimension)
+            ):
+                return cls._get_aliased_factor(from_dimension, to_descriptor)
+
         to_dimension = CompositeDimension.from_descriptor(to_descriptor)
         return cls._get_numerator_factor(
             from_dimension, to_dimension
@@ -666,3 +746,77 @@ class CompositeUnitConverter(metaclass=ABCMeta):
             factor = (converter.get_factor(from_d.unit, to_d.unit)) ** from_d.power
             denominator_factor *= factor
         return denominator_factor
+
+    @staticmethod
+    def _is_alias(
+        from_dimension: CompositeDimension, descriptor: UnitDescriptor
+    ) -> bool:
+        """
+        Returns True if the descriptor is an alias of the from_dimension.
+
+        Assumes that from_dimension and descriptor are both an instance of the
+        converter's generic unit descriptor.
+        """
+        if isinstance(descriptor, AliasMeasurementUnit):
+            return True
+
+        if isinstance(descriptor, Dimension):
+            if isinstance(descriptor.unit, AliasMeasurementUnit):
+                return True
+
+            return False
+
+        if isinstance(descriptor, CompositeDimension):
+            for n in descriptor.numerator:
+                if from_dimension.get_numerator(n.to_generic(), None) is None:
+                    return True
+
+            for d in descriptor.denominator:
+                if from_dimension.get_denominator(d.to_generic(), None) is None:
+                    return True
+
+        return False
+
+    @staticmethod
+    def _is_aliased(dimension: CompositeDimension) -> bool:
+        """
+        Returns True if the dimension contains an alias, False otherwise.
+        """
+        for n in dimension.numerator:
+            if isinstance(n.unit, AliasMeasurementUnit):
+                return True
+
+        for d in dimension.denominator:
+            if isinstance(d.unit, AliasMeasurementUnit):
+                return True
+
+        return False
+
+    @classmethod
+    def _get_aliased_factor(
+        cls, from_dimension: CompositeDimension, to_descriptor: UnitDescriptor
+    ) -> float:
+        """
+        Returns the conversion factor from an alias unit to its aliased.
+
+        The conversion happens in three steps:
+
+        1. Convert from the alias unit to the SI unit.
+        2. Convert from the SI unit to the aliased SI units (this step is not
+        implemented in code, because the conversion factor is 1)
+        3. Convert from the SI units to the target units.
+
+        e.g. if you want to convert from cal/K/s to kW/K:
+        1. cal/K/s -> J/K/s
+        2. J/K/s -> W/K (conversion factor 1)
+        3. W/K -> kW/K
+        """
+        step_1_factor = cls.get_factor(from_dimension, from_dimension.si())
+
+        converter = get_converter(to_descriptor.to_generic())
+
+        step_3_factor = converter.convert(
+            1, to_descriptor.to_generic().to_si(), to_descriptor
+        )
+
+        return step_1_factor * step_3_factor

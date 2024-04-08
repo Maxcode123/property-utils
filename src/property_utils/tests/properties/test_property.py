@@ -12,6 +12,8 @@ from property_utils.tests.data import (
     Unit2,
     Unit3,
     Unit4,
+    Unit6,
+    Unit8,
     generic_dimension_1,
     generic_composite_dimension,
 )
@@ -126,6 +128,36 @@ class TestPropertyEq(TestProperty):
     @args({"other": Property(33.3333, Unit1.A2)})
     def test_with_uneregistered_units(self):
         self.assert_invalid_operation()
+
+
+@add_to(property_test_suite, "eq")
+class TestAliasPropertyEq(TestProperty):
+    def build_property(self):
+        return Property(10, Unit8.H)
+
+    @args({"other": Property(10, Unit8.H)})
+    def test_with_same_unit(self):
+        self.assertResultTrue()
+
+    @args({"other": Property(40, Unit8.h)})
+    def test_with_si_unit(self):
+        self.assertResultTrue()
+
+    @args({"other": Property(40, Unit1.a**2 / Unit4.d**2)})
+    def test_with_aliased_si_units(self):
+        self.assertResultTrue()
+
+    @args({"other": Property(10, Unit1.A**2 / Unit4.D**2)})
+    def test_with_aliased_units(self):
+        self.assertResultTrue()
+
+    @args({"other": Property(40, Unit6.f / Unit4.d**2)})
+    def test_with_other_aliased_si_units(self):
+        self.assertResultTrue()
+
+    @args({"other": Property(500, Unit6.F / Unit4.D**2)})
+    def test_with_other_aliased_units(self):
+        self.assertResultTrue()
 
 
 @add_to(property_test_suite)
@@ -471,6 +503,28 @@ class TestPropertyAdditionWithUnregisteredUnitConverter(TestProperty):
         self.assert_invalid_operation()
 
 
+@add_to(property_test_suite, "__add__")
+class TestAliasPropertyAddition(TestProperty):
+    def build_property(self) -> Property:
+        return Property(15, Unit8.H)
+
+    @args({"other": Property(40, Unit1.a**2 / Unit4.d**2)})
+    def test_with_aliased_si_units(self):
+        self.assert_result("25.0 H")
+
+    @args({"other": Property(15, Unit1.A**2 / Unit4.D**2)})
+    def test_with_aliased_units(self):
+        self.assert_result("30.0 H")
+
+    @args({"other": Property(40, Unit6.f / Unit4.d**2)})
+    def test_with_other_aliased_si_units(self):
+        self.assert_result("25.0 H")
+
+    @args({"other": Property(500, Unit6.F / Unit4.D**2)})
+    def test_with_other_aliased_units(self):
+        self.assert_result("25.0 H")
+
+
 @add_to(property_test_suite, "__sub__")
 class TestSimplePropertySubtraction(TestProperty):
 
@@ -540,6 +594,28 @@ class TestPropertySubtractionWithUnregisteredUnitConverter(TestProperty):
         self.assert_invalid_operation()
 
 
+@add_to(property_test_suite, "__sub__")
+class TestAliasPropertySubtraction(TestProperty):
+    def build_property(self) -> Property:
+        return Property(25, Unit8.H)
+
+    @args({"other": Property(40, Unit1.a**2 / Unit4.d**2)})
+    def test_with_aliased_si_units(self):
+        self.assert_result("15.0 H")
+
+    @args({"other": Property(15, Unit1.A**2 / Unit4.D**2)})
+    def test_with_aliased_units(self):
+        self.assert_result("10.0 H")
+
+    @args({"other": Property(40, Unit6.f / Unit4.d**2)})
+    def test_with_other_aliased_si_units(self):
+        self.assert_result("15.0 H")
+
+    @args({"other": Property(500, Unit6.F / Unit4.D**2)})
+    def test_with_other_aliased_units(self):
+        self.assert_result("15.0 H")
+
+
 @add_to(property_test_suite, "__rsub__")
 class TestSimplePropertyRightSubtraction(TestProperty):
 
@@ -569,6 +645,24 @@ class TestSimplePropertyRightSubtraction(TestProperty):
     @args({"other": -Property(2.5, Unit1.A)})
     def test_with_negative(self):
         self.assert_result("-5.0 A")
+
+
+@add_to(property_test_suite, "__rsub__")
+class TestAliasPropertyRightSubtraction(TestProperty):
+    def build_property(self) -> Property:
+        return Property(25, Unit8.H)
+
+    @args({"other": Property(40, Unit1.a**2 / Unit4.d**2)})
+    def test_with_aliased_si_units(self):
+        self.assert_result("-60.0 (a^2) / (d^2)")
+
+    @args({"other": Property(15, Unit1.A**2 / Unit4.D**2)})
+    def test_with_aliased_units(self):
+        self.assert_result("-10.0 (A^2) / (D^2)")
+
+    @args({"other": Property(40, Unit6.f / Unit4.d**2)})
+    def test_with_other_aliased_si_units(self):
+        self.assert_result("-60.0 f / (d^2)")
 
 
 @add_to(property_test_suite, "__pow__")
@@ -788,6 +882,28 @@ class TestPropertyWithUnregistedUnitsGreater(TestProperty):
         self.assertResultFalse()
 
 
+@add_to(property_test_suite, "__gt__")
+class TestAliasPropertyGreater(TestProperty):
+    def build_property(self):
+        return Property(10, Unit8.H)
+
+    @args({"other": Property(35, Unit1.a**2 / Unit4.d**2)})
+    def test_with_aliased_si_units(self):
+        self.assertResultTrue()
+
+    @args({"other": Property(15, Unit1.A**2 / Unit4.D**2)})
+    def test_with_aliased_units(self):
+        self.assertResultFalse()
+
+    @args({"other": Property(22, Unit6.f / Unit4.d**2)})
+    def test_with_other_aliased_si_units(self):
+        self.assertResultTrue()
+
+    @args({"other": Property(345, Unit6.F / Unit4.D**2)})
+    def test_with_other_aliased_units(self):
+        self.assertResultTrue()
+
+
 @add_to(property_test_suite, "__ge__")
 class TestPropertyGreaterEqual(TestProperty):
 
@@ -851,6 +967,28 @@ class TestPropertyWithUnregistedUnitsGreaterEqual(TestProperty):
 
     @args({"other": Property(5, Unit3.C)})
     def test_with_same_prop(self):
+        self.assertResultTrue()
+
+
+@add_to(property_test_suite, "__ge__")
+class TestAliasPropertyGreaterEqual(TestProperty):
+    def build_property(self):
+        return Property(10, Unit8.H)
+
+    @args({"other": Property(40, Unit1.a**2 / Unit4.d**2)})
+    def test_with_aliased_si_units(self):
+        self.assertResultTrue()
+
+    @args({"other": Property(20, Unit1.A**2 / Unit4.D**2)})
+    def test_with_aliased_units(self):
+        self.assertResultFalse()
+
+    @args({"other": Property(40, Unit6.f / Unit4.d**2)})
+    def test_with_other_aliased_si_units(self):
+        self.assertResultTrue()
+
+    @args({"other": Property(500, Unit6.F / Unit4.D**2)})
+    def test_with_other_aliased_units(self):
         self.assertResultTrue()
 
 
@@ -920,6 +1058,28 @@ class TestPropertyWithUnregistedUnitsLower(TestProperty):
         self.assertResultFalse()
 
 
+@add_to(property_test_suite, "__lt__")
+class TestAliasPropertyLower(TestProperty):
+    def build_property(self):
+        return Property(10, Unit8.H)
+
+    @args({"other": Property(50, Unit1.a**2 / Unit4.d**2)})
+    def test_with_aliased_si_units(self):
+        self.assertResultTrue()
+
+    @args({"other": Property(11, Unit1.A**2 / Unit4.D**2)})
+    def test_with_aliased_units(self):
+        self.assertResultTrue()
+
+    @args({"other": Property(20, Unit6.f / Unit4.d**2)})
+    def test_with_other_aliased_si_units(self):
+        self.assertResultFalse()
+
+    @args({"other": Property(600, Unit6.F / Unit4.D**2)})
+    def test_with_other_aliased_units(self):
+        self.assertResultTrue()
+
+
 @add_to(property_test_suite, "__le__")
 class TestPropertyLowerEqual(TestProperty):
 
@@ -983,4 +1143,26 @@ class TestPropertyWithUnregistedUnitsLowerEqual(TestProperty):
 
     @args({"other": Property(5, Unit3.C)})
     def test_with_same_prop(self):
+        self.assertResultTrue()
+
+
+@add_to(property_test_suite, "__le__")
+class TestAliasPropertyLowerEqual(TestProperty):
+    def build_property(self):
+        return Property(10, Unit8.H)
+
+    @args({"other": Property(40, Unit1.a**2 / Unit4.d**2)})
+    def test_with_aliased_si_units(self):
+        self.assertResultTrue()
+
+    @args({"other": Property(11, Unit1.A**2 / Unit4.D**2)})
+    def test_with_aliased_units(self):
+        self.assertResultTrue()
+
+    @args({"other": Property(40, Unit6.f / Unit4.d**2)})
+    def test_with_other_aliased_si_units(self):
+        self.assertResultTrue()
+
+    @args({"other": Property(505, Unit6.F / Unit4.D**2)})
+    def test_with_other_aliased_units(self):
         self.assertResultTrue()

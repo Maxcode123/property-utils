@@ -104,7 +104,7 @@ class Property:
         """
         if not isinstance(other, Property):
             return False
-        if not self.unit.isinstance(other.unit.to_generic()):
+        if not self.unit.isinstance_equivalent(other.unit.to_generic()):
             return False
         try:
             prop = other.to_unit(self.unit) if self.unit != other.unit else other
@@ -155,7 +155,7 @@ class Property:
         >>> T.to_unit(RelativeTemperatureUnit.FAHRENHEIT)
         <Property: 212.0 °F>
         """
-        if not unit.isinstance(self.unit.to_generic()):
+        if not unit.isinstance_equivalent(self.unit.to_generic()):
             raise PropertyUnitConversionError(
                 f"cannot convert {self} to ({unit}) units; 'unit' should be an instance"
                 f" of {self.unit.to_generic()}. "
@@ -300,7 +300,7 @@ class Property:
                 f"cannot add {other} to ({self}); {other} is not a {self.__class__}; "
                 "only same properties can be added to each other. "
             )
-        if not self.unit.isinstance(other.unit.to_generic()):
+        if not self.unit.isinstance_equivalent(other.unit.to_generic()):
             raise PropertyBinaryOperationError(
                 f"cannot add ({other}) to ({self}); "
                 f"({other}) must have ({self.unit.to_generic()}) units. "
@@ -347,7 +347,7 @@ class Property:
                 f"{self.__class__}; only same properties can be subtracted from each "
                 "other. "
             )
-        if not self.unit.isinstance(other.unit.to_generic()):
+        if not self.unit.isinstance_equivalent(other.unit.to_generic()):
             raise PropertyBinaryOperationError(
                 f"cannot subtract ({other}) from ({self}); "
                 f"({other}) must have ({self.unit.to_generic()}) units. "
@@ -382,7 +382,7 @@ class Property:
                 f"{self.__class__}; only same properties can be subtracted from each "
                 "other. "
             )
-        if not self.unit.isinstance(other.unit.to_generic()):
+        if not self.unit.isinstance_equivalent(other.unit.to_generic()):
             raise PropertyBinaryOperationError(
                 f"cannot subtract ({self}) from ({other}); "
                 f"({other}) must have ({self.unit.to_generic()}) units. "
@@ -422,7 +422,7 @@ class Property:
         """
         if not isinstance(other, Property):
             return False
-        if not self.unit.isinstance(other.unit.to_generic()):
+        if not self.unit.isinstance_equivalent(other.unit.to_generic()):
             return False
         try:
             prop = other.to_unit(self.unit) if self.unit != other.unit else other
@@ -581,7 +581,7 @@ class Property:
                 f"cannot compare {other} to ({self}); {other} is not a Property; "
                 "only properties can be compared to properties. "
             )
-        if not self.unit.isinstance(other.unit.to_generic()):
+        if not self.unit.isinstance_equivalent(other.unit.to_generic()):
             raise PropertyBinaryOperationError(
                 f"cannot compare ({other}) to ({self}); "
                 f"({other}) must have ({self.unit.to_generic()}) units. "

@@ -46,6 +46,9 @@ class RelativeTemperatureUnit(MeasurementUnit):
     def isinstance(self, generic: GenericUnitDescriptor) -> bool:
         return super().isinstance(generic) or generic == AbsoluteTemperatureUnit
 
+    def isinstance_equivalent(self, generic: GenericUnitDescriptor) -> bool:
+        return super().isinstance_equivalent(generic) or self.isinstance(generic)
+
 
 class AbsoluteTemperatureUnit(MeasurementUnit):
     KELVIN = "K"
@@ -57,6 +60,9 @@ class AbsoluteTemperatureUnit(MeasurementUnit):
 
     def isinstance(self, generic: GenericUnitDescriptor) -> bool:
         return super().isinstance(generic) or generic == RelativeTemperatureUnit
+
+    def isinstance_equivalent(self, generic: GenericUnitDescriptor) -> bool:
+        return super().isinstance_equivalent(generic) or self.isinstance(generic)
 
 
 class LengthUnit(MeasurementUnit):
