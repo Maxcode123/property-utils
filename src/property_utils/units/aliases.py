@@ -1,6 +1,7 @@
 # pylint: disable=unused-wildcard-import, wildcard-import
 from property_utils.units.units import *
 
+# pylint: disable=duplicate-code
 __all__ = [
     "NonDimensionalUnit",
     "RelativeTemperatureUnit",
