@@ -2,6 +2,18 @@
 from property_utils.units.units import *
 
 __all__ = [
+    "NonDimensionalUnit",
+    "RelativeTemperatureUnit",
+    "AbsoluteTemperatureUnit",
+    "LengthUnit",
+    "MassUnit",
+    "AmountUnit",
+    "TimeUnit",
+    "ElectricCurrentUnit",
+    "ForceUnit",
+    "PressureUnit",
+    "EnergyUnit",
+    "PowerUnit",
     "NON_DIMENSIONAL",
     "CELCIUS",
     "KELVIN",
