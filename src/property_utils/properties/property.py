@@ -159,6 +159,9 @@ class Property:
             >>> T.to_unit(RelativeTemperatureUnit.FAHRENHEIT)
             <Property: 212.0 °F>
         """
+        if self.unit == unit:
+            return self.__class__(unit=self.unit, value=self.value)
+
         if not unit.isinstance_equivalent(self.unit.to_generic()):
             raise PropertyUnitConversionError(
                 f"cannot convert {self} to ({unit}) units; 'unit' should be an instance"
