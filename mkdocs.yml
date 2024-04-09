@@ -1,5 +1,7 @@
 site_name: property-utils
 site_url: https://maxcode123.github.io/property-utils/
+repo_url: https://github.com/Maxcode123/property-utils
+repo_name: Maxcode123/property-utils
 nav:
   - Get started:
     - What is property-utils?: index.md
@@ -35,6 +37,8 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
 
 plugins:
 - mkdocstrings
