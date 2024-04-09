@@ -2,7 +2,7 @@
 This module defines the Property class and property arithmetics.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Type, Optional
 from math import isclose
 
@@ -209,8 +209,9 @@ class Property:
         if isinstance(other, (float, int)):
             return Property(self.value * other, self.unit)
         if isinstance(other, Property):
+            _other = self._unit_preconversion(other)
             return Property(
-                self.value * other.value, (self.unit * other.unit).simplified()
+                self.value * _other.value, (self.unit * _other.unit).simplified()
             )
         raise PropertyBinaryOperationError(
             f"cannot multiply {self} with {other}; "
@@ -609,3 +610,114 @@ class Property:
                 f"cannot compare ({other}) to ({self}); "
                 f"({other}) must have ({self.unit.to_generic()}) units. "
             )
+
+    def _unit_preconversion(self, prop: "Property") -> "Property":
+        """
+        Applies a conversion to the given property's units before it is multiplied or
+        divided with this unit.
+
+        The preconversion is needed to produce simplified units from the multiplication/
+        division.
+        For example, if you multiply 5 cm with 2.02 m you don't want to get the result
+        in cm * m; in order to get the result in cm^2, 2.02 m (the right operand) is
+        converted to cm first.
+        """
+        if isinstance(prop.unit, CompositeDimension):
+            return prop.to_unit(self._composite_unit_preconversion(prop.unit))
+
+        if isinstance(prop.unit, Dimension):
+            return prop.to_unit(self._dimension_unit_preconversion(prop.unit))
+
+        if isinstance(prop.unit, MeasurementUnit):
+            return prop.to_unit(self._simple_unit_preconversion(prop.unit))
+
+        return prop
+
+    # pylint: disable=too-many-branches
+    def _composite_unit_preconversion(
+        self, unit: CompositeDimension
+    ) -> CompositeDimension:
+        """
+        Returns the composite dimension that the given dimension should be converted to
+        before multiplication or division with this property.
+        """
+        other = replace(unit).simplified()
+
+        if isinstance(self.unit, CompositeDimension):
+            self.unit.simplify()
+
+            for i, num in enumerate(other.numerator):
+                _n = self.unit.get_numerator(num.to_generic(), None)
+                if _n is not None:
+                    other.numerator[i] = replace(_n)
+
+                d = self.unit.get_denominator(num.to_generic(), None)
+                if d is not None:
+                    other.numerator[i] = replace(d)
+
+            for i, d in enumerate(other.denominator):
+                _d = self.unit.get_denominator(d.to_generic(), None)
+                if _d is not None:
+                    other.denominator[i] = replace(_d)
+
+                n = self.unit.get_numerator(d.to_generic(), None)
+                if n is not None:
+                    other.denominator[i] = replace(n)
+
+            return other
+
+        _self: UnitDescriptor
+        if isinstance(self.unit, MeasurementUnit):
+            _self = self.unit**1
+        elif isinstance(self.unit, Dimension):
+            _self = replace(self.unit)
+        else:
+            _self = self.unit
+
+        if isinstance(_self, Dimension):
+            for i, n in enumerate(other.numerator):
+                if n.unit.isinstance(_self.unit.to_generic()):
+                    other.numerator[i] = _self.unit ** other.numerator[i].power
+                    return other
+
+            for i, d in enumerate(other.denominator):
+                if d.unit.isinstance(_self.unit.to_generic()):
+                    other.denominator[i] = _self.unit ** other.denominator[i].power
+                    return other
+
+        return unit
+
+    def _dimension_unit_preconversion(self, unit: Dimension) -> Dimension:
+        """
+        Returns the dimension that the given dimension should be converted to before
+        multiplication or division with this property.
+        """
+        if isinstance(self.unit, CompositeDimension):
+            self.unit.simplify()
+
+            for d in self.unit.denominator:
+                if d.unit.isinstance(unit.unit.to_generic()):
+                    return d.unit**unit.power
+
+            for n in self.unit.numerator:
+                if n.unit.isinstance(unit.unit.to_generic()):
+                    return n.unit**unit.power
+
+        _self: UnitDescriptor
+        if isinstance(self.unit, Dimension):
+            _self = self.unit.unit
+        else:
+            _self = self.unit
+
+        if isinstance(_self, MeasurementUnit):
+            if _self.isinstance(unit.unit.to_generic()):
+                return _self**unit.power
+
+        return unit
+
+    def _simple_unit_preconversion(self, unit: MeasurementUnit) -> MeasurementUnit:
+        """
+        Returns the unit that the given unit should be converted to before
+        multiplication or division with this property.
+        """
+        return self._dimension_unit_preconversion(unit**1).unit
