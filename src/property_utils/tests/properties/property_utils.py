@@ -45,6 +45,12 @@ class TestProperty(TestCase):
         self.assertResultIsNot(self.prop())
         self.assertSequenceEqual(str(self.cachedResult()), result_str, str)
 
+    def assert_result_almost(self, result_str):
+        self.assertResultIsNot(self.prop())
+        result = self.cachedResult()
+        result.value = round(result.value, 2)
+        self.assertSequenceEqual(str(result), result_str, str)
+
     def _assert_error(self, error: PropertyUtilsException, expected_regex):
         if expected_regex is None:
             self.assertResultRaises(error)
