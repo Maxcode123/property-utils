@@ -167,15 +167,15 @@ class TestPropertyToSi(TestProperty):
 
     @args({"unit": Unit1.a})
     def test_with_simple_si_units(self):
-        self.assert_result("200.0 a")
+        self.assert_result("200 a")
 
     @args({"unit": Unit1.a**2})
     def test_with_dimension_si_units(self):
-        self.assert_result("200.0 (a^2)")
+        self.assert_result("200 (a^2)")
 
     @args({"unit": (Unit1.a**2) / (Unit4.d**3)})
     def test_with_composite_si_units(self):
-        self.assert_result("200.0 (a^2) / (d^3)")
+        self.assert_result("200 (a^2) / (d^3)")
 
     @args({"unit": Unit1.A})
     def test_with_simple_non_si_units(self):
@@ -210,7 +210,7 @@ class TestSimplePropertyToUnit(TestProperty):
 
     @args({"unit": Unit1.A})
     def test_with_same_unit(self):
-        self.assert_result("105.0 A")
+        self.assert_result("105 A")
 
     @args({"unit": Unit1.a})
     def test_with_other_unit(self):
@@ -233,7 +233,7 @@ class TestPropertyToUnit(TestProperty):
 
     @args({"unit": Unit1.A**2})
     def test_with_same_dimension(self):
-        self.assert_result("52.0 (A^2)")
+        self.assert_result("52 (A^2)")
 
     @args({"unit": Unit1.a**2})
     def test_with_other_unit(self):
@@ -256,7 +256,7 @@ class TestCompositePropertyToUnit(TestProperty):
 
     @args({"unit": (Unit1.A**2) / (Unit4.D**3)})
     def test_with_same_composite_dimension(self):
-        self.assert_result("20.0 (A^2) / (D^3)")
+        self.assert_result("20 (A^2) / (D^3)")
 
     @args({"unit": (Unit1.a**2) / (Unit4.d**3)})
     def test_with_other_unit(self):
