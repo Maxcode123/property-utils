@@ -474,6 +474,95 @@ class TestPropertyDivision(TestProperty):
         self.assert_invalid_operation()
 
 
+@add_to(property_test_suite, "__truediv__")
+class TestCompositeDimensionPropertyUnitPreconversionDivision(TestProperty):
+
+    def build_property(self) -> Property:
+        return Property(1, Unit1.A * Unit4.d**2 / Unit6.F / Unit8.H**3)
+
+    @args({"other": Property(1, Unit6.f / Unit1.a)})
+    def test_with_composite_unit_add_to_numerator_and_denominator(self):
+        self.assert_result("0.2 (A^2) * (d^2) / (F^2) / (H^3)")
+
+    @args({"other": Property(1, Unit1.a / Unit6.f)})
+    def test_with_composite_unit_simplify_numerator_and_denominator(self):
+        self.assert_result("5.0 (d^2) / (H^3)")
+
+    @args({"other": Property(1, Unit8.h**3)})
+    def test_with_dimension_same_denominator(self):
+        self.assert_result("64.0 (d^2) * A / (H^6) / F")
+
+    @args({"other": Property(1, Unit8.h**2)})
+    def test_with_dimension_denominator(self):
+        self.assert_result("16.0 (d^2) * A / (H^5) / F")
+
+    @args({"other": Property(1, Unit1.a**2)})
+    def test_with_dimension_numerator(self):
+        self.assert_result_almost("100.0 (d^2) / (H^3) / A / F")
+
+    @args({"other": Property(1, Unit4.D)})
+    def test_with_unit_same_numerator(self):
+        self.assert_result("0.2 A * d / (H^3) / F")
+
+    @args({"other": Property(2, Unit6.f)})
+    def test_with_unit_same_denominator(self):
+        self.assert_result("1.0 (d^2) * A / (F^2) / (H^3)")
+
+
+@add_to(property_test_suite, "__truediv__")
+class TestDimensionPropertyUnitPreconversionDivision(TestProperty):
+
+    def build_property(self) -> Property:
+        return Property(1, Unit1.A**2)
+
+    @args({"other": Property(1, Unit4.d / Unit1.a)})
+    def test_with_composite_dimension_denominator(self):
+        self.assert_result("0.1 (A^3) / d")
+
+    @args({"other": Property(1, Unit1.a / Unit4.d)})
+    def test_with_composite_dimension_numerator(self):
+        self.assert_result("10.0 A * d")
+
+    @args({"other": Property(1, Unit4.d / Unit1.a**2)})
+    def test_with_composite_dimension_same_denominator(self):
+        self.assert_result_almost("0.01 (A^4) / d")
+
+    @args({"other": Property(1000, Unit1.a**3)})
+    def test_with_same_unit_dimension(self):
+        self.assert_result_almost("1.0  / A")
+
+    @args({"other": Property(10, Unit1.a)})
+    def test_with_same_unit(self):
+        self.assert_result("1.0 A")
+
+
+@add_to(property_test_suite, "__truediv__")
+class TestUnitPropertyUnitPreconversionDivision(TestProperty):
+
+    def build_property(self) -> Property:
+        return Property(1, Unit1.A)
+
+    @args({"other": Property(1, Unit4.d / Unit1.a)})
+    def test_with_composite_dimension_same_denominator(self):
+        self.assert_result("0.1 (A^2) / d")
+
+    @args({"other": Property(10, Unit1.a / Unit4.d)})
+    def test_with_composite_dimension_same_numerator(self):
+        self.assert_result("1.0 d")
+
+    @args({"other": Property(1, Unit4.d / Unit1.a**2)})
+    def test_with_composite_dimension(self):
+        self.assert_result_almost("0.01 (A^3) / d")
+
+    @args({"other": Property(100, Unit1.a**2)})
+    def test_with_dimension_same_unit(self):
+        self.assert_result_almost("1.0  / A")
+
+    @args({"other": Property(10, Unit1.a)})
+    def test_with_same_unit(self):
+        self.assert_result("1.0 ")
+
+
 @add_to(property_test_suite, "__rtruediv__")
 class TestPropertyRightDivision(TestProperty):
 

@@ -255,13 +255,14 @@ class Property:
                 ) from None
             return Property(value, self.unit)
         if isinstance(other, Property):
+            _other = self._unit_preconversion(other)
             try:
-                value = self.value / other.value
+                value = self.value / _other.value
             except ZeroDivisionError:
                 raise PropertyBinaryOperationError(
                     f"cannot divide {self} with {other}; denominator's value is zero. "
                 ) from None
-            return Property(value, (self.unit / other.unit).simplified())
+            return Property(value, (self.unit / _other.unit).simplified())
         raise PropertyBinaryOperationError(
             f"cannot divide {self} with {other}; "
             "denominator must be numeric or Property. "
