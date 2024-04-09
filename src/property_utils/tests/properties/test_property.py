@@ -3,6 +3,7 @@ from unittest import TestSuite, TextTestRunner
 from unittest_extensions import args, TestCase
 
 from property_utils.properties.property import Property, p
+from property_utils.units.descriptors import CompositeDimension
 from property_utils.units.units import NonDimensionalUnit, PressureUnit
 from property_utils.exceptions.properties.property import (
     PropertyExponentError,
@@ -13,6 +14,7 @@ from property_utils.tests.data import (
     Unit3,
     Unit4,
     Unit6,
+    Unit7,
     Unit8,
     generic_dimension_1,
     generic_composite_dimension,
@@ -330,6 +332,95 @@ class TestPropertyMultiplication(TestProperty):
     @args({"other": Property(0, (Unit1.A**2) / (Unit2.B**3))})
     def test_with_zero_value_property(self):
         self.assert_result("0.0 (A^3) / (B^3)")
+
+
+@add_to(property_test_suite, "__mul__")
+class TestCompositeDimensionPropertyUnitPreconversionMultiplication(TestProperty):
+
+    def build_property(self) -> Property:
+        return Property(1, Unit1.A * Unit4.d**2 / Unit6.F / Unit8.H**3)
+
+    @args({"other": Property(1, Unit6.f / Unit1.a)})
+    def test_with_composite_unit_simplify_numerator_and_denominator(self):
+        self.assert_result("5.0 (d^2) / (H^3)")
+
+    @args({"other": Property(1, Unit1.a / Unit6.f)})
+    def test_with_composite_unit_add_to_numerator_and_denominator(self):
+        self.assert_result("0.2 (A^2) * (d^2) / (F^2) / (H^3)")
+
+    @args({"other": Property(64, Unit8.h**3)})
+    def test_with_dimension_same_denominator(self):
+        self.assert_result("1.0 (d^2) * A / F")
+
+    @args({"other": Property(16, Unit8.h**2)})
+    def test_with_dimension_denominator(self):
+        self.assert_result("1.0 (d^2) * A / F / H")
+
+    @args({"other": Property(100, Unit1.a**2)})
+    def test_with_dimension_numerator(self):
+        self.assert_result_almost("1.0 (A^3) * (d^2) / (H^3) / F")
+
+    @args({"other": Property(1, Unit4.D)})
+    def test_with_unit_same_numerator(self):
+        self.assert_result("5.0 (d^3) * A / (H^3) / F")
+
+    @args({"other": Property(2, Unit6.f)})
+    def test_with_unit_same_denominator(self):
+        self.assert_result("1.0 (d^2) * A / (H^3)")
+
+
+@add_to(property_test_suite, "__mul__")
+class TestDimensionPropertyUnitPreconversionMultiplication(TestProperty):
+
+    def build_property(self) -> Property:
+        return Property(1, Unit1.A**2)
+
+    @args({"other": Property(1, Unit4.d / Unit1.a)})
+    def test_with_composite_dimension_denominator(self):
+        self.assert_result("10.0 A * d")
+
+    @args({"other": Property(10, Unit1.a / Unit4.d)})
+    def test_with_composite_dimension_numerator(self):
+        self.assert_result("1.0 (A^3) / d")
+
+    @args({"other": Property(1, Unit4.d / Unit1.a**2)})
+    def test_with_composite_dimension_same_denominator(self):
+        self.assert_result_almost("100.0 d")
+
+    @args({"other": Property(1000, Unit1.a**3)})
+    def test_with_same_unit_dimension(self):
+        self.assert_result_almost("1.0 (A^5)")
+
+    @args({"other": Property(10, Unit1.a)})
+    def test_with_same_unit(self):
+        self.assert_result("1.0 (A^3)")
+
+
+@add_to(property_test_suite, "__mul__")
+class TestUnitPropertyUnitPreconversionMultiplication(TestProperty):
+
+    def build_property(self) -> Property:
+        return Property(1, Unit1.A)
+
+    @args({"other": Property(1, Unit4.d / Unit1.a)})
+    def test_with_composite_dimension_same_denominator(self):
+        self.assert_result("10.0 d")
+
+    @args({"other": Property(10, Unit1.a / Unit4.d)})
+    def test_with_composite_dimension_same_numerator(self):
+        self.assert_result("1.0 (A^2) / d")
+
+    @args({"other": Property(1, Unit4.d / Unit1.a**2)})
+    def test_with_composite_dimension(self):
+        self.assert_result_almost("100.0 d / A")
+
+    @args({"other": Property(100, Unit1.a**2)})
+    def test_with_dimension_same_unit(self):
+        self.assert_result_almost("1.0 (A^3)")
+
+    @args({"other": Property(10, Unit1.a)})
+    def test_with_same_unit(self):
+        self.assert_result("1.0 (A^2)")
 
 
 @add_to(property_test_suite, "__truediv__")
