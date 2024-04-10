@@ -6,8 +6,8 @@ exclude = "tests"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["property_utils"]
-exclude = ["property_utils.tests"]
+include = ["property_utils*"]
+exclude = ["property_utils.tests*"]
 namespaces = false
 
 [build-system]
@@ -16,7 +16,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "property-utils"
-version = "0.2.0"
+version = "0.2.1"
 authors = [
     { name="Maximos Nikiforakis", email="nikiforos@live.co.uk" },
 ]
