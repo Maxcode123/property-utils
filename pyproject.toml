@@ -10,6 +10,9 @@ include = ["property_utils*"]
 exclude = ["property_utils.tests*"]
 namespaces = false
 
+[tool.setuptools.package-data]
+"pkgname" = ["py.typed"]
+
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
