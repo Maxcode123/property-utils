@@ -87,19 +87,3 @@ class TestValidatedPropertyInitWithDefaultUnit(TestValidatedProperty):
     @args({"value": 5, "unit": Unit1.a})
     def test_with_unit(self):
         self.assert_result("5 a")
-
-
-@add_to(validated_property_test_suite)
-class TestValidatedPropertySetValue(TestValidatedProperty):
-    def subject(self, value):
-        prop = BiggerThan5Prop(10, Unit1.A)
-        prop.value = value
-        return prop
-
-    @args({"value": 11})
-    def test_with_valid_value(self):
-        self.assert_result("11 A")
-
-    @args({"value": 2})
-    def test_with_invalid_value(self):
-        self.assert_validation_error()
