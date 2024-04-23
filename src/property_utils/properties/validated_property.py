@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, ClassVar, Optional
+from typing import ClassVar, Optional
 from abc import abstractmethod
 
 from property_utils.units.descriptors import UnitDescriptor, GenericUnitDescriptor
@@ -50,7 +50,11 @@ class ValidatedProperty(Property):
                 f"cannot create {self.__class__.__name__} with {unit} units; "
                 f"expected {self.generic_unit_descriptor} units. "
             )
-        self.validate_value(value)
+
+        self.__post_init__()
+
+    def __post_init__(self) -> None:
+        self.validate_value(self.value)
 
     @abstractmethod
     def validate_value(self, value: float) -> None:
@@ -63,8 +67,3 @@ class ValidatedProperty(Property):
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__}: {self.value} {self.unit}>"
-
-    def __setattr__(self, __name: str, __value: Any) -> None:
-        if __name == "value":
-            self.validate_value(__value)
-        super().__setattr__(__name, __value)
