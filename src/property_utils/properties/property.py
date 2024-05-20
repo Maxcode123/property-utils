@@ -316,10 +316,10 @@ class Property:
             >>> x1 + x2
             <Property: 20 m>
         """
-        if not isinstance(other, self.__class__):
+        if not isinstance(other, Property):
             raise PropertyBinaryOperationError(
-                f"cannot add {other} to ({self}); {other} is not a {self.__class__}; "
-                "only same properties can be added to each other. "
+                f"cannot add {other} to ({self}); {other} is not a Property; "
+                "only properties can be added to properties. "
             )
         if not self.unit.isinstance_equivalent(other.unit.to_generic()):
             raise PropertyBinaryOperationError(
@@ -364,11 +364,10 @@ class Property:
             >>> t1 - t2
             <Property: 1.0 min>
         """
-        if not isinstance(other, self.__class__):
+        if not isinstance(other, Property):
             raise PropertyBinaryOperationError(
                 f"cannot subtract {other} from ({self}); {other} is not a "
-                f"{self.__class__}; only same properties can be subtracted from each "
-                "other. "
+                "Property; only properties can be subtracted from properties. "
             )
         if not self.unit.isinstance_equivalent(other.unit.to_generic()):
             raise PropertyBinaryOperationError(
@@ -389,7 +388,7 @@ class Property:
             ) from None
         return self.__class__(self.value - prop.value, self.unit)
 
-    def __rsub__(self, other) -> Self:
+    def __rsub__(self, other) -> "Property":
         """
         Defines right subtraction between properties.
 
@@ -400,7 +399,7 @@ class Property:
             >>> t1 - t2
             <Property: 1.0 min>
         """
-        if not isinstance(other, self.__class__):
+        if not isinstance(other, Property):
             raise PropertyBinaryOperationError(
                 f"cannot subtract {self} from ({other}); {other} is not a "
                 f"{self.__class__}; only same properties can be subtracted from each "
