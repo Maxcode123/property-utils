@@ -1,4 +1,5 @@
 from unittest import TestSuite, TextTestRunner
+from operator import mul
 
 from unittest_extensions import args, TestCase
 
@@ -356,6 +357,19 @@ class TestPropertyMultiplication(TestProperty):
     @args({"other": Property(0, (Unit1.A**2) / (Unit2.B**3))})
     def test_with_zero_value_property(self):
         self.assert_result("0.0 (A^3) / (B^3)")
+
+
+class TestPropertyMultiplicationResultClass(TestProperty):
+    def subject(self, left, right):
+        return mul(left, right)
+
+    @args({"left": 2, "right": PropUnit1(10, Unit1.A)})
+    def test_left_multiplication_result_class(self):
+        self.assertResultIsInstance(PropUnit1)
+
+    @args({"left": PropUnit1(20, Unit1.A), "right": 2})
+    def test_right_multiplication_result_class(self):
+        self.assertResultIsInstance(PropUnit1)
 
 
 @add_to(property_test_suite, "__mul__")

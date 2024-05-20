@@ -213,7 +213,7 @@ class Property:
             <Property: 3000 (m^2) * K>
         """
         if isinstance(other, (float, int)):
-            return Property(self.value * other, self.unit)
+            return self.__class__(self.value * other, self.unit)
         if isinstance(other, Property):
             _other = self._unit_preconversion(other)
             return Property(
