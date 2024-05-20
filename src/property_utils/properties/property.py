@@ -3,7 +3,7 @@ This module defines the Property class and property arithmetics.
 """
 
 from dataclasses import dataclass, replace
-from typing import Type, Optional
+from typing import Type, Optional, ClassVar
 from math import isclose
 
 try:
@@ -63,17 +63,23 @@ class Property:
     value: float
     unit: UnitDescriptor
     unit_converter: Optional[Type[UnitConverter]] = None
+    default_units: ClassVar[Optional[UnitDescriptor]] = None
 
-    def __init__(self, value: float, unit: UnitDescriptor) -> None:
+    def __init__(self, value: float, unit: Optional[UnitDescriptor] = None) -> None:
         if not isinstance(value, (float, int)):
             raise PropertyValidationError(
                 f"cannot create Property; invalid 'value': {value}; expected numeric. "
             )
+
+        if unit is None and self.default_units is not None:
+            unit = self.default_units
+
         if not isinstance(unit, (MeasurementUnit, Dimension, CompositeDimension)):
             raise PropertyValidationError(
                 f"cannot create Property; invalid 'unit': {unit}. Expected an instance"
                 " of one of: MeasurementUnit, Dimension, CompositeDimension. "
             )
+
         self.value = value
         self.unit = unit
 

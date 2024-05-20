@@ -3,7 +3,6 @@ from unittest import TestSuite, TextTestRunner
 from unittest_extensions import args, TestCase
 
 from property_utils.properties.property import Property, p
-from property_utils.units.descriptors import CompositeDimension
 from property_utils.units.units import NonDimensionalUnit, PressureUnit
 from property_utils.exceptions.properties.property import (
     PropertyExponentError,
@@ -14,8 +13,9 @@ from property_utils.tests.data import (
     Unit3,
     Unit4,
     Unit6,
-    Unit7,
     Unit8,
+    PropUnit1,
+    PropUnit2,
     generic_dimension_1,
     generic_composite_dimension,
 )
@@ -65,6 +65,30 @@ class TestPropertyInit(TestProperty):
     @args({"value": 0.98, "unit": Unit1.A})
     def test_does_not_initialize_converter(self):
         self.assertIsNone(self.result().unit_converter)
+
+
+@add_to(property_test_suite)
+class TestPropertyDefaultUnits(TestProperty):
+    def subject(self, **kwargs):
+        return PropUnit1(**kwargs)
+
+    @args({"value": 1, "unit": Unit1.A})
+    def test_with_units(self):
+        self.assert_result("1 A")
+
+    @args({"value": 1})
+    def test_with_no_units(self):
+        self.assert_result("1 a")
+
+
+@add_to(property_test_suite)
+class TestPropertyWithoutDefaultUnits(TestProperty):
+    def subject(self, value):
+        return PropUnit2(value)
+
+    @args({"value": 10})
+    def test_raises_validation_error(self):
+        self.assert_validation_error()
 
 
 @add_to(property_test_suite)
