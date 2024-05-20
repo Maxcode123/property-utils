@@ -15,6 +15,7 @@ from property_utils.units.converter_types import (
     CompositeUnitConverter,
 )
 from property_utils.properties.validated_property import ValidatedProperty
+from property_utils.properties.property import Property
 from property_utils.exceptions.properties.property import PropertyValidationError
 
 
@@ -341,3 +342,10 @@ class PositiveProp(ValidatedProperty):
     def validate_value(self, value: float) -> None:
         if value <= 0:
             raise PropertyValidationError
+
+
+class PropUnit1(Property):
+    default_units = Unit1.a
+
+
+class PropUnit2(Property): ...
