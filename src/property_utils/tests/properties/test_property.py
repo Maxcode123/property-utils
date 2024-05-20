@@ -743,6 +743,20 @@ class TestAliasPropertyAddition(TestProperty):
         self.assert_result("25.0 H")
 
 
+@add_to(property_test_suite)
+class TestDifferentPropertyAddition(TestProperty):
+    def subject(self, left, right):
+        return left + right
+
+    @args({"left": PropUnit1(10), "right": Property(10, Unit1.a)})
+    def test_left_operand(self):
+        self.assert_result("20 a")
+
+    @args({"left": Property(10, Unit1.a), "right": PropUnit1(10)})
+    def test_right_operand(self):
+        self.assert_result("20 a")
+
+
 @add_to(property_test_suite, "__sub__")
 class TestSimplePropertySubtraction(TestProperty):
 
@@ -834,6 +848,16 @@ class TestAliasPropertySubtraction(TestProperty):
         self.assert_result("15.0 H")
 
 
+@add_to(property_test_suite)
+class TestDifferentPropertySubtraction(TestProperty):
+    def subject(self, prop):
+        return PropUnit1(10) - prop
+
+    @args({"prop": Property(5, Unit1.a)})
+    def test_with_base_property_class(self):
+        self.assert_result("5 a")
+
+
 @add_to(property_test_suite, "__rsub__")
 class TestSimplePropertyRightSubtraction(TestProperty):
 
@@ -881,6 +905,16 @@ class TestAliasPropertyRightSubtraction(TestProperty):
     @args({"other": Property(40, Unit6.f / Unit4.d**2)})
     def test_with_other_aliased_si_units(self):
         self.assert_result("-60.0 f / (d^2)")
+
+
+@add_to(property_test_suite)
+class TestDifferentPropertyRightSubtraction(TestProperty):
+    def subject(self, prop):
+        return prop - PropUnit1(5)
+
+    @args({"prop": Property(10, Unit1.a)})
+    def test_with_base_property_class(self):
+        self.assert_result("5 a")
 
 
 @add_to(property_test_suite, "__pow__")
