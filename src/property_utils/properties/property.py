@@ -217,7 +217,7 @@ class Property:
         if isinstance(other, Property):
             _other = self._unit_preconversion(other)
             return Property(
-                self.value * _other.value, (self.unit * _other.unit).simplified()
+                self.value * _other.value, self._simplify_units(self.unit * _other.unit)
             )
         raise PropertyBinaryOperationError(
             f"cannot multiply {self} with {other}; "
@@ -268,7 +268,7 @@ class Property:
                 raise PropertyBinaryOperationError(
                     f"cannot divide {self} with {other}; denominator's value is zero. "
                 ) from None
-            return Property(value, (self.unit / _other.unit).simplified())
+            return Property(value, self._simplify_units(self.unit / _other.unit))
         raise PropertyBinaryOperationError(
             f"cannot divide {self} with {other}; "
             "denominator must be numeric or Property. "
@@ -299,7 +299,7 @@ class Property:
                 raise PropertyBinaryOperationError(
                     f"cannot divide {self} with {other}; denominator's value is zero. "
                 ) from None
-            return Property(value, (other.unit / self.unit).simplified())
+            return Property(value, self._simplify_units(other.unit / self.unit))
         raise PropertyBinaryOperationError(
             f"cannot divide {self} with {other}; "
             "numerator must be numeric or Property. "
@@ -727,3 +727,15 @@ class Property:
         multiplication or division with this property.
         """
         return self._dimension_unit_preconversion(unit**1).unit
+
+    def _simplify_units(self, unit: CompositeDimension) -> UnitDescriptor:
+        """
+        Simplifies the composite dimension and returns NON_DIMENSIONAL if the simplified
+        composite does not have units.
+        """
+        unit = unit.simplified()
+
+        if unit.has_no_units():
+            return NonDimensionalUnit.NON_DIMENSIONAL
+
+        return unit
