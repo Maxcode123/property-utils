@@ -346,6 +346,10 @@ class TestPropertyMultiplication(TestProperty):
     def test_with_inverse_property(self):
         self.assert_result("10.4 ")
 
+    @args({"other": Property(2, Unit1.A ** (-1))})
+    def test_produced_units_with_inverse_property(self):
+        self.assertEqual(self.result().unit, NonDimensionalUnit.NON_DIMENSIONAL)
+
     @args({"other": Property(4, Unit2.B)})
     def test_with_other_propperty(self):
         self.assert_result("20.8 A * B")
@@ -499,6 +503,10 @@ class TestPropertyDivision(TestProperty):
     def test_with_same_property(self):
         self.assert_result("3.0 ")
 
+    @args({"other": Property(2, Unit1.A)})
+    def test_produced_units_with_same_property(self):
+        self.assertEqual(self.result().unit, NonDimensionalUnit.NON_DIMENSIONAL)
+
     @args({"other": Property(2, Unit2.B)})
     def test_with_other_propperty(self):
         self.assert_result("3.0 A / B")
@@ -638,6 +646,10 @@ class TestPropertyRightDivision(TestProperty):
     @args({"other": Property(2, Unit1.A)})
     def test_with_same_property(self):
         self.assert_result("0.2 ")
+
+    @args({"other": Property(2, Unit1.A)})
+    def test_produced_units_with_same_property(self):
+        self.assertEqual(self.result().unit, NonDimensionalUnit.NON_DIMENSIONAL)
 
     @args({"other": Property(2, Unit2.B)})
     def test_with_other_propperty(self):
