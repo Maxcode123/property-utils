@@ -1314,6 +1314,21 @@ class GenericCompositeDimension:
 
         return False
 
+    def has_no_units(self) -> bool:
+        """
+        Returns True if the generic composite dimension does not have any units, False
+        otherwise.
+
+        Examples:
+            >>> class LengthUnit(MeasurementUnit): ...
+
+            >>> GenericCompositeDimension().has_no_units()
+            True
+            >>> GenericCompositeDimension([LengthUnit]).has_no_units()
+            False
+        """
+        return len(self.denominator) == 0 and len(self.numerator) == 0
+
     def _numerator_copy(self) -> List[GenericDimension]:
         return [replace(n) for n in self.numerator]
 
@@ -1742,6 +1757,21 @@ class CompositeDimension:
             <CompositeDimension: s / m>
         """
         return CompositeDimension(self._denominator_copy(), self._numerator_copy())
+
+    def has_no_units(self) -> bool:
+        """
+        Returns True if the composite dimension does not have any units, False otherwise.
+
+        Examples:
+            >>> class LengthUnit(MeasurementUnit):
+            ...     METER = "m"
+
+            >>> CompositeDimension().has_no_units()
+            True
+            >>> CompositeDimension([LengthUnit.METER]).has_no_units()
+            False
+        """
+        return len(self.denominator) == 0 and len(self.numerator) == 0
 
     def _numerator_copy(self) -> List[Dimension]:
         return [replace(n) for n in self.numerator]
