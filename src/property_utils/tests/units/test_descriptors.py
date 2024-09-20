@@ -68,14 +68,12 @@ descriptors_test_suite.addTests(
 
 @add_to(MeasurementUnitMeta_test_suite)
 class TestMeasurementUnitMetaInverseGeneric(TestDescriptor):
-
     def test_inverse_generic(self):
         self.assertSequenceEqual(str(Unit1.inverse_generic()), " / Unit1", str)
 
 
 @add_to(MeasurementUnitMeta_test_suite)
 class TestMeasurementUnitMetaMultiplication(TestDescriptorBinaryOperation):
-
     operator = mul
     produced_type = GenericCompositeDimension
 
@@ -116,7 +114,6 @@ class TestMeasurementUnitMetaMultiplication(TestDescriptorBinaryOperation):
 
 @add_to(MeasurementUnitMeta_test_suite)
 class TestMeasurementUnitMetaDivision(TestDescriptorBinaryOperation):
-
     operator = truediv
     produced_type = GenericCompositeDimension
 
@@ -227,7 +224,6 @@ class TestMeasurementUnitMetaIsEquivalent(TestDescriptor):
 
 @add_to(MeasurementUnit_test_suite)
 class TestMeasurementUnitFromDescriptor(TestDescriptor):
-
     def subject(self, descriptor):
         return MeasurementUnit.from_descriptor(descriptor)
 
@@ -266,7 +262,6 @@ class TestMeasurementUnitFromDescriptor(TestDescriptor):
 
 @add_to(MeasurementUnit_test_suite)
 class TestMeasurementUnitIsInstance(TestDescriptor):
-
     def subject(self, generic):
         return Unit1.A.isinstance(generic)
 
@@ -301,7 +296,6 @@ class TestMeasurementUnitIsInstance(TestDescriptor):
 
 @add_to(MeasurementUnit_test_suite)
 class TestMeasurementUnitIsInstanceEquivalent(TestDescriptor):
-
     def subject(self, descriptor):
         return Unit3.C.isinstance_equivalent(descriptor)
 
@@ -2006,6 +2000,7 @@ class TestComplexAliasGenericCompositeDimensionIsEquivalent(TestDescriptor):
     def test_with_fully_aliased_composite_dimension(self):
         self.assertResultTrue()
 
+
 @add_to(GenericCompositeDimension_test_suite)
 class TestGenericCompositeDimensionHasNoUnits(TestDescriptor):
     def test_with_measurement_units(self):
@@ -2576,6 +2571,7 @@ class TestCompositeDimensionInverse(TestDescriptor):
         self.assertNotEqual(ids(composite.numerator), ids(inverse.denominator))
         self.assertNotEqual(ids(composite.denominator), ids(inverse.numerator))
 
+
 @add_to(CompositeDimension_test_suite)
 class TestCompositeDimensionHasNoUnits(TestDescriptor):
     def test_with_units(self):
@@ -2585,10 +2581,11 @@ class TestCompositeDimensionHasNoUnits(TestDescriptor):
         self.assertTrue(CompositeDimension().has_no_units())
 
     def test_with_same_unit_type(self):
-        self.assertFalse(CompositeDimension([Unit1.A],[Unit1.a]).has_no_units())
+        self.assertFalse(CompositeDimension([Unit1.A], [Unit1.a]).has_no_units())
 
     def test_with_same_unit(self):
-        self.assertFalse(CompositeDimension([Unit1.A],[Unit1.A]).has_no_units())
+        self.assertFalse(CompositeDimension([Unit1.A], [Unit1.A]).has_no_units())
+
 
 @add_to(CompositeDimension_test_suite)
 class TestCompositeDimensionMultiplication(TestDescriptorBinaryOperation):
