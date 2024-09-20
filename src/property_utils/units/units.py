@@ -34,6 +34,10 @@ class NonDimensionalUnit(MeasurementUnit):
     def si(cls) -> "NonDimensionalUnit":
         return cls.NON_DIMENSIONAL
 
+    @classmethod
+    def is_non_dimensional(cls) -> bool:
+        return True
+
 
 class RelativeTemperatureUnit(MeasurementUnit):
     CELCIUS = "°C"
