@@ -115,6 +115,14 @@ class Unit8(AliasMeasurementUnit):
         return cls.h
 
 
+class Unit9(MeasurementUnit):
+    NON_DIMENSIONAL = ""
+
+    @classmethod
+    def is_non_dimensional(cls) -> bool:
+        return True
+
+
 class UnregisteredConverter(AbsoluteUnitConverter): ...
 
 
@@ -260,6 +268,10 @@ def dimension_7(power: float = 1) -> Dimension:
     G^power
     """
     return Dimension(Unit7.G, power)
+
+
+def dimension_9(power: float = 1) -> Dimension:
+    return Dimension(Unit9.NON_DIMENSIONAL, power)
 
 
 def generic_dimension_1(power: float = 1) -> GenericDimension:
