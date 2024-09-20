@@ -320,6 +320,22 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         """
         raise NotImplementedError
 
+    @classmethod
+    def is_non_dimensional(cls) -> bool:
+        """
+        Implement this function for defined measurement units that are non dimensional.
+
+        Examples:
+            >>> class NonDimensionalUnit(MeasurementUnit):
+            ...     NON_DIMENSIONAL = ""
+            ...     @classmethod
+            ...     def is_non_dimensional(cls) -> bool: return True
+
+            >>> NonDimensionalUnit.is_non_dimensional()
+            True
+        """
+        return False
+
     @staticmethod
     def from_descriptor(descriptor: UnitDescriptor) -> "MeasurementUnit":
         """
@@ -468,6 +484,9 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
             >>> LengthUnit.FEET**3
             <Dimension: ft^3>
         """
+        # always keep non dimensional units to the first power
+        power = 1 if self.is_non_dimensional() else power
+
         return Dimension(self, power)
 
     def __hash__(self) -> int:
@@ -1009,7 +1028,10 @@ class Dimension:
                 f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
                 " expected float or int. "
             )
-        self.power *= power
+        if self.unit.is_non_dimensional():
+            self.power = 1
+        else:
+            self.power *= power
         return self
 
     def __eq__(self, dimension) -> bool:
@@ -1701,6 +1723,9 @@ class CompositeDimension:
         numerator = []
         denominator = []
         for unit, exponent in exponents.items():
+            if unit.is_non_dimensional():
+                continue  # do not add non dimensional units to the simplified composite
+
             if exponent > 0:
                 numerator.append(Dimension(unit) ** exponent)
             elif exponent < 0:

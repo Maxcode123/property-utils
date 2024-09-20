@@ -42,3 +42,19 @@ class TestPublicPropertyOperations(TestCase):
     @args({"p1": p(11, JOULE / KELVIN), "p2": p(10, JOULE / KELVIN), "op": ge})
     def test_greater_or_equal(self):
         self.assertResultTrue()
+
+    @args({"p1": p(1) ** 2, "p2": p(1), "op": add})
+    def test_non_dimensionals_addition(self):
+        self.assert_result("2.0 ")
+
+    @args({"p1": p(1) / p(1), "p2": p(1), "op": add})
+    def test_non_dimensionals_addition_2(self):
+        self.assert_result("2.0 ")
+
+    @args({"p1": p(1) / (p(1) ** 2), "p2": p(1), "op": add})
+    def test_non_dimensionals_addition_3(self):
+        self.assert_result("2.0 ")
+
+    @args({"p1": (p(1) ** 2) ** 3, "p2": p(1), "op": add})
+    def test_non_dimensionals_addition_4(self):
+        self.assert_result("2.0 ")
