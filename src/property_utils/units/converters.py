@@ -94,9 +94,7 @@ class UnitPrefix(float, Enum):
 
 
 @register_converter(RelativeTemperatureUnit)
-class RelativeTemperatureUnitConverter(
-    RelativeUnitConverter
-):  # pylint: disable=too-few-public-methods
+class RelativeTemperatureUnitConverter(RelativeUnitConverter):  # pylint: disable=too-few-public-methods
     """
     Convert temperature units with this converter.
 
