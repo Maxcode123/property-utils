@@ -2542,6 +2542,14 @@ class TestCompositeDimensionSimplify(TestDescriptor):
     def test_same_numerator_dimensions_zero_sum(self):
         self.assert_result(" / C")
 
+    @args({"composite": CompositeDimension([dimension_9()], [dimension_9()])})
+    def test_non_dimensionals(self):
+        self.assert_result("")
+
+    @args({"composite": CompositeDimension([dimension_9(3)], [dimension_9()])})
+    def test_non_dimensionals_exponentiated(self):
+        self.assert_result("")
+
 
 @add_to(CompositeDimension_test_suite)
 class TestCompositeDimensionSimplified(TestCompositeDimensionSimplify):

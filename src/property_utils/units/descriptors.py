@@ -1717,6 +1717,9 @@ class CompositeDimension:
         numerator = []
         denominator = []
         for unit, exponent in exponents.items():
+            if unit.is_non_dimensional():
+                continue  # do not add non dimensional units to the simplified composite
+
             if exponent > 0:
                 numerator.append(Dimension(unit) ** exponent)
             elif exponent < 0:
