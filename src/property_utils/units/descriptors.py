@@ -320,6 +320,22 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
         """
         raise NotImplementedError
 
+    @classmethod
+    def is_non_dimensional(cls) -> bool:
+        """
+        Implement this function for defined measurement units that are non dimensional.
+
+        Examples:
+            >>> class NonDimensionalUnit(MeasurementUnit):
+            ...     NON_DIMENSIONAL = ""
+            ...     @classmethod
+            ...     def is_non_dimensional(cls) -> bool: return True
+
+            >>> NonDimensionalUnit.is_non_dimensional()
+            True
+        """
+        return False
+
     @staticmethod
     def from_descriptor(descriptor: UnitDescriptor) -> "MeasurementUnit":
         """
