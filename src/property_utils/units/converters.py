@@ -13,6 +13,7 @@ except ImportError:
 from property_utils.units.descriptors import UnitDescriptor
 from property_utils.exceptions.units.converter_types import UnitConversionError
 from property_utils.units.units import (
+    NonDimensionalUnit,
     RelativeTemperatureUnit,
     AbsoluteTemperatureUnit,
     LengthUnit,
@@ -151,6 +152,17 @@ class AbsoluteTemperatureUnitConverter(AbsoluteUnitConverter):
                 value, from_descriptor, to_descriptor
             )
         return value * cls.get_factor(from_descriptor, to_descriptor)
+
+
+@register_converter(NonDimensionalUnit)
+class NonDimensionalUnitConverter(AbsoluteUnitConverter):
+    """
+    This converter is needed for compatibility, i.e. for conversions to work from
+    non-dimensional units to non-dimensional dimensions.
+    """
+
+    reference_unit = NonDimensionalUnit.NON_DIMENSIONAL
+    conversion_map = {NonDimensionalUnit.NON_DIMENSIONAL: 1}
 
 
 @register_converter(LengthUnit)
