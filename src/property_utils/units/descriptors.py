@@ -484,6 +484,9 @@ class MeasurementUnit(Enum, metaclass=MeasurementUnitMeta):
             >>> LengthUnit.FEET**3
             <Dimension: ft^3>
         """
+        # always keep non dimensional units to the first power
+        power = 1 if self.is_non_dimensional() else power
+
         return Dimension(self, power)
 
     def __hash__(self) -> int:
@@ -1025,7 +1028,10 @@ class Dimension:
                 f"invalid exponent: {{ value: {power}, type: {type(power)} }};"
                 " expected float or int. "
             )
-        self.power *= power
+        if self.unit.is_non_dimensional():
+            self.power = 1
+        else:
+            self.power *= power
         return self
 
     def __eq__(self, dimension) -> bool:

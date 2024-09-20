@@ -29,6 +29,7 @@ from property_utils.tests.data import (
     Unit5,
     Unit6,
     Unit7,
+    Unit9,
     dimension_1,
     dimension_2,
     dimension_3,
@@ -36,6 +37,7 @@ from property_utils.tests.data import (
     dimension_5,
     dimension_6,
     dimension_7,
+    dimension_9,
     generic_dimension_1,
     generic_dimension_2,
     generic_dimension_3,
@@ -464,6 +466,22 @@ class TestMeasurementUnitExponentiation(TestDescriptor):
     @args({"value": None})
     def test_with_none(self):
         self.assertResultRaises(DescriptorExponentError)
+
+
+@add_to(MeasurementUnit_test_suite)
+class TestNonDimensionalMeasurementUnitExponentiation(TestDescriptor):
+    produced_type = Dimension
+
+    def subject(self, value):
+        return Unit9.NON_DIMENSIONAL**value
+
+    @args({"value": 2})
+    def test_with_positive_int(self):
+        self.assert_result("")
+
+    @args({"value": -10})
+    def test_with_negative_int(self):
+        self.assert_result("")
 
 
 @add_to(AliasMeasurementUnit_test_suite)
@@ -1370,6 +1388,19 @@ class TestDimensionExponentiation(TestMeasurementUnitExponentiation):
 
     def subject(self, value):
         return dimension_1() ** value
+
+
+@add_to(Dimension_test_suite)
+class TestNonDimensionalDimensionExponentiation(
+    TestNonDimensionalMeasurementUnitExponentiation
+):
+    """
+    Repeat all tests in `TestNonDimensionalMeasurementUnitExponentiation` but with
+    dimension_9() as descriptor.
+    """
+
+    def subject(self, value):
+        return dimension_9() ** value
 
 
 @add_to(Dimension_test_suite)
