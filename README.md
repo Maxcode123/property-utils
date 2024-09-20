@@ -82,7 +82,7 @@ Result:
 ```
 Heat transfer coefficient = 150 Btu / (ft^2) / hr / °R
 Heat exchange area = 1.7341591447815656 (m^2)
-Logarithmic mean temperature difference = 207.24308513672648 K
+Temperature difference = 207.24308513672648 K
 
 Heat duty = 1044588.4611345044 Btu / hr
           = 306122.45180469507 J / s
